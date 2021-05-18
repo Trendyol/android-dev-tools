@@ -3,7 +3,7 @@
     <style name="Theme.Devtools" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dev_tools_white</item>
-        <item name="colorOnPrimary">@color/dev_tools_white</item>
+        <item name="colorOnPrimary">@color/dev_tools_black</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/dev_tools_black</item>
         <!-- Status bar color. -->

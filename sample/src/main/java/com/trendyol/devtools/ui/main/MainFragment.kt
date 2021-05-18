@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         button.setOnClickListener {
-            TrendyolDevTools.show(requireContext())
+            TrendyolDevTools.show()
         }
     }
 
