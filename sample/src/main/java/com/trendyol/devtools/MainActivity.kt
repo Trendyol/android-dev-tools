@@ -1,7 +1,7 @@
 package com.trendyol.devtools
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.trendyol.devtools.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {

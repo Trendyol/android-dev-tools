@@ -1,0 +1,71 @@
+name: Android Feature Branch CI
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  tests:
+    name: Lint and JVM tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # step 1
+      - uses: actions/checkout@v2
+      - name: Setup JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: 'zulu'
+      # Cache Gradle dependencies
+      - name: Setup Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle-
+      # step 2
+      - name: Run Kotlin Linter
+        run: ./gradlew ktlintCheck
+      # step 3
+      - name: Android Lint
+        run: ./gradlew lintDebug
+      - name: Upload Android Lint Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: android-lint-report
+          path: build/reports/android-lint.html
+      # step 4
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
+      - name: Upload Unit Test Reports
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: unit-test-report
+          path: ./**/build/reports/tests/testDebugUnitTest/**
+  androidTests:
+    name: Instrumentation Tests
+    needs: tests
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v2
+      # step 1
+      - name: Run Instrumentation Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          profile: pixel_3a
+          target: google_apis
+          script: ./gradlew connectedDebugAndroidTest mergeAndroidReports --continue
+      # step 2
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumentation-test-results
+          path: build/androidTest-results
