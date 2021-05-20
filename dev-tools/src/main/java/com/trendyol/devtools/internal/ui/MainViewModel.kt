@@ -16,6 +16,10 @@ internal class MainViewModel(
     private val actionChannel = Channel<Action>(Channel.BUFFERED)
     val actionsFlow = actionChannel.receiveAsFlow()
 
+    init {
+        onEnvironmentChangeClicked()
+    }
+
     fun onEnvironmentChangeClicked() {
         viewModelScope.launch(Dispatchers.Default) {
             val currentEnvironment = environmentUseCase.getCurrentEnvironment()
