@@ -12,7 +12,6 @@ afterEvaluate {
             maven {
                 def properties = new Properties()
                 file("../local.properties").withInputStream { properties.load(it) }
-                println properties
 
                 name = properties["maven.name"]
                 url = uri(properties["maven.url"])
