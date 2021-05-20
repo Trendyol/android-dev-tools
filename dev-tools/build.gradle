@@ -58,3 +58,5 @@ dependencies {
 
     implementation 'com.github.Trendyol.android-ui-components:dialogs:dialogs-1.2.1-viewbinding'
 }
+
+apply from: '../publish.gradle'
