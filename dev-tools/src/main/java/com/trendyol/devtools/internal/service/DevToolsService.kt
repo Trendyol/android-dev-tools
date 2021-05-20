@@ -62,7 +62,8 @@ internal class DevToolsService : Service() {
         ).apply {
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
-        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(notificationChannel)
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(notificationChannel)
     }
 
     companion object {
