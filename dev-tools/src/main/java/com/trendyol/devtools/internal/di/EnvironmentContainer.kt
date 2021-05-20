@@ -14,7 +14,7 @@ internal class EnvironmentContainer(private val context: Context, val environmen
         EnvironmentRepository(sharedPreferences = provideSharedPreferences())
 
     private fun provideSharedPreferences(): SharedPreferences =
-        context.getSharedPreferences("dev_tools_preferences", Context.MODE_PRIVATE)
+        context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     companion object {
 

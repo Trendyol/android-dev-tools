@@ -1,6 +1,7 @@
 package com.trendyol.devtools.internal.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.trendyol.devtools.databinding.DevToolsActivityMainBinding
 import com.trendyol.devtools.internal.di.ContextContainer
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.onEach
 internal class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: DevToolsActivityMainBinding
-    private val viewModel: MainViewModel by lazy { ContextContainer.getMainContainer().getViewModel() }
+    private val viewModel: MainViewModel by viewModels { ContextContainer.getMainContainer().MainViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

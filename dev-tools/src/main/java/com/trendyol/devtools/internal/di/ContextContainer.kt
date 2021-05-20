@@ -10,7 +10,11 @@ internal object ContextContainer {
     private lateinit var environments: List<String>
 
     fun getContext(): Context =
-        if (::context.isInitialized) context else throw NullPointerException("context is not initialized, please call TrendyolDevTools.init(Application) on Application.onCreate to use Trendyol Dev Tools.")
+        if (::context.isInitialized) {
+            context
+        } else {
+            throw NullPointerException("context is not initialized, please call TrendyolDevTools.init(Application) on Application.onCreate to use Trendyol Dev Tools.")
+        }
 
     fun setContext(context: Context) {
         this.context = context
@@ -20,8 +24,7 @@ internal object ContextContainer {
         this.environments = environments
     }
 
-    fun getEnvironmentsContainer(): EnvironmentContainer =
-        EnvironmentContainer(context, environments)
+    fun getEnvironmentsContainer(): EnvironmentContainer = EnvironmentContainer(context, environments)
 
     fun getMainContainer(): MainContainer = MainContainer(getEnvironmentsContainer())
 }

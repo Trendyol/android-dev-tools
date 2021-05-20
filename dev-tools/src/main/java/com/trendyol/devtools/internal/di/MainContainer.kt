@@ -6,9 +6,7 @@ import com.trendyol.devtools.internal.ui.MainViewModel
 
 internal class MainContainer(private val environmentContainer: EnvironmentContainer) {
 
-    fun getViewModel(): MainViewModel = MainViewModelFactory().create(MainViewModel::class.java)
-
-    inner class MainViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+    inner class MainViewModelFactory : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

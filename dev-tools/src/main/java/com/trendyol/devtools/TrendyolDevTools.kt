@@ -3,7 +3,6 @@ package com.trendyol.devtools
 import android.app.Application
 import android.content.Intent
 import com.trendyol.devtools.internal.di.ContextContainer
-import com.trendyol.devtools.internal.domain.EnvironmentUseCase
 import com.trendyol.devtools.internal.service.DevToolsService
 import com.trendyol.devtools.internal.ui.MainActivity
 import com.trendyol.devtools.model.DefaultEnvironments
@@ -25,5 +24,6 @@ object TrendyolDevTools {
         ContextContainer.setEnvironments(environments)
     }
 
-    fun getCurrentEnvironment(): String = EnvironmentUseCase.getInstance().getCurrentEnvironment()
+    fun getCurrentEnvironment(): String =
+        ContextContainer.getEnvironmentsContainer().provideGetCurrentEnvironmentUseCase().getCurrentEnvironment()
 }
