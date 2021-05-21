@@ -11,7 +11,7 @@ afterEvaluate {
         repositories {
             maven {
                 def properties = new Properties()
-                file("../local.properties").withInputStream { properties.load(it) }
+                file("../publish.properties").withInputStream { properties.load(it) }
 
                 name = properties["maven.name"]
                 url = uri(properties["maven.url"])
