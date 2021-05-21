@@ -20,23 +20,25 @@ internal class FlowObserver<T>(
     private var job: Job? = null
 
     init {
-        lifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { source: LifecycleOwner, event: Lifecycle.Event ->
-            when (event) {
-                Lifecycle.Event.ON_START -> {
-                    job = source.lifecycleScope.launch {
-                        flow.collect(object : FlowCollector<T> {
-                            override suspend fun emit(value: T) {
-                                collector(value)
-                            }
-                        })
+        lifecycleOwner.lifecycle.addObserver(
+            LifecycleEventObserver { source: LifecycleOwner, event: Lifecycle.Event ->
+                when (event) {
+                    Lifecycle.Event.ON_START -> {
+                        job = source.lifecycleScope.launch {
+                            flow.collect(object : FlowCollector<T> {
+                                override suspend fun emit(value: T) {
+                                    collector(value)
+                                }
+                            })
+                        }
+                    }
+                    Lifecycle.Event.ON_STOP -> {
+                        job?.cancel()
+                        job = null
                     }
                 }
-                Lifecycle.Event.ON_STOP -> {
-                    job?.cancel()
-                    job = null
-                }
             }
-        })
+        )
     }
 }
 
