@@ -5,10 +5,9 @@ import android.content.SharedPreferences
 import com.trendyol.devtools.internal.data.EnvironmentRepository
 import com.trendyol.devtools.internal.domain.EnvironmentUseCase
 
-internal class EnvironmentContainer(private val context: Context, val environments: List<String>) {
+internal class EnvironmentContainer(private val context: Context) {
 
-    fun provideGetCurrentEnvironmentUseCase(): EnvironmentUseCase =
-        EnvironmentUseCase(repository = provideEnvironmentRepository())
+    val environmentUseCase by lazy { EnvironmentUseCase(repository = provideEnvironmentRepository()) }
 
     private fun provideEnvironmentRepository(): EnvironmentRepository =
         EnvironmentRepository(sharedPreferences = provideSharedPreferences())

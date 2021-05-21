@@ -4,4 +4,5 @@
     <string name="dev_tools_notification_name">Trendyol Dev Tools</string>
 
     <string name="dev_tools_action_change_environment">Change Environment</string>
+    <string name="title_select_environment">Select Environment</string>
 </resources>

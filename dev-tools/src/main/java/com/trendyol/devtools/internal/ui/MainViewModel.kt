@@ -8,10 +8,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-internal class MainViewModel(
-    private val environments: List<String>,
-    private val environmentUseCase: EnvironmentUseCase
-) : ViewModel() {
+internal class MainViewModel(private val environmentUseCase: EnvironmentUseCase) : ViewModel() {
 
     private val actionChannel = Channel<Action>(Channel.BUFFERED)
     val actionsFlow = actionChannel.receiveAsFlow()
@@ -22,15 +19,14 @@ internal class MainViewModel(
 
     fun onEnvironmentChangeClicked() {
         viewModelScope.launch(Dispatchers.Default) {
-            val currentEnvironment = environmentUseCase.getCurrentEnvironment()
-            val environmentsPair = environments.map { (it == currentEnvironment) to it }
+            val environmentsPair = environmentUseCase.getEnvironmentPairs()
 
             actionChannel.send(Action.ShowEnvironmentSelection(environmentsPair))
         }
     }
 
     fun onEnvironmentSelected(environmentIndex: Int) {
-        environmentUseCase.updateCurrentEnvironment(environments[environmentIndex])
+        environmentUseCase.updateCurrentEnvironment(environmentIndex)
     }
 
     sealed class Action {

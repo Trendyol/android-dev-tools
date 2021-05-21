@@ -42,6 +42,8 @@ android {
         htmlReport true
         htmlOutput file("${project.rootDir}/build/reports/android-lint.html")
     }
+
+    buildFeatures.viewBinding = true
 }
 
 dependencies {

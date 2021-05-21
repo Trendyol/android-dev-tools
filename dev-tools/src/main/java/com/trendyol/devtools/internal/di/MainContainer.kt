@@ -10,10 +10,7 @@ internal class MainContainer(private val environmentContainer: EnvironmentContai
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(
-                environments = environmentContainer.environments,
-                environmentUseCase = environmentContainer.provideGetCurrentEnvironmentUseCase()
-            ) as T
+            return MainViewModel(environmentUseCase = environmentContainer.environmentUseCase) as T
         }
     }
 }
