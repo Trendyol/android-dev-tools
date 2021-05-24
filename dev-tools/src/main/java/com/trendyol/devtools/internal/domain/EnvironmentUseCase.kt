@@ -2,26 +2,19 @@ package com.trendyol.devtools.internal.domain
 
 import com.trendyol.devtools.internal.data.EnvironmentRepository
 import com.trendyol.devtools.model.DefaultEnvironments
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 internal class EnvironmentUseCase(private val repository: EnvironmentRepository) {
 
     var onEnvironmentChanged: ((String) -> Unit)? = null
-
-    private var environments: List<String> = emptyList()
-        get() {
-            return if (field.isEmpty()) {
-                (repository.getEnvironments() ?: DefaultEnvironments.getAll()).also { environments = it }
-            } else {
-                field
-            }
-        }
 
     fun getCurrentEnvironment(): String = repository.getCurrentEnvironment() ?: DefaultEnvironments.PRODUCTION.also {
         updateCurrentEnvironment(0)
     }
 
     fun updateCurrentEnvironment(environmentIndex: Int) {
-        val environment = environments[environmentIndex]
+        val environment = getEnvironments()[environmentIndex]
         if (environment.isEmpty() || environment.isBlank()) {
             throw IllegalArgumentException("Provided environment should not be empty or blank")
         }
@@ -30,15 +23,17 @@ internal class EnvironmentUseCase(private val repository: EnvironmentRepository)
     }
 
     fun updateEnvironments(environments: List<String>) {
-        if (this.environments == environments) return
-
-        this.environments = environments
         repository.updateEnvironments(environments)
         updateCurrentEnvironment(0)
     }
 
-    fun getEnvironmentPairs(): List<Pair<Boolean, String>> {
-        val currentEnvironment = getCurrentEnvironment()
-        return environments.map { (it == currentEnvironment) to it }
-    }
+    fun getEnvironmentPairs(): Observable<List<Pair<Boolean, String>>> =
+        Observable.just(getCurrentEnvironment())
+            .subscribeOn(Schedulers.io())
+            .map { currentEnvironment ->
+                getEnvironments().map { environment -> (environment == currentEnvironment) to environment }
+            }
+
+    private fun getEnvironments(): List<String> =
+        repository.getEnvironments() ?: DefaultEnvironments.getAll().also { repository.updateEnvironments(it) }
 }

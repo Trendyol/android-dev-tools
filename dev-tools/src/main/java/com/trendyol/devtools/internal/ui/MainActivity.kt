@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.trendyol.devtools.R
 import com.trendyol.devtools.databinding.DevToolsActivityMainBinding
 import com.trendyol.devtools.internal.di.ContextContainer
-import com.trendyol.devtools.internal.flow.observeInLifecycle
 import com.trendyol.uicomponents.dialogs.selectionDialog
-import kotlinx.coroutines.flow.onEach
 
 internal class MainActivity : AppCompatActivity() {
 
@@ -25,11 +23,9 @@ internal class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.actionsFlow.onEach { action ->
-            when (action) {
-                is MainViewModel.Action.ShowEnvironmentSelection -> showEnvironmentSelectionDialog(action.environments)
-            }
-        }.observeInLifecycle(this)
+        viewModel.getShowEnvironmentSelectionLiveEvent().observe(this) { environments ->
+            showEnvironmentSelectionDialog(environments)
+        }
     }
 
     private fun setUpView() = with(binding) {

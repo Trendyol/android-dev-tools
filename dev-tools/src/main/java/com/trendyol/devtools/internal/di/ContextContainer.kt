@@ -24,8 +24,4 @@ internal object ContextContainer {
     fun setContext(context: Context) {
         this.context = context
     }
-
-    fun updateEnvironments(environments: List<String>) {
-        environmentsContainer.environmentUseCase.updateEnvironments(environments)
-    }
 }

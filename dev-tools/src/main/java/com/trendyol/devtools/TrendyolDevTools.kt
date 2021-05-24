@@ -21,7 +21,7 @@ object TrendyolDevTools {
 
     fun updateEnvironments(environments: List<String>) {
         EnvironmentValidator.validateEnvironments(environments)
-        ContextContainer.updateEnvironments(environments)
+        ContextContainer.environmentsContainer.environmentUseCase.updateEnvironments(environments)
     }
 
     fun getCurrentEnvironment(): String =

@@ -1,36 +1,33 @@
 package com.trendyol.devtools.internal.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.trendyol.devtools.internal.domain.EnvironmentUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
+import com.trendyol.devtools.internal.util.SingleLiveEvent
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 internal class MainViewModel(private val environmentUseCase: EnvironmentUseCase) : ViewModel() {
 
-    private val actionChannel = Channel<Action>(Channel.BUFFERED)
-    val actionsFlow = actionChannel.receiveAsFlow()
+    private val showEnvironmentSelectionLiveEvent: SingleLiveEvent<List<Pair<Boolean, String>>> = SingleLiveEvent()
+
+    fun getShowEnvironmentSelectionLiveEvent(): LiveData<List<Pair<Boolean, String>>> =
+        showEnvironmentSelectionLiveEvent
 
     init {
         onEnvironmentChangeClicked()
     }
 
     fun onEnvironmentChangeClicked() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val environmentsPair = environmentUseCase.getEnvironmentPairs()
-
-            actionChannel.send(Action.ShowEnvironmentSelection(environmentsPair))
-        }
+        environmentUseCase.getEnvironmentPairs()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ environments ->
+                showEnvironmentSelectionLiveEvent.value = environments
+            }, {
+                TODO("Handle error")
+            })
     }
 
     fun onEnvironmentSelected(environmentIndex: Int) {
         environmentUseCase.updateCurrentEnvironment(environmentIndex)
-    }
-
-    sealed class Action {
-
-        class ShowEnvironmentSelection(val environments: List<Pair<Boolean, String>>) : Action()
     }
 }
