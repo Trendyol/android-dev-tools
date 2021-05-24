@@ -20,11 +20,14 @@ internal class MainViewModel(private val environmentUseCase: EnvironmentUseCase)
     fun onEnvironmentChangeClicked() {
         environmentUseCase.getEnvironmentPairs()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ environments ->
-                showEnvironmentSelectionLiveEvent.value = environments
-            }, {
-                TODO("Handle error")
-            })
+            .subscribe(
+                { environments ->
+                    showEnvironmentSelectionLiveEvent.value = environments
+                },
+                {
+                    TODO("Handle error")
+                }
+            )
     }
 
     fun onEnvironmentSelected(environmentIndex: Int) {
