@@ -1,6 +1,7 @@
 package com.trendyol.devtools.internal.domain
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.trendyol.devtools.internal.data.EnvironmentRepository
 import com.trendyol.devtools.internal.util.SingleLiveEvent
 import com.trendyol.devtools.model.DefaultEnvironments
@@ -9,7 +10,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 internal class EnvironmentUseCase(private val repository: EnvironmentRepository) {
 
-    private val environmentChangedLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
+    private val environmentChangedLiveEvent: MutableLiveData<String> = SingleLiveEvent()
 
     fun getEnvironmentChangedLiveEvent(): LiveData<String> = environmentChangedLiveEvent
 
