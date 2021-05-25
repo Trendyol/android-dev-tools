@@ -28,7 +28,7 @@ object TrendyolDevTools {
     fun getCurrentEnvironment(): String =
         ContextContainer.environmentsContainer.environmentUseCase.getCurrentEnvironment()
 
-    fun getEnvironmentChangedLiveEvent(): LiveData<String> {
-        return ContextContainer.environmentsContainer.environmentUseCase.getEnvironmentChangedLiveEvent()
+    fun getEnvironmentChangedLiveData(): LiveData<String> {
+        return ContextContainer.environmentsContainer.environmentUseCase.getEnvironmentChangedLiveData()
     }
 }

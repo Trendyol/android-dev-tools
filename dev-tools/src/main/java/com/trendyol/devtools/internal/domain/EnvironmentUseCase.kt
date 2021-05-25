@@ -10,9 +10,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 internal class EnvironmentUseCase(private val repository: EnvironmentRepository) {
 
-    private val environmentChangedLiveEvent: MutableLiveData<String> = SingleLiveEvent()
+    private val environmentChangedLiveData: MutableLiveData<String> = SingleLiveEvent()
 
-    fun getEnvironmentChangedLiveEvent(): LiveData<String> = environmentChangedLiveEvent
+    fun getEnvironmentChangedLiveData(): LiveData<String> = environmentChangedLiveData
 
     fun getCurrentEnvironment(): String = repository.getCurrentEnvironment() ?: DefaultEnvironments.PRODUCTION.also {
         updateCurrentEnvironment(0)
@@ -24,7 +24,7 @@ internal class EnvironmentUseCase(private val repository: EnvironmentRepository)
             throw IllegalArgumentException("Provided environment should not be empty or blank")
         }
         repository.updateCurrentEnvironment(environment)
-        environmentChangedLiveEvent.value = environment
+        environmentChangedLiveData.value = environment
     }
 
     fun updateEnvironments(environments: List<String>) {
