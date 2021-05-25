@@ -2,6 +2,7 @@ package com.trendyol.devtools
 
 import android.app.Application
 import android.content.Intent
+import androidx.lifecycle.LiveData
 import com.trendyol.devtools.internal.di.ContextContainer
 import com.trendyol.devtools.internal.domain.EnvironmentValidator
 import com.trendyol.devtools.internal.service.DevToolsService
@@ -27,9 +28,7 @@ object TrendyolDevTools {
     fun getCurrentEnvironment(): String =
         ContextContainer.environmentsContainer.environmentUseCase.getCurrentEnvironment()
 
-    fun setOnNewEnvironmentSelectedListener(onEnvironmentChanged: (String) -> Unit) {
-        ContextContainer.environmentsContainer.environmentUseCase.onEnvironmentChanged = {
-            onEnvironmentChanged.invoke(it)
-        }
+    fun getEnvironmentChangedLiveEvent() : LiveData<String> {
+        return ContextContainer.environmentsContainer.environmentUseCase.getEnvironmentChangedLiveEvent()
     }
 }

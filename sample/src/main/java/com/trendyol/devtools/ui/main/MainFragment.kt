@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
 
         binding.message.text = "current environment: ${TrendyolDevTools.getCurrentEnvironment()}"
 
-        TrendyolDevTools.setOnNewEnvironmentSelectedListener {
+        TrendyolDevTools.getEnvironmentChangedLiveEvent().observe(viewLifecycleOwner) {
             binding.message.text = "current environment: $it"
         }
     }

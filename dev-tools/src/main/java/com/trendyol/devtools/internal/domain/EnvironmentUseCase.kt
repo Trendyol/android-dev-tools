@@ -1,13 +1,17 @@
 package com.trendyol.devtools.internal.domain
 
+import androidx.lifecycle.LiveData
 import com.trendyol.devtools.internal.data.EnvironmentRepository
+import com.trendyol.devtools.internal.util.SingleLiveEvent
 import com.trendyol.devtools.model.DefaultEnvironments
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 internal class EnvironmentUseCase(private val repository: EnvironmentRepository) {
 
-    var onEnvironmentChanged: ((String) -> Unit)? = null
+    private val environmentChangedLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
+
+    fun getEnvironmentChangedLiveEvent(): LiveData<String> = environmentChangedLiveEvent
 
     fun getCurrentEnvironment(): String = repository.getCurrentEnvironment() ?: DefaultEnvironments.PRODUCTION.also {
         updateCurrentEnvironment(0)
@@ -19,7 +23,7 @@ internal class EnvironmentUseCase(private val repository: EnvironmentRepository)
             throw IllegalArgumentException("Provided environment should not be empty or blank")
         }
         repository.updateCurrentEnvironment(environment)
-        onEnvironmentChanged?.invoke(environment)
+        environmentChangedLiveEvent.value = environment
     }
 
     fun updateEnvironments(environments: List<String>) {
