@@ -57,6 +57,8 @@ dependencies {
 
     implementation 'io.reactivex.rxjava3:rxjava:3.0.12'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    implementation "com.infinum.dbinspector:dbinspector:5.3.5"
 }
 
 apply from: '../publish.gradle'

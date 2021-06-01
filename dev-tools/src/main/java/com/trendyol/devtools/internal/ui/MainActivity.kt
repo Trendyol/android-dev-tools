@@ -3,6 +3,7 @@ package com.trendyol.devtools.internal.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.infinum.dbinspector.DbInspector
 import com.trendyol.devtools.R
 import com.trendyol.devtools.databinding.DevToolsActivityMainBinding
 import com.trendyol.devtools.internal.di.ContextContainer
@@ -31,6 +32,10 @@ internal class MainActivity : AppCompatActivity() {
     private fun setUpView() = with(binding) {
         buttonChangeEnvironment.setOnClickListener {
             viewModel.onEnvironmentChangeClicked()
+        }
+
+        buttonInspectDatabase.setOnClickListener {
+            DbInspector.show()
         }
     }
 
