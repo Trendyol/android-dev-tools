@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.trendyol.devtools.TrendyolDevTools
 import com.trendyol.devtools.databinding.MainFragmentBinding
 import kotlin.random.Random
@@ -35,6 +36,10 @@ class MainFragment : Fragment() {
 
         TrendyolDevTools.getEnvironmentChangedLiveData().observe(viewLifecycleOwner) {
             binding.message.text = "current environment: $it"
+        }
+
+        TrendyolDevTools.getDebugActionClickEvent().observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it.text, Snackbar.LENGTH_LONG).show()
         }
     }
 

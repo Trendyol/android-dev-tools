@@ -8,6 +8,7 @@ internal object ContextContainer {
 
     val environmentsContainer by lazy { EnvironmentContainer(context) }
     val mainContainer by lazy { MainContainer(environmentsContainer) }
+    val debugMenuContainer by lazy { DebugMenuContainer() }
 
     private lateinit var context: Context
 

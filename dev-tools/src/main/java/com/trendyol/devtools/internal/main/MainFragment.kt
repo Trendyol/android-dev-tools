@@ -12,7 +12,7 @@ import com.trendyol.devtools.internal.di.ContextContainer
 import com.trendyol.devtools.internal.fragment.viewBinding
 import com.trendyol.uicomponents.dialogs.selectionDialog
 
-class MainFragment : Fragment(R.layout.dev_tools_fragment_main) {
+internal class MainFragment : Fragment(R.layout.dev_tools_fragment_main) {
 
     private val binding: DevToolsFragmentMainBinding by viewBinding(DevToolsFragmentMainBinding::bind)
     private val viewModel: MainViewModel by viewModels { ContextContainer.mainContainer.MainViewModelFactory() }
