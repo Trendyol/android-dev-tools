@@ -2,7 +2,7 @@ package com.trendyol.devtools.internal.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.trendyol.devtools.internal.ui.MainViewModel
+import com.trendyol.devtools.internal.main.MainViewModel
 
 internal class MainContainer(private val environmentContainer: EnvironmentContainer) {
 
