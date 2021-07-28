@@ -14,7 +14,7 @@ internal class GetActiveRequestsUseCase(private val manipulatorUseCase: Manipula
             .concatMap {
                 Observable.fromIterable(it.values)
                     .filter { requestResponse ->
-                        requestResponse.response != null && requestResponse.response!!.state == State.BLOCKED
+                        requestResponse.response.state == State.BLOCKED
                     }
                     .toList()
                     .toObservable()

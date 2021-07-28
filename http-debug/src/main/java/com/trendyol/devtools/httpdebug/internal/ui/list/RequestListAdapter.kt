@@ -30,7 +30,7 @@ internal class RequestListAdapter(private val onRequestClicked: (String) -> Unit
             with(binding) {
                 devToolsHttpDebugTextMethod.text = item.request.request.method
                 devToolsHttpDebugTextUrl.text = item.request.request.url.toString()
-                devToolsHttpDebugTextResponseCode.text = item.response?.response?.code?.toString()
+                devToolsHttpDebugTextResponseCode.text = item.response.response?.code?.toString()
                 devToolsHttpDebugTextResponseCode.visibility = item.getResponseCodeVisibility()
             }
         }
