@@ -42,6 +42,16 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonChangeEnvironment" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonHttpDebug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/dev_tools_action_http_debug"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonInspectDatabase" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonDebugPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,6 +59,6 @@
         android:layout_marginTop="16dp"
         android:text="@string/dev_tools_action_debug_page"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonInspectDatabase" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonHttpDebug" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

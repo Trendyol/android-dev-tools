@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_tools_http_debug_string_skip">Skip</string>
+    <string name="dev_tools_http_debug_string_tab_name_request">Request</string>
+    <string name="dev_tools_http_debug_string_tab_name_response">Response</string>
+    <string name="dev_tools_http_debug_string_request_body_not_presentable">(Request body is either null or not presentable)</string>
+</resources>

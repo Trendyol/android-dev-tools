@@ -28,13 +28,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 
     buildFeatures {
         buildConfig false
@@ -44,17 +37,21 @@ android {
 
 dependencies {
 
+    implementation project(":common")
+    implementation project(":http-debug")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.activity:activity-ktx:1.2.3'
-    implementation "androidx.fragment:fragment-ktx:1.3.5"
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.activity:activity-ktx:1.2.4'
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    implementation 'com.github.Trendyol.android-ui-components:dialogs:dialogs-1.2.1-viewbinding'
+    implementation 'com.github.Trendyol.android-ui-components:dialogs:dialogs-1.2.4'
 
     implementation 'io.reactivex.rxjava3:rxjava:3.0.12'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'

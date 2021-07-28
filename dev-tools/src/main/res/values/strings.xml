@@ -7,4 +7,5 @@
     <string name="dev_tools_action_debug_page">Debug Page</string>
     <string name="dev_tools_action_inspect_database">Inspect Database</string>
     <string name="title_select_environment">Select Environment</string>
+    <string name="dev_tools_action_http_debug">Http Debug</string>
 </resources>

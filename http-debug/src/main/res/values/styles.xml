@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DevTools.HttpDebug" />
+
+    <style name="DevTools.HttpDebug.Theme" parent="Theme.MaterialComponents.DayNight.Bridge">
+
+    </style>
+</resources>

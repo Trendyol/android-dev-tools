@@ -8,6 +8,11 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         TrendyolDevTools.init(this)
-        TrendyolDevTools.addDebugAction(DebugActionItem("Toggle SSL Pinning"))
+        TrendyolDevTools.addDebugActionItems(
+            listOf(
+                DebugActionItem("Toggle SSL Pinning"),
+                DebugActionItem("Inspect")
+            )
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.trendyol.devtools.internal.fragment
+package com.trendyol.devtools.common
 
 // https://github.com/Zhuinden/fragmentviewbindingdelegate-kt
 

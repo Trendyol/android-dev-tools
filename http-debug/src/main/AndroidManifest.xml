@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.trendyol.devtools.httpdebug">
+
+    <application>
+
+        <activity
+            android:name=".internal.ui.HttpDebugActivity"
+            android:theme="@style/DevTools.HttpDebug.Theme" />
+    </application>
+</manifest>

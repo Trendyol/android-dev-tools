@@ -1,4 +1,4 @@
-package com.trendyol.devtools.internal.util
+package com.trendyol.devtools.common
 
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  *
  * see <a href="https://gist.github.com/JoaquimLey/17c9a6d6aaef404b8ffce6596a11c621">JoaquimLey/SingleLiveEvent.kt</a>
  */
-internal class SingleLiveEvent<T> : MutableLiveData<T>() {
+class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     private val mPending = AtomicBoolean(false)
 

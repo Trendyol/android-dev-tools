@@ -6,10 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.infinum.dbinspector.DbInspector
 import com.trendyol.devtools.R
+import com.trendyol.devtools.common.viewBinding
 import com.trendyol.devtools.databinding.DevToolsFragmentMainBinding
+import com.trendyol.devtools.httpdebug.HttpDebug
 import com.trendyol.devtools.internal.debugmenu.DebugMenuFragment
 import com.trendyol.devtools.internal.di.ContextContainer
-import com.trendyol.devtools.internal.fragment.viewBinding
 import com.trendyol.uicomponents.dialogs.selectionDialog
 
 internal class MainFragment : Fragment(R.layout.dev_tools_fragment_main) {
@@ -38,6 +39,10 @@ internal class MainFragment : Fragment(R.layout.dev_tools_fragment_main) {
         }
         buttonInspectDatabase.setOnClickListener {
             DbInspector.show()
+        }
+        buttonHttpDebug.setOnClickListener {
+            HttpDebug.enable()
+            HttpDebug.show()
         }
     }
 

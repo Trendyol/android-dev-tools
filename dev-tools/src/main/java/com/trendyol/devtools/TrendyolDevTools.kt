@@ -3,6 +3,7 @@ package com.trendyol.devtools
 import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.LiveData
+import com.trendyol.devtools.httpdebug.HttpDebug
 import com.trendyol.devtools.internal.debugmenu.DebugActionItem
 import com.trendyol.devtools.internal.debugmenu.DebugMenuUseCase
 import com.trendyol.devtools.internal.di.ContextContainer
@@ -18,6 +19,7 @@ object TrendyolDevTools {
 
     fun init(application: Application) {
         ContextContainer.setContext(application)
+        HttpDebug.init(application)
         debugMenuUseCase = ContextContainer.debugMenuContainer.debugMenuUseCase
         environmentsUseCase = ContextContainer.environmentsContainer.environmentUseCase
         DevToolsService.initializeService(application)
