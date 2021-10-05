@@ -1,3 +1,4 @@
 rootProject.name = "dev-tools"
 include ':sample'
 include ':dev-tools'
+include ':autofill'
