@@ -3,7 +3,6 @@ package com.trendyol.devtools.autofill.api
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -12,14 +11,15 @@ import com.trendyol.devtools.autofill.R
 import com.trendyol.devtools.autofill.internal.ext.asAppcompatActivity
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
 import com.trendyol.devtools.autofill.internal.ext.getView
-import com.trendyol.devtools.autofill.internal.ext.hasInputType
+import com.trendyol.devtools.autofill.internal.ext.sameInstanceWith
 import com.trendyol.devtools.autofill.internal.lifecycle.AutofillViewLifecycleCallback
 
 class AutofillService private constructor(
     application: Application,
-    private val autoFillData: List<AutofillData>,
-    private val environment: String?
+    private val autoFillData: List<AutofillData>
 ) {
+
+    private val inputAdapters = autoFillData.map { it.adapter }.toSet()
 
     private val viewLifecycleCallback = object: AutofillViewLifecycleCallback() {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -54,19 +54,14 @@ class AutofillService private constructor(
     private fun processView(activity: Activity, view: View?) {
         val inputs = view?.findAllInputs()
 
-        val inputEmail = inputs?.find {
-            it.hasInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-        }
-        val inputPassword = inputs?.find {
-            it.hasInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
-        }
-
-        if (inputEmail != null) {
-            showAutoFillSnackBar(activity) {
-                showAutoFillDataSelectDialog(activity) { data ->
-                    inputEmail.setText(data.email)
-                    inputPassword?.setText(data.password)
+        for (adapter in inputAdapters) {
+            if (adapter.isCompatibleWith(inputs.orEmpty())) {
+                showAutoFillSnackBar(activity) {
+                    showAutoFillDataSelectDialog(activity, autoFillData.filter { it.adapter.sameInstanceWith(adapter) }) { data ->
+                        data.adapter.fill(inputs.orEmpty())
+                    }
                 }
+                return
             }
         }
     }
@@ -81,16 +76,12 @@ class AutofillService private constructor(
 
     private inline fun showAutoFillDataSelectDialog(
         activity: Activity,
+        autoFillData: List<AutofillData>,
         crossinline onSelected: (AutofillData) -> Unit
     ) {
         MaterialAlertDialogBuilder(activity)
             .setTitle(R.string.dev_tools_autofill_data_select_dialog_title)
-            .setItems(
-                autoFillData
-                    .filter { environment.isNullOrBlank() || environment == it.environment }
-                    .map { it.email }
-                    .toTypedArray()
-            ) { _, pos ->
+            .setItems(autoFillData.map { it.title }.toTypedArray()) { _, pos ->
                 onSelected.invoke(autoFillData[pos])
             }.show()
     }
@@ -99,23 +90,15 @@ class AutofillService private constructor(
 
         private var autoFillData: List<AutofillData>? = null
 
-        private var environment: String? = null
-
         fun withAutoFillData(autoFillData: List<AutofillData>): Builder {
             this.autoFillData = autoFillData
-            return this
-        }
-
-        fun withEnvironment(environment: String?): Builder {
-            this.environment = environment
             return this
         }
 
         fun build(): AutofillService {
             return AutofillService(
                 application = application,
-                autoFillData = autoFillData.orEmpty(),
-                environment = environment
+                autoFillData = autoFillData.orEmpty()
             )
         }
     }
