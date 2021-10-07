@@ -20,6 +20,21 @@ form data.
 3. If the layout has required inputs, it shows a snackBar on the activity view to continue with autofill.
 4. After clicking the snackBar action, it opens a single-select list dialog to choose a autofill data.
 
+### Setup
+
+```kotlin
+AutofillService.Builder(this)
+    .withAutoFillData(
+        listOf(
+            AutofillData.LoginEmail("test@trendyol.com", "123456"),
+            AutofillData.LoginEmail("guest@trendyol.com", "123456"),
+            AutofillData.LoginEmail("dev@trendyol.com", "123456"),
+            AutofillData.LoginPhone("+90 506 643 1212", "123456"),
+        )
+    )
+    .build()
+```
+
 ### TODO
 
 - [ ] Code documentation

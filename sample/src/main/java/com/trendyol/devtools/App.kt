@@ -18,7 +18,7 @@ class App : Application() {
                     AutofillData.LoginEmail("test@trendyol.com", "123456"),
                     AutofillData.LoginEmail("guest@trendyol.com", "123456"),
                     AutofillData.LoginEmail("dev@trendyol.com", "123456"),
-                    AutofillData.LoginPhone("0594385353", "123456"),
+                    AutofillData.LoginPhone("+90 506 643 1212", "123456"),
                 )
             )
             .build()
