@@ -8,19 +8,11 @@ abstract class InputAdapter {
 
     abstract val inputTypes: Map<Int, String>
 
-    private val inputs = mutableListOf<EditText>()
-
     fun isCompatibleWith(inputs: List<EditText>): Boolean {
-        val isCompatible = inputTypes.keys
+        return inputTypes.keys
             .map { inputType -> inputType to inputs.containsInputType(inputType) }
             .toMap()
             .all { map -> map.value }
-
-        if (isCompatible) {
-            this.inputs.clear()
-            this.inputs.addAll(inputs)
-        }
-        return isCompatible
     }
 
     fun fill(inputs: List<EditText>) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="dev_tools_autofill_message">Email input detected. Do you want to autofill?</string>
+    <string name="dev_tools_autofill_message">Test inputs detected. Do you want to autofill?</string>
     <string name="dev_tools_autofill_action_autofill">Autofill</string>
     <string name="dev_tools_autofill_data_select_dialog_title">Select a Test Account</string>
 </resources>

@@ -19,7 +19,7 @@ class AutofillService private constructor(
     private val autoFillData: List<AutofillData>
 ) {
 
-    private val inputAdapters = autoFillData.map { it.adapter }.toSet()
+    private val inputAdapters by lazy {autoFillData.map { it.adapter }.toSet() }
 
     private val viewLifecycleCallback = object: AutofillViewLifecycleCallback() {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -52,14 +52,14 @@ class AutofillService private constructor(
     }
 
     private fun processView(activity: Activity, view: View?) {
-        val inputs = view?.findAllInputs()
-
-        for (adapter in inputAdapters) {
-            if (adapter.isCompatibleWith(inputs.orEmpty())) {
+        val inputs = view?.findAllInputs().orEmpty()
+        inputAdapters.forEach { adapter ->
+            if (adapter.isCompatibleWith(inputs)) {
                 showAutoFillSnackBar(activity) {
-                    showAutoFillDataSelectDialog(activity, autoFillData.filter { it.adapter.sameInstanceWith(adapter) }) { data ->
-                        data.adapter.fill(inputs.orEmpty())
-                    }
+                    showAutoFillDataSelectDialog(
+                        activity,
+                        autoFillData.filter { it.adapter.sameInstanceWith(adapter) }
+                    ) { data -> data.adapter.fill(inputs) }
                 }
                 return
             }
