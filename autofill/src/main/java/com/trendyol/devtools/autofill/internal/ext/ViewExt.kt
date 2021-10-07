@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.view.children
 
-fun View.findAllInputs(): List<EditText> {
+internal fun View.findAllInputs(): List<EditText> {
     return mutableListOf<EditText>().apply {
         when (this@findAllInputs) {
             is EditText -> add(this@findAllInputs)
@@ -17,4 +17,3 @@ fun View.findAllInputs(): List<EditText> {
         }
     }
 }
-

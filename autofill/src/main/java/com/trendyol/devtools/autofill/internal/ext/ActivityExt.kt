@@ -3,6 +3,11 @@ package com.trendyol.devtools.autofill.internal.ext
 import android.app.Activity
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.appcompat.app.AppCompatActivity
+
+internal fun Activity.asAppcompatActivity(): AppCompatActivity {
+    return this as AppCompatActivity
+}
 
 internal fun Activity.getView(callback: ((View) -> Unit)) {
 

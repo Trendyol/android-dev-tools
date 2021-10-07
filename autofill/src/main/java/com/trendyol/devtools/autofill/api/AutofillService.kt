@@ -5,53 +5,59 @@ import android.app.Application
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentOnAttachListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.trendyol.devtools.autofill.R
+import com.trendyol.devtools.autofill.internal.ext.asAppcompatActivity
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
 import com.trendyol.devtools.autofill.internal.ext.getView
 import com.trendyol.devtools.autofill.internal.ext.hasInputType
+import com.trendyol.devtools.autofill.internal.lifecycle.AutofillViewLifecycleCallback
 
 class AutofillService private constructor(
+    application: Application,
     private val autoFillData: List<AutofillData>,
-) : AutofillLifecycleCallback() {
+    private val environment: String?
+) {
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        processActivityView(activity)
-        activity.asAppcompatActivity()
-            .supportFragmentManager
-            .addFragmentOnAttachListener(fragmentOnAttackListener)
+    private val viewLifecycleCallback = object: AutofillViewLifecycleCallback() {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            super.onActivityCreated(activity, savedInstanceState)
+            activity.asAppcompatActivity()
+                .supportFragmentManager
+                .registerFragmentLifecycleCallbacks(this, true)
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+            super.onActivityDestroyed(activity)
+            activity.asAppcompatActivity()
+                .supportFragmentManager
+                .unregisterFragmentLifecycleCallbacks(this)
+        }
+
+        override fun onActivityViewCreated(activity: Activity, view: View) {
+            processView(activity, view)
+        }
+
+        override fun onFragmentViewCreated(activity: Activity, fragment: Fragment, view: View) {
+            processView(activity, view)
+        }
     }
 
-    override fun onActivityDestroyed(activity: Activity) {
-        super.onActivityDestroyed(activity)
-        activity.asAppcompatActivity()
-            .supportFragmentManager
-            .removeFragmentOnAttachListener(fragmentOnAttackListener)
+    init {
+        application.registerActivityLifecycleCallbacks(
+            viewLifecycleCallback
+        )
     }
 
-    private val fragmentOnAttackListener = FragmentOnAttachListener { _, fragment ->
-        processFragmentView(fragment.requireActivity(), fragment)
-    }
+    private fun processView(activity: Activity, view: View?) {
+        val inputs = view?.findAllInputs()
 
-    private fun processActivityView(activity: Activity) {
-        activity.getView { view -> processView(activity, view) }
-    }
-
-    private fun processFragmentView(activity: Activity, fragment: Fragment) {
-        fragment.getView(activity.asAppcompatActivity()) { view -> processView(activity, view) }
-    }
-
-    private fun processView(activity: Activity, view: View) {
-        val inputs = view.findAllInputs()
-
-        val inputEmail = inputs.find {
+        val inputEmail = inputs?.find {
             it.hasInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
         }
-        val inputPassword = inputs.find {
+        val inputPassword = inputs?.find {
             it.hasInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
         }
 
@@ -80,29 +86,37 @@ class AutofillService private constructor(
         MaterialAlertDialogBuilder(activity)
             .setTitle(R.string.dev_tools_autofill_data_select_dialog_title)
             .setItems(
-                autoFillData.map { it.email }.toTypedArray()
+                autoFillData
+                    .filter { environment.isNullOrBlank() || environment == it.environment }
+                    .map { it.email }
+                    .toTypedArray()
             ) { _, pos ->
                 onSelected.invoke(autoFillData[pos])
             }.show()
     }
 
-    private fun Activity.asAppcompatActivity(): AppCompatActivity {
-        return this as AppCompatActivity
-    }
-
-    class Builder(private val app: Application) {
+    class Builder(private val application: Application) {
 
         private var autoFillData: List<AutofillData>? = null
+
+        private var environment: String? = null
 
         fun withAutoFillData(autoFillData: List<AutofillData>): Builder {
             this.autoFillData = autoFillData
             return this
         }
 
+        fun withEnvironment(environment: String?): Builder {
+            this.environment = environment
+            return this
+        }
+
         fun build(): AutofillService {
-            val autoFillService = AutofillService(autoFillData.orEmpty())
-            app.registerActivityLifecycleCallbacks(autoFillService)
-            return autoFillService
+            return AutofillService(
+                application = application,
+                autoFillData = autoFillData.orEmpty(),
+                environment = environment
+            )
         }
     }
 }
