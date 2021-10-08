@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.trendyol.devtools.autofill.internal.ext.getView
 
-internal abstract class AutofillViewLifecycleCallback : FragmentManager.FragmentLifecycleCallbacks(),
-    Application.ActivityLifecycleCallbacks {
+internal abstract class AutofillViewLifecycleCallback :
+    FragmentManager.FragmentLifecycleCallbacks(), Application.ActivityLifecycleCallbacks {
 
     abstract fun onActivityViewCreated(activity: Activity, view: View)
 

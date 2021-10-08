@@ -20,9 +20,10 @@ class AutofillService private constructor(
     private val autoFillData: List<AutofillData>
 ) {
 
-    private val inputAdapters by lazy {autoFillData.map { it.adapter }.toSet() }
+    private val inputAdapters by lazy { autoFillData.map { it.adapter }.toSet() }
 
-    private val viewLifecycleCallback = object: AutofillViewLifecycleCallback() {
+    private val viewLifecycleCallback = object : AutofillViewLifecycleCallback() {
+
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             super.onActivityCreated(activity, savedInstanceState)
             activity.asAppcompatActivity()
