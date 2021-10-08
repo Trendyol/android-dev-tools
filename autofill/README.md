@@ -35,7 +35,36 @@ AutofillService.Builder(this)
     .build()
 ```
 
+## Create Custom Autofill Data
+
+Creating Autofill Data
+```kotlin
+class RegisterAutofillData(
+    private val email: String,
+    private val name: String,
+    private val password: String,
+) : AutofillData(RegisterInputAdapter(email, name, password), email)
+```
+
+Creating Input Adapter
+```kotlin
+class RegisterInputAdapter(
+    private val email: String,
+    private val firstname: String,
+    private val password: String,
+) : InputAdapter() {
+
+    override val inputTypes: Map<Int, String>
+        get() = mapOf(
+            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS to email,
+            InputType.TYPE_TEXT_VARIATION_PERSON_NAME to firstname,
+            InputType.TYPE_TEXT_VARIATION_PASSWORD to password
+        )
+}
+```
+
 ### TODO
 
+- [ ] Autofill by Input Res ID to support complex forms
 - [ ] Code documentation
 - [ ] Unit tests

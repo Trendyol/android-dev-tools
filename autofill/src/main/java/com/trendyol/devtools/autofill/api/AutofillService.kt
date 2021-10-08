@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.trendyol.devtools.autofill.R
+import com.trendyol.devtools.autofill.api.model.AutofillData
 import com.trendyol.devtools.autofill.internal.ext.asAppcompatActivity
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
 import com.trendyol.devtools.autofill.internal.ext.getView

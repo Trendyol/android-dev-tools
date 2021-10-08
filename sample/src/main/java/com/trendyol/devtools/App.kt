@@ -1,8 +1,9 @@
 package com.trendyol.devtools
 
 import android.app.Application
-import com.trendyol.devtools.autofill.api.AutofillData
 import com.trendyol.devtools.autofill.api.AutofillService
+import com.trendyol.devtools.autofill.api.model.LoginEmail
+import com.trendyol.devtools.autofill.api.model.LoginPhoneNumber
 import com.trendyol.devtools.internal.debugmenu.DebugActionItem
 
 class App : Application() {
@@ -15,10 +16,10 @@ class App : Application() {
         AutofillService.Builder(this)
             .withAutoFillData(
                 listOf(
-                    AutofillData.LoginEmail("test@trendyol.com", "123456"),
-                    AutofillData.LoginEmail("guest@trendyol.com", "123456"),
-                    AutofillData.LoginEmail("dev@trendyol.com", "123456"),
-                    AutofillData.LoginPhone("+90 506 643 1212", "123456"),
+                    LoginEmail("test@trendyol.com", "123456"),
+                    LoginEmail("guest@trendyol.com", "123456"),
+                    LoginEmail("dev@trendyol.com", "123456"),
+                    LoginPhoneNumber("+90 506 643 1212", "123456"),
                 )
             )
             .build()
