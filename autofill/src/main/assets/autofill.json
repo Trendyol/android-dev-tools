@@ -1,0 +1,24 @@
+{
+  "Black Wallet": [
+    { "inputEmail": "ibrahim@test.com", "inputPassword": "123456" },
+    { "inputEmail": "ibrahim@test.com", "inputPassword": "123456" },
+    { "inputEmail": "ibrahim@test.com", "inputPassword": "123456" },
+    {
+      "inputCardNo": "3242 2342 3432 3432",
+      "inputMonth": "45",
+      "inputYear": "23",
+      "inputCvv": "123"
+    }
+  ],
+  "Consumer Lending": [
+    { "inputEmail": "ibrahim@test.com", "inputPassword": "123456" },
+    { "inputEmail": "ibrahim@test.com", "inputPassword": "123456" },
+    { "inputEmail": "ibrahim@test.com", "inputPassword": "123456" },
+    {
+      "inputCardNo": "3242 2342 3432 3432",
+      "inputMonth": "45",
+      "inputYear": "23",
+      "inputCvv": "123"
+    }
+  ]
+}
