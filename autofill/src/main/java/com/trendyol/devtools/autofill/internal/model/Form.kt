@@ -1,4 +1,4 @@
-package com.trendyol.devtools.autofill.internal.form
+package com.trendyol.devtools.autofill.internal.model
 
 import com.squareup.moshi.Json
 

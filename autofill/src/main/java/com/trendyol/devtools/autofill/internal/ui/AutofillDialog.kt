@@ -9,10 +9,10 @@ import androidx.fragment.app.DialogFragment
 import com.trendyol.devtools.autofill.databinding.DialogAutofillBinding
 import com.trendyol.devtools.autofill.internal.model.ListItem
 
-internal class DialogAutofill : DialogFragment() {
+internal class AutofillDialog : DialogFragment() {
 
     private val args by lazy {
-        requireNotNull(requireArguments().getParcelable<DialogAutofillArguments>(BUNDLE_ARGUMENTS))
+        requireNotNull(requireArguments().getParcelable<AutofillDialogArguments>(BUNDLE_ARGUMENTS))
     }
 
     private lateinit var binding: DialogAutofillBinding
@@ -42,7 +42,7 @@ internal class DialogAutofill : DialogFragment() {
         adapter.updateItems(args.items)
     }
 
-    fun setArguments(args: DialogAutofillArguments) {
+    fun setArguments(args: AutofillDialogArguments) {
         adapter.updateItems(args.items)
     }
 
@@ -50,7 +50,7 @@ internal class DialogAutofill : DialogFragment() {
         const val DIALOG_TAG = "dialogAutofill"
         private const val BUNDLE_ARGUMENTS = "arguments"
 
-        fun newInstance(args: DialogAutofillArguments) = DialogAutofill().apply {
+        fun newInstance(args: AutofillDialogArguments) = AutofillDialog().apply {
             arguments = bundleOf(BUNDLE_ARGUMENTS to args)
         }
     }
