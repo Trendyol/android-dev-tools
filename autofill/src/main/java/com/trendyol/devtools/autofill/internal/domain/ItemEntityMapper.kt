@@ -12,10 +12,10 @@ internal class ItemEntityMapper {
         )
     }
 
-    fun mapToEntity(fields: List<String>, item: ListItem.Autofill): ListItemEntity {
+    fun mapToEntity(fields: List<String>, values: List<String>): ListItemEntity {
         return ListItemEntity(
             fields = fields,
-            values = item.data,
+            values = values,
         )
     }
 }

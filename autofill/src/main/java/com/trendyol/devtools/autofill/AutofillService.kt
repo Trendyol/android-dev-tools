@@ -30,7 +30,6 @@ import com.trendyol.devtools.autofill.internal.ext.launchDefault
 import com.trendyol.devtools.autofill.internal.ext.launchIO
 import com.trendyol.devtools.autofill.internal.io.FileReader
 import com.trendyol.devtools.autofill.internal.lifecycle.AutofillViewLifecycleCallback
-import com.trendyol.devtools.autofill.internal.model.ListItemEntity
 import com.trendyol.devtools.autofill.internal.model.Form
 import com.trendyol.devtools.autofill.internal.model.Forms
 import com.trendyol.devtools.autofill.internal.model.ListItem
@@ -118,7 +117,7 @@ class AutofillService private constructor() {
             }
 
             val listItemsFlow = MutableStateFlow<List<ListItem>>(listItems)
-            detectAndSaveInputData(inputs)
+            detectAndSaveInputDataOnDetach(inputs)
 
             showAutoFillSnackBar(activity) {
                 showFormCategorySelectDialog(activity, listItemsFlow) { item ->
@@ -140,16 +139,12 @@ class AutofillService private constructor() {
             }
         }
 
-        private fun detectAndSaveInputData(inputs: Map<String, EditText>) {
+        private fun detectAndSaveInputDataOnDetach(inputs: Map<String, EditText>) {
             inputs.values.firstOrNull()?.doOnDetach {
                 val keys = inputs.keys.toList()
                 val values = inputs.values.map { it.text.toString() }.toList()
-                if (values.all { it.isNotBlank() }) {
-                    val entity = ListItemEntity(keys, values)
-
-                    launchIO {
-                        historyRepository.save(entity)
-                    }
+                if (values.all { it.isNotBlank() }) launchIO {
+                    historyRepository.save(itemEntityMapper.mapToEntity(keys, values))
                 }
             }
         }
