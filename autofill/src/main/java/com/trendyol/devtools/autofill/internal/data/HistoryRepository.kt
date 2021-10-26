@@ -2,7 +2,7 @@ package com.trendyol.devtools.autofill.internal.data
 
 import com.trendyol.devtools.autofill.internal.model.ListItemEntity
 
-interface HistoryRepository {
+internal interface HistoryRepository {
 
     suspend fun save(entity: ListItemEntity)
 

@@ -8,7 +8,7 @@ import com.squareup.moshi.Moshi
 import com.trendyol.devtools.autofill.internal.model.ListItemEntity
 import kotlinx.coroutines.flow.first
 
-class HistoryRepositoryImpl(
+internal class HistoryRepositoryImpl(
     private val dataStore: DataStore<Preferences>,
     moshi: Moshi,
 ) : HistoryRepository {

@@ -16,7 +16,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="14sp"
-        android:textColor="#444444"
+        android:textColor="@color/dev_tools_autofill_title_text_color"
         tools:text="Black Wallet" />
 
 </LinearLayout>

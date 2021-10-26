@@ -17,7 +17,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="14sp"
-        android:textColor="#444444"
+        android:textColor="@color/dev_tools_autofill_title_text_color"
         tools:text="test@trendyol.com" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:textSize="12sp"
-        android:textColor="#606060"
+        android:textColor="@color/dev_tools_autofill_subtitle_text_color"
         tools:text="123456" />
 
 </LinearLayout>

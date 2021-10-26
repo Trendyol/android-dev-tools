@@ -12,7 +12,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -149,7 +148,7 @@ class AutofillService private constructor() {
         }
 
         private fun findMatchedForm(inputs: Map<String, EditText>): Form? {
-            return autofillData?.forms.orEmpty().find { form -> inputs.keys.containsAll(form.fields) }
+            return autofillData?.data.orEmpty().find { form -> inputs.keys.containsAll(form.fields) }
         }
 
         private inline fun showAutoFillSnackBar(activity: Activity, crossinline onAccepted: () -> Unit) {
