@@ -20,7 +20,6 @@ import com.trendyol.devtools.autofill.internal.coroutines.DefaultDispatcherProvi
 import com.trendyol.devtools.autofill.internal.coroutines.DispatcherProvider
 import com.trendyol.devtools.autofill.internal.data.HistoryRepository
 import com.trendyol.devtools.autofill.internal.data.HistoryRepositoryImpl
-import com.trendyol.devtools.autofill.internal.domain.ItemEntityMapper
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
 import com.trendyol.devtools.autofill.internal.ext.getAutofillListItems
 import com.trendyol.devtools.autofill.internal.ext.getCategoryListItems
@@ -56,8 +55,6 @@ class AutofillService private constructor() {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(DATA_STORE_NAME)
 
         private val moshi by lazy { Moshi.Builder().add(KotlinJsonAdapterFactory()).build() }
-
-        private val itemEntityMapper by lazy { ItemEntityMapper() }
 
         private val historyRepository: HistoryRepository by lazy {
             HistoryRepositoryImpl(
@@ -110,8 +107,8 @@ class AutofillService private constructor() {
             val matchedForm = findMatchedForm(inputs) ?: return@launchDefault
             val listItems = matchedForm.getCategoryListItems().toMutableList()
 
-            historyRepository.getLast()?.let { itemEntity ->
-                listItems.add(itemEntityMapper.mapFromEntity(itemEntity))
+            historyRepository.getLast(matchedForm.fields)?.let { itemEntity ->
+                listItems.add(itemEntity)
             }
 
             val listItemsFlow = MutableStateFlow<List<ListItem>>(listItems)
@@ -139,10 +136,10 @@ class AutofillService private constructor() {
 
         private fun detectAndSaveInputDataOnDetach(inputs: Map<String, EditText>) {
             inputs.values.firstOrNull()?.doOnDetach {
-                val keys = inputs.keys.toList()
+                val fields = inputs.keys.toList()
                 val values = inputs.values.map { it.text.toString() }.toList()
                 if (values.all { it.isNotBlank() }) launchIO {
-                    historyRepository.save(itemEntityMapper.mapToEntity(keys, values))
+                    historyRepository.save(fields, ListItem.Autofill(values.first(), values))
                 }
             }
         }

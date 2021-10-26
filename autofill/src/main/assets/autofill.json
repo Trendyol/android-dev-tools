@@ -6,19 +6,29 @@
         "\ud83d\udcb0 Black Wallet": [
           ["test@trendyol.com", "123456"],
           ["meal@trendyol.com", "123456"],
-          ["dev@trendyol.com", "123456"]
+          ["dev@trendyol.com", "123456"],
+          ["tools@trendyol.com", "123456"]
         ],
         "\ud83d\udc51 Consumer Lending": [
           ["test@trendyol.com", "123456"],
-          ["meal@trendyol.com", "123456"]
+          ["meal@trendyol.com", "123456"],
+          ["dev@trendyol.com", "123456"],
+          ["tools@trendyol.com", "123456"]
         ]
       }
     },
     {
-      "fields": ["inputCardNo", "inputMonth", "inputYear", "inputCvv"],
+      "fields": ["inputCardNo", "inputCardMonth", "inputCardYear", "inputCardCvv"],
       "categories": {
         "\uD83D\uDCB0 Black Wallet": [
-          ["1234 1234 1234 1234", "12", "21", "123"]
+          ["1234 1234 1234 1234", "12", "21", "123"],
+          ["1111 1111 1111 1111", "12", "21", "123"],
+          ["2222 2222 2222 2222", "12", "21", "123"]
+        ],
+        "\ud83d\udc51 Consumer Lending": [
+          ["1234 1234 1234 1234", "12", "21", "123"],
+          ["1111 1111 1111 1111", "12", "21", "123"],
+          ["2222 2222 2222 2222", "12", "21", "123"]
         ]
       }
     }

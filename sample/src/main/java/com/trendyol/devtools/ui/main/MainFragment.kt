@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.trendyol.devtools.MainActivity
 import com.trendyol.devtools.TrendyolDevTools
 import com.trendyol.devtools.databinding.MainFragmentBinding
+import com.trendyol.devtools.ui.card.CardFragment
 import com.trendyol.devtools.ui.login.LoginFragment
 import kotlin.random.Random
 
@@ -37,6 +38,12 @@ class MainFragment : Fragment() {
             (activity as? MainActivity)?.navigateToFragment(
                 LoginFragment.newInstance(),
                 LoginFragment.FRAGMENT_TAG
+            )
+        }
+        binding.buttonOpenCard.setOnClickListener {
+            (activity as? MainActivity)?.navigateToFragment(
+                CardFragment.newInstance(),
+                CardFragment.FRAGMENT_TAG
             )
         }
 

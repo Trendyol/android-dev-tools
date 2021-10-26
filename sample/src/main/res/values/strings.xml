@@ -3,4 +3,5 @@
     <string name="start_dev_tools">Start Dev Tools</string>
     <string name="update_environments">Update Environments</string>
     <string name="open_login_page">Open Login Page</string>
+    <string name="open_card_page">Open Card Page</string>
 </resources>
