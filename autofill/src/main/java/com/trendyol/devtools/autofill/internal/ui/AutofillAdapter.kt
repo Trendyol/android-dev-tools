@@ -2,6 +2,7 @@ package com.trendyol.devtools.autofill.internal.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.devtools.autofill.databinding.ItemDialogAutofillBinding
 import com.trendyol.devtools.autofill.databinding.ItemDialogCategoryBinding
@@ -49,9 +50,10 @@ internal class AutofillAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     override fun getItemCount(): Int = items.size
 
     fun updateItems(items: List<ListItem>) {
+        val diffCallback = DiffUtil.calculateDiff(DifferCallback(this.items, items))
         this.items.clear()
         this.items.addAll(items)
-        notifyDataSetChanged()
+        diffCallback.dispatchUpdatesTo(this)
     }
 
     inner class CategoryViewHolder(
@@ -88,6 +90,36 @@ internal class AutofillAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             boundItem = item
             binding.textViewTitle.text = item.name
             binding.textViewExtras.text = item.data.joinToString(separator = ", ")
+        }
+    }
+
+    inner class DifferCallback(
+        private val oldItems: List<ListItem>,
+        private val newItems: List<ListItem>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int = oldItems.size
+
+        override fun getNewListSize(): Int = newItems.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldItem = oldItems[oldItemPosition]
+            val newItem = newItems[newItemPosition]
+            return when {
+                oldItem is ListItem.Category && newItem is ListItem.Category -> oldItem.name == newItem.name
+                oldItem is ListItem.Autofill && newItem is ListItem.Autofill -> oldItem == newItem
+                else -> false
+            }
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldItem = oldItems[oldItemPosition]
+            val newItem = newItems[newItemPosition]
+            return when {
+                oldItem is ListItem.Category && newItem is ListItem.Category -> oldItem.name == newItem.name
+                oldItem is ListItem.Autofill && newItem is ListItem.Autofill -> oldItem == newItem
+                else -> false
+            }
         }
     }
 

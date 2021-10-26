@@ -3,12 +3,12 @@
     {
       "fields": ["inputEmail", "inputPassword"],
       "categories": {
-        "Black Wallet": [
+        "\ud83d\udcb0 Black Wallet": [
           ["test@trendyol.com", "123456"],
           ["meal@trendyol.com", "123456"],
           ["dev@trendyol.com", "123456"]
         ],
-        "Consumer Lending": [
+        "\ud83d\udc51 Consumer Lending": [
           ["test@trendyol.com", "123456"],
           ["meal@trendyol.com", "123456"]
         ]
@@ -17,7 +17,7 @@
     {
       "fields": ["inputCardNo", "inputMonth", "inputYear", "inputCvv"],
       "categories": {
-        "Black Wallet": [
+        "\uD83D\uDCB0 Black Wallet": [
           ["1234 1234 1234 1234", "12", "21", "123"]
         ]
       }

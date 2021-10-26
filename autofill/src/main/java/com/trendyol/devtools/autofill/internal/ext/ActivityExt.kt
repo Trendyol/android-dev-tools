@@ -4,9 +4,15 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 
-internal fun Activity.asAppcompatActivity(): AppCompatActivity {
-    return this as AppCompatActivity
+internal fun Activity.getSupportFragmentManager(): FragmentManager? {
+    return when (this) {
+        is AppCompatActivity -> this.supportFragmentManager
+        is FragmentActivity -> this.supportFragmentManager
+        else -> null
+    }
 }
 
 internal fun Activity.getView(callback: ((View) -> Unit)) {

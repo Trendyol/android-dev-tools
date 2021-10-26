@@ -12,6 +12,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -21,10 +22,10 @@ import com.trendyol.devtools.autofill.internal.coroutines.DispatcherProvider
 import com.trendyol.devtools.autofill.internal.data.HistoryRepository
 import com.trendyol.devtools.autofill.internal.data.HistoryRepositoryImpl
 import com.trendyol.devtools.autofill.internal.domain.ItemEntityMapper
-import com.trendyol.devtools.autofill.internal.ext.asAppcompatActivity
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
 import com.trendyol.devtools.autofill.internal.ext.getAutofillListItems
 import com.trendyol.devtools.autofill.internal.ext.getCategoryListItems
+import com.trendyol.devtools.autofill.internal.ext.getSupportFragmentManager
 import com.trendyol.devtools.autofill.internal.ext.getView
 import com.trendyol.devtools.autofill.internal.ext.launchDefault
 import com.trendyol.devtools.autofill.internal.ext.launchIO
@@ -70,16 +71,14 @@ class AutofillService private constructor() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             super.onActivityCreated(activity, savedInstanceState)
-            activity.asAppcompatActivity()
-                .supportFragmentManager
-                .registerFragmentLifecycleCallbacks(this, true)
+            activity.getSupportFragmentManager()
+                ?.registerFragmentLifecycleCallbacks(this, true)
         }
 
         override fun onActivityDestroyed(activity: Activity) {
             super.onActivityDestroyed(activity)
-            activity.asAppcompatActivity()
-                .supportFragmentManager
-                .unregisterFragmentLifecycleCallbacks(this)
+            activity.getSupportFragmentManager()
+                ?.unregisterFragmentLifecycleCallbacks(this)
         }
 
         override fun onActivityViewCreated(activity: Activity, view: View) {
@@ -167,6 +166,7 @@ class AutofillService private constructor() {
             crossinline onItemSelected: (ListItem) -> Boolean
         ) {
             val dialog = AutofillDialog.newInstance()
+            val fragmentManager = activity.getSupportFragmentManager() ?: return
             dialog.lifecycleScope.launchWhenStarted {
                 items.collect {
                     dialog.updateItems(it)
@@ -176,7 +176,7 @@ class AutofillService private constructor() {
                 if (onItemSelected.invoke(item)) dialog.dismiss()
             }
             dialog.show(
-                activity.asAppcompatActivity().supportFragmentManager,
+                fragmentManager,
                 AutofillDialog.DIALOG_TAG
             )
         }
