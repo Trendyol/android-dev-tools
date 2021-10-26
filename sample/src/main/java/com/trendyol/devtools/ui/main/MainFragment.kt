@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        binding.button.setOnClickListener {
+        binding.buttonDevTools.setOnClickListener {
             TrendyolDevTools.show()
         }
         binding.buttonUpdateEnvironments.setOnClickListener {
