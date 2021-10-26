@@ -12,6 +12,7 @@ class App : Application() {
         TrendyolDevTools.addDebugAction(DebugActionItem("Toggle SSL Pinning"))
 
         AutofillService.Builder(this)
+            .withFilePath("autofill.json")
             .build()
     }
 }

@@ -11,10 +11,6 @@ import com.trendyol.devtools.autofill.internal.model.ListItem
 
 internal class AutofillDialog : DialogFragment() {
 
-    private val args by lazy {
-        requireNotNull(requireArguments().getParcelable<AutofillDialogArguments>(BUNDLE_ARGUMENTS))
-    }
-
     private lateinit var binding: DialogAutofillBinding
 
     private val adapter by lazy { AutofillAdapter() }
@@ -39,19 +35,16 @@ internal class AutofillDialog : DialogFragment() {
         }
 
         binding.recyclerView.adapter = adapter
-        adapter.updateItems(args.items)
     }
 
-    fun setArguments(args: AutofillDialogArguments) {
-        adapter.updateItems(args.items)
+    fun updateItems(items: List<ListItem>) {
+        adapter.updateItems(items)
     }
 
     companion object {
         const val DIALOG_TAG = "dialogAutofill"
         private const val BUNDLE_ARGUMENTS = "arguments"
 
-        fun newInstance(args: AutofillDialogArguments) = AutofillDialog().apply {
-            arguments = bundleOf(BUNDLE_ARGUMENTS to args)
-        }
+        fun newInstance() = AutofillDialog()
     }
 }

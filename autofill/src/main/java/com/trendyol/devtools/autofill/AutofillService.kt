@@ -4,63 +4,70 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.core.view.doOnDetach
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.trendyol.devtools.autofill.internal.coroutines.CoroutineRunner
+import com.trendyol.devtools.autofill.internal.coroutines.DefaultDispatcherProvider
+import com.trendyol.devtools.autofill.internal.coroutines.DispatcherProvider
 import com.trendyol.devtools.autofill.internal.data.HistoryRepository
 import com.trendyol.devtools.autofill.internal.data.HistoryRepositoryImpl
+import com.trendyol.devtools.autofill.internal.domain.ItemEntityMapper
 import com.trendyol.devtools.autofill.internal.ext.asAppcompatActivity
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
+import com.trendyol.devtools.autofill.internal.ext.getAutofillListItems
+import com.trendyol.devtools.autofill.internal.ext.getCategoryListItems
 import com.trendyol.devtools.autofill.internal.ext.getView
-import com.trendyol.devtools.autofill.internal.model.Form
-import com.trendyol.devtools.autofill.internal.model.Forms
+import com.trendyol.devtools.autofill.internal.ext.launchDefault
+import com.trendyol.devtools.autofill.internal.ext.launchIO
 import com.trendyol.devtools.autofill.internal.io.FileReader
 import com.trendyol.devtools.autofill.internal.lifecycle.AutofillViewLifecycleCallback
-import com.trendyol.devtools.autofill.internal.model.AutofillEntity
+import com.trendyol.devtools.autofill.internal.model.ListItemEntity
+import com.trendyol.devtools.autofill.internal.model.Form
+import com.trendyol.devtools.autofill.internal.model.Forms
 import com.trendyol.devtools.autofill.internal.model.ListItem
 import com.trendyol.devtools.autofill.internal.ui.AutofillDialog
-import com.trendyol.devtools.autofill.internal.ui.AutofillDialogArguments
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.launch
 
-class AutofillService private constructor(
-    private val application: Application
-) {
+class AutofillService private constructor() {
 
-    private val autofillJob = SupervisorJob()
+    internal class AutofillProcessor(
+        private val application: Application,
+        private val filePath: String,
+    ) : AutofillViewLifecycleCallback(), CoroutineRunner {
 
-    private val autofillScope = CoroutineScope(autofillJob + Dispatchers.IO)
+        override val job = SupervisorJob()
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+        override val dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
 
-    private val moshi by lazy { Moshi.Builder().add(KotlinJsonAdapterFactory()).build() }
+        override val scope = CoroutineScope(job)
 
-    private val historyRepository: HistoryRepository by lazy {
-        HistoryRepositoryImpl(
-            application.applicationContext.dataStore,
-            moshi,
-        )
-    }
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(DATA_STORE_NAME)
 
-    private val autofillData by lazy {
-        val c = FileReader.readAssetFile(application.applicationContext, "autofill.json")
-        runCatching { moshi.adapter(Forms::class.java).fromJson(c.orEmpty()) }.getOrNull()
-    }
+        private val moshi by lazy { Moshi.Builder().add(KotlinJsonAdapterFactory()).build() }
 
-    private val viewLifecycleCallback = object : AutofillViewLifecycleCallback() {
+        private val itemEntityMapper by lazy { ItemEntityMapper() }
+
+        private val historyRepository: HistoryRepository by lazy {
+            HistoryRepositoryImpl(
+                application.applicationContext.dataStore,
+                moshi,
+            )
+        }
+
+        private var autofillData: Forms? = null
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             super.onActivityCreated(activity, savedInstanceState)
@@ -83,103 +90,125 @@ class AutofillService private constructor(
         override fun onFragmentViewCreated(activity: Activity, fragment: Fragment, view: View) {
             processView(activity, view)
         }
-    }
 
-    init {
-        application.registerActivityLifecycleCallbacks(
-            viewLifecycleCallback
-        )
-    }
+        init {
+            application.registerActivityLifecycleCallbacks(this)
+            launchIO {
+                val fileData = FileReader.readAssetFile(application.applicationContext, filePath)
+                autofillData = runCatching {
+                    moshi.adapter(Forms::class.java).fromJson(fileData.orEmpty())
+                }.getOrNull()
+            }
+        }
 
-    private fun processView(activity: Activity, view: View?) {
-        val inputs = view?.findAllInputs()
-            .orEmpty()
-            .map { application.resources.getResourceEntryName(it.id) to it }
-            .toMap()
+        private fun processView(
+            activity: Activity,
+            view: View?
+        ) = launchDefault {
+            val inputs = view?.findAllInputs()
+                .orEmpty()
+                .map { application.resources.getResourceEntryName(it.id) to it }
+                .toMap()
 
-        autofillData?.forms?.forEach { form ->
-            if (form.fields.containsAll(inputs.keys) && inputs.keys.containsAll(form.fields)) {
+            val matchedForm = findMatchedForm(inputs) ?: return@launchDefault
+            val listItems = matchedForm.getCategoryListItems().toMutableList()
 
-                inputs.values.first().doOnDetach {
-                    val keys = inputs.keys.toList()
-                    val values = inputs.values.map { it.text.toString() }.toList()
-                    if (values.all { it.isNotBlank() }) {
-                        val entity = AutofillEntity(keys, values)
+            historyRepository.getLast()?.let { itemEntity ->
+                listItems.add(itemEntityMapper.mapFromEntity(itemEntity))
+            }
 
-                        autofillScope.launch {
-                            historyRepository.save(entity)
+            val listItemsFlow = MutableStateFlow<List<ListItem>>(listItems)
+            detectAndSaveInputData(inputs)
+
+            showAutoFillSnackBar(activity) {
+                showFormCategorySelectDialog(activity, listItemsFlow) { item ->
+                    when (item) {
+                        is ListItem.Category -> {
+                            launchDefault {
+                                listItemsFlow.emit(matchedForm.getAutofillListItems(item.name))
+                            }
+                            false
+                        }
+                        is ListItem.Autofill -> {
+                            matchedForm.fields.forEachIndexed { index, inputId ->
+                                inputs[inputId]?.setText(item.data[index])
+                            }
+                            true
                         }
                     }
                 }
-
-                showAutoFillSnackBar(activity) {
-                    showFormCategorySelectDialog(activity, form) { data ->
-                        form.fields.forEachIndexed { index, inputId ->
-                            inputs[inputId]?.setText(data.data[index])
-                        }
-                   }
-                }
-                return
             }
         }
-    }
 
-    private inline fun showAutoFillSnackBar(activity: Activity, crossinline onAccepted: () -> Unit) {
-        activity.getView { activityView ->
-            Snackbar.make(activityView, R.string.dev_tools_autofill_message, Snackbar.LENGTH_LONG)
-                .setAction(R.string.dev_tools_autofill_action_autofill) { onAccepted.invoke() }
-                .show()
-        }
-    }
+        private fun detectAndSaveInputData(inputs: Map<String, EditText>) {
+            inputs.values.firstOrNull()?.doOnDetach {
+                val keys = inputs.keys.toList()
+                val values = inputs.values.map { it.text.toString() }.toList()
+                if (values.all { it.isNotBlank() }) {
+                    val entity = ListItemEntity(keys, values)
 
-    private inline fun showFormCategorySelectDialog(
-        activity: Activity,
-        form: Form,
-        crossinline onSelected: (ListItem.Autofill) -> Unit
-    ) {
-        val dialog = AutofillDialog.newInstance(
-            AutofillDialogArguments(form.getCategoryListItems())
-        )
-
-        dialog.onItemClickedListener = { item ->
-            when (item) {
-                is ListItem.Category -> {
-                    dialog.setArguments(
-                        AutofillDialogArguments(form.getAutofillListItems(item.name))
-                    )
-                }
-                is ListItem.Autofill -> {
-                    onSelected.invoke(item)
-                    dialog.dismiss()
+                    launchIO {
+                        historyRepository.save(entity)
+                    }
                 }
             }
         }
 
-        dialog.show(
-            activity.asAppcompatActivity().supportFragmentManager,
-            AutofillDialog.DIALOG_TAG
-        )
-    }
-
-    private fun Form.getAutofillListItems(category: String): List<ListItem.Autofill> {
-        return categories[category].orEmpty().map { values ->
-            ListItem.Autofill(values.first(), values)
+        private fun findMatchedForm(inputs: Map<String, EditText>): Form? {
+            return autofillData?.forms.orEmpty().find { form -> inputs.keys.containsAll(form.fields) }
         }
-    }
 
-    private fun Form.getCategoryListItems(): List<ListItem.Category> {
-        val extra = 
-        return categories.keys.map { name ->
-            ListItem.Category(name)
+        private inline fun showAutoFillSnackBar(activity: Activity, crossinline onAccepted: () -> Unit) {
+            activity.getView { activityView ->
+                Snackbar.make(activityView, R.string.dev_tools_autofill_message, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.dev_tools_autofill_action_autofill) { onAccepted.invoke() }
+                    .show()
+            }
+        }
+
+        private inline fun showFormCategorySelectDialog(
+            activity: Activity,
+            items: Flow<List<ListItem>>,
+            crossinline onItemSelected: (ListItem) -> Boolean
+        ) {
+            val dialog = AutofillDialog.newInstance()
+            dialog.lifecycleScope.launchWhenStarted {
+                items.collect {
+                    dialog.updateItems(it)
+                }
+            }
+            dialog.onItemClickedListener = { item ->
+                if (onItemSelected.invoke(item)) dialog.dismiss()
+            }
+            dialog.show(
+                activity.asAppcompatActivity().supportFragmentManager,
+                AutofillDialog.DIALOG_TAG
+            )
         }
     }
 
     class Builder(private val application: Application) {
 
-        fun build(): AutofillService {
-            return AutofillService(
-                application = application
+        private var filePath: String = DEFAULT_FILE_PATH
+
+        fun withFilePath(filePath: String): Builder {
+            this.filePath = filePath
+            return this
+        }
+
+        fun build() {
+            AutofillProcessor(
+                application = application,
+                filePath = filePath,
             )
         }
+
+        companion object {
+            private const val DEFAULT_FILE_PATH = "autofill.json"
+        }
+    }
+
+    companion object {
+        private const val DATA_STORE_NAME = "autofill"
     }
 }
