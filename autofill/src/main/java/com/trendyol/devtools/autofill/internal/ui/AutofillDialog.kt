@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.trendyol.devtools.autofill.databinding.DialogAutofillBinding
 import com.trendyol.devtools.autofill.internal.model.ListItem
@@ -43,7 +42,6 @@ internal class AutofillDialog : DialogFragment() {
 
     companion object {
         const val DIALOG_TAG = "dialogAutofill"
-        private const val BUNDLE_ARGUMENTS = "arguments"
 
         fun newInstance() = AutofillDialog()
     }

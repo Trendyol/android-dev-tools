@@ -64,7 +64,7 @@ internal class AutofillAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
         init {
             binding.root.setOnClickListener {
-                boundItem?.let {  onItemClickedListener?.invoke(it) }
+                boundItem?.let { onItemClickedListener?.invoke(it) }
             }
         }
 
@@ -82,7 +82,7 @@ internal class AutofillAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
         init {
             binding.root.setOnClickListener {
-                boundItem?.let {  onItemClickedListener?.invoke(it) }
+                boundItem?.let { onItemClickedListener?.invoke(it) }
             }
         }
 

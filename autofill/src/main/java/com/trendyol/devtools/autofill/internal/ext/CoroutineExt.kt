@@ -1,8 +1,6 @@
 package com.trendyol.devtools.autofill.internal.ext
 
 import com.trendyol.devtools.autofill.internal.coroutines.CoroutineRunner
-import com.trendyol.devtools.autofill.internal.coroutines.DispatcherProvider
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

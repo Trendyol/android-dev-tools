@@ -8,7 +8,7 @@ internal object FileReader {
         return runCatching {
             context.assets.open(name)
                 .bufferedReader()
-                .use{ it.readText() }
+                .use { it.readText() }
         }.getOrNull()
     }
 }
