@@ -76,5 +76,3 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
-
-publish.properties

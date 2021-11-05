@@ -1,9 +1,9 @@
 afterEvaluate {
     publishing {
         publications {
-            debug(MavenPublication) {
-                from components.debug
-                groupId = "com.trendyol.x"
+            release(MavenPublication) {
+                from components.release
+                groupId = "com.trendyol"
                 version = "0.1.0-alpha02"
             }
         }
