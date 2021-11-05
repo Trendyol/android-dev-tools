@@ -1,0 +1,31 @@
+afterEvaluate {
+    publishing {
+        publications {
+            debug(MavenPublication) {
+                from components.debug
+                groupId = "com.trendyol.x"
+                version = "0.1.0-alpha02"
+            }
+        }
+
+        repositories {
+            maven {
+                def properties = new Properties()
+                file("../publish.properties").withInputStream { properties.load(it) }
+
+                name = properties["maven.name"]
+                url = uri(properties["maven.url"])
+
+                credentials(HttpHeaderCredentials) {
+                    name = "Private-Token"
+                    value = properties["maven.token"]
+                    //username = properties["maven.username"]
+                    //password = properties["maven.password"]
+                }
+                authentication {
+                    header(HttpHeaderAuthentication)
+                }
+            }
+        }
+    }
+}

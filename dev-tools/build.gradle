@@ -62,4 +62,4 @@ dependencies {
     implementation "com.infinum.dbinspector:dbinspector:5.3.5"
 }
 
-apply from: '../publish.gradle'
+apply from: 'publish.gradle'
