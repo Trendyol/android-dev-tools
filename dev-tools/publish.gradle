@@ -16,14 +16,9 @@ afterEvaluate {
                 name = properties["maven.name"]
                 url = uri(properties["maven.url"])
 
-                credentials(HttpHeaderCredentials) {
-                    name = "Private-Token"
-                    value = properties["maven.token"]
-                    //username = properties["maven.username"]
-                    //password = properties["maven.password"]
-                }
-                authentication {
-                    header(HttpHeaderAuthentication)
+                credentials {
+                    username = properties["maven.username"]
+                    password = properties["maven.password"]
                 }
             }
         }
