@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.trendyol.devtools.MainActivity
 import com.trendyol.devtools.TrendyolDevTools
 import com.trendyol.devtools.databinding.MainFragmentBinding
+import com.trendyol.devtools.ui.card.CardFragment
+import com.trendyol.devtools.ui.login.LoginFragment
 import kotlin.random.Random
 
 class MainFragment : Fragment() {
@@ -24,12 +27,24 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        binding.button.setOnClickListener {
+        binding.buttonDevTools.setOnClickListener {
             TrendyolDevTools.show()
         }
         binding.buttonUpdateEnvironments.setOnClickListener {
             val environments = (1..6).toList().map { Random.nextInt(0, 100) }.distinct().map { "env $it" }
             TrendyolDevTools.updateEnvironments(environments)
+        }
+        binding.buttonOpenLogin.setOnClickListener {
+            (activity as? MainActivity)?.navigateToFragment(
+                LoginFragment.newInstance(),
+                LoginFragment.FRAGMENT_TAG
+            )
+        }
+        binding.buttonOpenCard.setOnClickListener {
+            (activity as? MainActivity)?.navigateToFragment(
+                CardFragment.newInstance(),
+                CardFragment.FRAGMENT_TAG
+            )
         }
 
         binding.message.text = "current environment: ${TrendyolDevTools.getCurrentEnvironment()}"

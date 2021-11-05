@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dev_tools_autofill_background_color">#f5f5f5</color>
+    <color name="dev_tools_autofill_title_text_color">#444444</color>
+    <color name="dev_tools_autofill_subtitle_text_color">#606060</color>
+</resources>

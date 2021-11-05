@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutCardNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputCardNo"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Card No" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutCardMonth"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/inputLayoutCardNo"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutCardNo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputCardMonth"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Month" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutCardYear"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@id/inputLayoutCardMonth"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutCardNo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputCardYear"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Year" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutCardCvv"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintEnd_toEndOf="@id/inputLayoutCardNo"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutCardNo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputCardCvv"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CVV" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Login"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutCardMonth" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

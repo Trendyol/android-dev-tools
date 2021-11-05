@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:textColor="@color/dev_tools_autofill_title_text_color"
+        tools:text="Black Wallet" />
+
+</LinearLayout>
