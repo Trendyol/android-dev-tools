@@ -16,8 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.devtools.autofill.internal.coroutines.CoroutineRunner
-import com.trendyol.devtools.autofill.internal.coroutines.DefaultDispatcherProvider
-import com.trendyol.devtools.autofill.internal.coroutines.DispatcherProvider
 import com.trendyol.devtools.autofill.internal.data.HistoryRepository
 import com.trendyol.devtools.autofill.internal.data.HistoryRepositoryImpl
 import com.trendyol.devtools.autofill.internal.ext.findAllInputs
@@ -47,8 +45,6 @@ class AutofillService private constructor() {
     ) : AutofillViewLifecycleCallback(), CoroutineRunner {
 
         override val job = SupervisorJob()
-
-        override val dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
 
         override val scope = CoroutineScope(job)
 

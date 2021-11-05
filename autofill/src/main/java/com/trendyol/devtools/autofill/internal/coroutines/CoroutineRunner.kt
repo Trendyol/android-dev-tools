@@ -7,7 +7,5 @@ internal interface CoroutineRunner {
 
     val job: CompletableJob
 
-    val dispatcherProvider: DispatcherProvider
-
     val scope: CoroutineScope
 }

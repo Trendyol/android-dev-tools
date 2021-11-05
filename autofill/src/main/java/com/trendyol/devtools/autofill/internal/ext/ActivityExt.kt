@@ -3,16 +3,11 @@ package com.trendyol.devtools.autofill.internal.ext
 import android.app.Activity
 import android.view.View
 import android.view.ViewTreeObserver
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 
 internal fun Activity.getSupportFragmentManager(): FragmentManager? {
-    return when (this) {
-        is AppCompatActivity -> this.supportFragmentManager
-        is FragmentActivity -> this.supportFragmentManager
-        else -> null
-    }
+    return if (this is FragmentActivity) return supportFragmentManager else null
 }
 
 internal fun Activity.getView(callback: ((View) -> Unit)) {
