@@ -1,11 +1,11 @@
-package com.trendyol.devtools.ui.login
+package com.trendyol.android.devtools.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.trendyol.devtools.databinding.FragmentLoginBinding
+import com.trendyol.android.devtools.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 

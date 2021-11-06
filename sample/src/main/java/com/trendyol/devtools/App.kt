@@ -1,8 +1,8 @@
-package com.trendyol.devtools
+package com.trendyol.android.devtools
 
 import android.app.Application
-import com.trendyol.devtools.autofill.AutofillService
-import com.trendyol.devtools.internal.debugmenu.DebugActionItem
+import com.trendyol.android.devtools.autofill.AutofillService
+import com.trendyol.android.devtools.internal.debugmenu.DebugActionItem
 
 class App : Application() {
 

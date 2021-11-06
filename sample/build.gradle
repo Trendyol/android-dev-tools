@@ -7,7 +7,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.trendyol.devtools"
+        applicationId "com.trendyol.android.devtools"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1

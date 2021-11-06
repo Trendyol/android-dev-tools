@@ -20,5 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.trendyol.devtools.TrendyolDevTools { *; }
--keep class com.trendyol.devtools.model.** { *; }
+-keep class com.trendyol.android.devtools.TrendyolDevTools { *; }
+-keep class com.trendyol.android.devtools.model.** { *; }

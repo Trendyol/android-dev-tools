@@ -3,7 +3,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = "com.trendyol.devtools"
+                groupId = "com.trendyol.android.devtools"
                 version = "0.1.0-alpha01"
             }
         }
