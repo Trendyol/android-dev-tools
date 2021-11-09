@@ -1,4 +1,4 @@
-package com.trendyol.devtools.ui.main
+package com.trendyol.android.devtools.ui.main
 
 import androidx.lifecycle.ViewModel
 

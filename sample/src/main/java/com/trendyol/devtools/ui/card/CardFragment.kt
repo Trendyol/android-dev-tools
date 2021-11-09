@@ -1,11 +1,11 @@
-package com.trendyol.devtools.ui.card
+package com.trendyol.android.devtools.ui.card
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.trendyol.devtools.databinding.FragmentCardBinding
+import com.trendyol.android.devtools.databinding.FragmentCardBinding
 
 class CardFragment : Fragment() {
 
