@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import com.trendyol.android.devtools.R
 import com.trendyol.android.devtools.databinding.DevToolsFragmentDebugMenuBinding
 import com.trendyol.android.devtools.internal.di.ContextContainer
-import com.trendyol.android.devtools.internal.fragment.viewBinding
+import com.trendyol.android.devtools.core.fragment.viewBinding
 
 internal class DebugMenuFragment : Fragment(R.layout.dev_tools_fragment_debug_menu) {
 

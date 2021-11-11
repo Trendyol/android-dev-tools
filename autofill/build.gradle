@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"

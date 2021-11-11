@@ -2,8 +2,8 @@ package com.trendyol.android.devtools.internal.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.trendyol.android.devtools.core.util.SingleLiveEvent
 import com.trendyol.android.devtools.internal.data.EnvironmentRepository
-import com.trendyol.android.devtools.internal.util.SingleLiveEvent
 import com.trendyol.android.devtools.model.DefaultEnvironments
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers

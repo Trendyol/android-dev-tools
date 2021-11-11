@@ -1,8 +1,8 @@
-package com.trendyol.android.devtools.autofill.internal.coroutines
+package com.trendyol.android.devtools.core.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 
-internal interface DispatcherProvider {
+interface DispatcherProvider {
 
     fun main(): CoroutineDispatcher
 

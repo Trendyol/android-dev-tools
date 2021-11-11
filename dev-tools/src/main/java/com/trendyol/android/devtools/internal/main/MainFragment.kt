@@ -9,7 +9,7 @@ import com.trendyol.android.devtools.R
 import com.trendyol.android.devtools.databinding.DevToolsFragmentMainBinding
 import com.trendyol.android.devtools.internal.debugmenu.DebugMenuFragment
 import com.trendyol.android.devtools.internal.di.ContextContainer
-import com.trendyol.android.devtools.internal.fragment.viewBinding
+import com.trendyol.android.devtools.core.fragment.viewBinding
 import com.trendyol.uicomponents.dialogs.selectionDialog
 
 internal class MainFragment : Fragment(R.layout.dev_tools_fragment_main) {

@@ -1,11 +1,11 @@
-package com.trendyol.android.devtools.autofill.internal.ext
+package com.trendyol.android.devtools.core.ext
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.view.children
 
-internal fun View.findAllInputs(): List<EditText> {
+fun View.findAllInputs(): List<EditText> {
     return mutableListOf<EditText>().apply {
         when (this@findAllInputs) {
             is EditText -> add(this@findAllInputs)
