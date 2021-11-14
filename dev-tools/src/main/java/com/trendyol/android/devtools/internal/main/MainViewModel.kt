@@ -2,8 +2,8 @@ package com.trendyol.android.devtools.internal.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.trendyol.android.devtools.internal.domain.EnvironmentUseCase
 import com.trendyol.android.devtools.core.util.SingleLiveEvent
+import com.trendyol.android.devtools.internal.domain.EnvironmentUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 internal class MainViewModel(private val environmentUseCase: EnvironmentUseCase) : ViewModel() {
