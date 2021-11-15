@@ -1,8 +1,8 @@
-package com.trendyol.android.devtools.autofill.internal.io
+package com.trendyol.android.devtools.core.io
 
 import android.content.Context
 
-internal object FileReader {
+object FileReader {
 
     fun readAssetFile(context: Context, name: String): String? {
         return runCatching {

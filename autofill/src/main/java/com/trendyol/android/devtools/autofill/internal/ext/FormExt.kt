@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.autofill.internal.ext
+package com.trendyol.android.devtools.core.ext
 
 import com.trendyol.android.devtools.autofill.internal.model.Form
 import com.trendyol.android.devtools.autofill.internal.model.ListItem

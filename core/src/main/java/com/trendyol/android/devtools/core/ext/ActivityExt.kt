@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.autofill.internal.ext
+package com.trendyol.android.devtools.core.ext
 
 import android.app.Activity
 import android.view.View
@@ -6,11 +6,11 @@ import android.view.ViewTreeObserver
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 
-internal fun Activity.getSupportFragmentManager(): FragmentManager? {
+fun Activity.getSupportFragmentManager(): FragmentManager? {
     return if (this is FragmentActivity) return supportFragmentManager else null
 }
 
-internal fun Activity.getView(callback: ((View) -> Unit)) {
+fun Activity.getView(callback: ((View) -> Unit)) {
 
     val view: View? = findViewById(android.R.id.content)
 

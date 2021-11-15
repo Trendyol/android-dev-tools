@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.trendyol.android.devtools.autofill.internal.ext.getView
+import com.trendyol.android.devtools.core.ext.getView
 
 internal abstract class AutofillViewLifecycleCallback :
     FragmentManager.FragmentLifecycleCallbacks(), Application.ActivityLifecycleCallbacks {
