@@ -11,6 +11,7 @@ internal sealed class ListItem : Parcelable {
     @Parcelize
     data class Autofill(
         val name: String,
+        val description: String,
         val data: List<String>,
     ) : ListItem()
 }
