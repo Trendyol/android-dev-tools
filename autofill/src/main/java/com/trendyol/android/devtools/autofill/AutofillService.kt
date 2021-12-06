@@ -156,7 +156,7 @@ class AutofillService private constructor() {
         private inline fun showAutoFillSnackBar(activity: Activity, crossinline onAccepted: () -> Unit) {
             activity.getView { activityView ->
                 Snackbar.make(activityView, R.string.dev_tools_autofill_message, Snackbar.LENGTH_LONG)
-                    .setDuration(SNACKBAR_DURATION_IN_MS)
+                    .setDuration(7000)
                     .setAction(R.string.dev_tools_autofill_action_autofill) { onAccepted.invoke() }
                     .show()
             }
@@ -207,6 +207,5 @@ class AutofillService private constructor() {
 
     companion object {
         private const val DATA_STORE_NAME = "autofill"
-        private const val SNACKBAR_DURATION_IN_MS = 7000
     }
 }
