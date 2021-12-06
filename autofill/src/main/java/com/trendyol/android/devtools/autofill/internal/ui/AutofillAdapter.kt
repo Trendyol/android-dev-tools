@@ -89,7 +89,7 @@ internal class AutofillAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         fun bind(item: ListItem.Autofill) {
             boundItem = item
             binding.textViewTitle.text = item.name
-            binding.textViewExtras.text = item.data.joinToString(separator = ", ")
+            binding.textViewDescription.text = item.description
         }
     }
 

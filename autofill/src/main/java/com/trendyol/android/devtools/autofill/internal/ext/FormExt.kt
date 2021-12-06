@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.core.ext
+package com.trendyol.android.devtools.autofill.internal.ext
 
 import com.trendyol.android.devtools.autofill.internal.model.Form
 import com.trendyol.android.devtools.autofill.internal.model.ListItem
@@ -6,8 +6,12 @@ import com.trendyol.android.devtools.autofill.internal.model.ListItem
 internal fun Form.getAutofillListItems(
     category: String
 ): List<ListItem> {
-    return categories[category].orEmpty().map { values ->
-        ListItem.Autofill(values.first(), values)
+    return categories[category].orEmpty().map { fillData ->
+        ListItem.Autofill(
+            name = fillData.values.firstOrNull().orEmpty(),
+            description = fillData.description,
+            data = fillData.values,
+        )
     }
 }
 

@@ -4,16 +4,16 @@
       "fields": ["inputEmail", "inputPassword"],
       "categories": {
         "\ud83d\udcb0 Black Wallet": [
-          ["test@trendyol.com", "123456"],
-          ["meal@trendyol.com", "123456"],
-          ["dev@trendyol.com", "123456"],
-          ["tools@trendyol.com", "123456"]
+          { "description": "Has more then one order history. sdfds fds dfs dfsdfs fds fds f dsdf s f sdff ", "values": ["test@trendyol.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@trendyol.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@trendyol.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@trendyol.com", "123456"] }
         ],
         "\ud83d\udc51 Consumer Lending": [
-          ["test@trendyol.com", "123456"],
-          ["meal@trendyol.com", "123456"],
-          ["dev@trendyol.com", "123456"],
-          ["tools@trendyol.com", "123456"]
+          { "description": "Has more then one order history.", "values": ["test@trendyol.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@trendyol.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@trendyol.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@trendyol.com", "123456"] }
         ]
       }
     },
@@ -21,14 +21,14 @@
       "fields": ["inputCardNo", "inputCardMonth", "inputCardYear", "inputCardCvv"],
       "categories": {
         "\uD83D\uDCB0 Black Wallet": [
-          ["1234 1234 1234 1234", "12", "21", "123"],
-          ["1111 1111 1111 1111", "12", "21", "123"],
-          ["2222 2222 2222 2222", "12", "21", "123"]
+          { "description": "Has more then one order history.", "values": ["1234 1234 1234 1234", "12", "21", "123"] },
+          { "description": "Has more then one order history.", "values": ["1111 1111 1111 1111", "12", "21", "123"] },
+          { "description": "Has more then one order history.", "values": ["2222 2222 2222 2222", "12", "21", "123"] }
         ],
         "\ud83d\udc51 Consumer Lending": [
-          ["1234 1234 1234 1234", "12", "21", "123"],
-          ["1111 1111 1111 1111", "12", "21", "123"],
-          ["2222 2222 2222 2222", "12", "21", "123"]
+          { "description": "Has more then one order history.", "values": ["1234 1234 1234 1234", "12", "21", "123"] },
+          { "description": "Has more then one order history.", "values": ["1111 1111 1111 1111", "12", "21", "123"] },
+          { "description": "Has more then one order history.", "values": ["2222 2222 2222 2222", "12", "21", "123"] }
         ]
       }
     }

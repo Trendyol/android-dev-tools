@@ -17,6 +17,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.autofill.internal.data.HistoryRepository
 import com.trendyol.android.devtools.autofill.internal.data.HistoryRepositoryImpl
+import com.trendyol.android.devtools.autofill.internal.ext.getAutofillListItems
+import com.trendyol.android.devtools.autofill.internal.ext.getCategoryListItems
 import com.trendyol.android.devtools.autofill.internal.lifecycle.AutofillViewLifecycleCallback
 import com.trendyol.android.devtools.autofill.internal.model.Form
 import com.trendyol.android.devtools.autofill.internal.model.Forms
@@ -24,8 +26,6 @@ import com.trendyol.android.devtools.autofill.internal.model.ListItem
 import com.trendyol.android.devtools.autofill.internal.ui.AutofillDialog
 import com.trendyol.android.devtools.core.coroutines.CoroutineRunner
 import com.trendyol.android.devtools.core.ext.findAllInputs
-import com.trendyol.android.devtools.core.ext.getAutofillListItems
-import com.trendyol.android.devtools.core.ext.getCategoryListItems
 import com.trendyol.android.devtools.core.ext.getSupportFragmentManager
 import com.trendyol.android.devtools.core.ext.getView
 import com.trendyol.android.devtools.core.ext.launchDefault
@@ -135,7 +135,16 @@ class AutofillService private constructor() {
                 val fields = inputs.keys.toList()
                 val values = inputs.values.map { it.text.toString() }.toList()
                 if (values.all { it.isNotBlank() }) launchIO {
-                    historyRepository.save(fields, ListItem.Autofill(values.first(), values))
+                    historyRepository.save(
+                        fields,
+                        ListItem.Autofill(
+                            name = values.firstOrNull().orEmpty(),
+                            description = application.applicationContext.getString(
+                                R.string.dev_tools_autofill_history_list_item_description
+                            ),
+                            data = values,
+                        )
+                    )
                 }
             }
         }

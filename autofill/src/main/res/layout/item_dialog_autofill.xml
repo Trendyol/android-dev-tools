@@ -21,7 +21,7 @@
         tools:text="test@trendyol.com" />
 
     <TextView
-        android:id="@+id/textViewExtras"
+        android:id="@+id/textViewDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="2"
