@@ -156,6 +156,7 @@ class AutofillService private constructor() {
         private inline fun showAutoFillSnackBar(activity: Activity, crossinline onAccepted: () -> Unit) {
             activity.getView { activityView ->
                 Snackbar.make(activityView, R.string.dev_tools_autofill_message, Snackbar.LENGTH_LONG)
+                    .setDuration(7000)
                     .setAction(R.string.dev_tools_autofill_action_autofill) { onAccepted.invoke() }
                     .show()
             }
