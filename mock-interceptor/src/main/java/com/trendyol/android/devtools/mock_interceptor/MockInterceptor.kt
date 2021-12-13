@@ -3,7 +3,14 @@ package com.trendyol.android.devtools.mock_interceptor
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.trendyol.android.devtools.mock_interceptor.ext.readString
+import com.trendyol.android.devtools.mock_interceptor.internal.RequestQueue
+import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
+import com.trendyol.android.devtools.mock_interceptor.internal.WebServer
+import com.trendyol.android.devtools.mock_interceptor.internal.ext.safeParse
+import com.trendyol.android.devtools.mock_interceptor.internal.model.Carrier
+import com.trendyol.android.devtools.mock_interceptor.internal.model.RequestData
+import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseCarrier
+import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -19,7 +26,7 @@ import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.util.concurrent.TimeUnit
 
-class MockInterceptor(private val context: Context) : Interceptor {
+class MockInterceptor(context: Context) : Interceptor {
 
     private val supervisorJob = SupervisorJob()
 
@@ -29,50 +36,62 @@ class MockInterceptor(private val context: Context) : Interceptor {
         .add(KotlinJsonAdapterFactory())
         .build()
 
-    private val webServer = WebServer(context)
+    private val webServer = WebServer(context, interceptorScope)
 
-    private val queue = RequestQueue()
-
-    private val adapt = moshi.adapter(ReqRes::class.java)
+    private val requestQueue = RequestQueue()
 
     init {
-        interceptorScope.launch {
-            webServer.incomingFlow.collect {
-                runCatching { adapt.fromJson(it) }.getOrNull()?.let {
-                    queue.resume(it)
-                }
-            }
-        }
-        interceptorScope.launch {
-            queue.queueChannel.receiveAsFlow().collect {
-                webServer.ongoingFlow.emit(adapt.toJson(it))
+        collectSocket()
+        collectRequestQueue()
+    }
+
+    private fun collectSocket() = interceptorScope.launch {
+        val responseCarrierAdapter = moshi.adapter(ResponseCarrier::class.java)
+        webServer.incomingFlow.collect { json ->
+            responseCarrierAdapter.safeParse(json)?.let { responseCarrier ->
+                requestQueue.resume(responseCarrier)
             }
         }
     }
 
+    private fun collectRequestQueue() = interceptorScope.launch {
+        val carrierAdapter = moshi.adapter(Carrier::class.java)
+        requestQueue.getQueueChannel().receiveAsFlow().collect { carrier ->
+            webServer.ongoingFlow.emit(carrierAdapter.toJson(carrier))
+        }
+    }
+
     override fun intercept(chain: Interceptor.Chain): Response {
+        if (webServer.hasConnection().not()) {
+            return chain.proceed(chain.request())
+        }
+
         val request = chain
-            .withConnectTimeout(50000, TimeUnit.MILLISECONDS)
-            .withReadTimeout(50000, TimeUnit.MILLISECONDS)
-            .withWriteTimeout(50000, TimeUnit.MILLISECONDS)
+            .withConnectTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+            .withReadTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+            .withWriteTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .request()
 
         val response = chain.proceed(request)
 
-        if (webServer.hasSession.not()) {
-            return response
-        }
+        val carrier = requestQueue.add(
+            requestData = RequestData(
+                body = request.body.readString(),
+            ),
+            responseData = ResponseData(
+                code = response.code,
+                body = response.body.readString(),
+            ),
+        )
 
-        val reqRes = queue.add(request.body.readString(), response.body.readString())
-
-        val mockedProcess = runBlocking { queue.waitFor(reqRes.id) }
+        val responseData = runBlocking { requestQueue.waitFor(carrier.id) }
 
         return Response.Builder()
             .request(request)
             .message(DEFAULT_RESPONSE_MESSAGE)
-            .code(202)
+            .code(responseData.code)
             .protocol(Protocol.HTTP_2)
-            .body(createResponseBody(MockResponse(200, mockedProcess.response)))
+            .body(createResponseBody(responseData))
             .addHeader("content-type", CONTENT_TYPE_JSON)
             .apply {
                //addHeader
@@ -80,9 +99,9 @@ class MockInterceptor(private val context: Context) : Interceptor {
             .build()
     }
 
-    private fun createResponseBody(mockResponse: MockResponse): ResponseBody {
+    private fun createResponseBody(responseData: ResponseData): ResponseBody {
         return moshi.adapter(Any::class.java)
-            .toJson(mockResponse.body)
+            .toJson(responseData.body)
             .toByteArray()
             .toResponseBody(CONTENT_TYPE_JSON.toMediaTypeOrNull())
     }
@@ -90,9 +109,6 @@ class MockInterceptor(private val context: Context) : Interceptor {
     companion object {
         private const val CONTENT_TYPE_JSON = "application/json"
         private const val DEFAULT_RESPONSE_MESSAGE = ""
+        private const val REQUEST_TIMEOUT = 50000
     }
 }
-
-data class MockResponse(val code: Int, val body: String)
-
-data class ReqRes(val id: Int, val request: String, val response: String)

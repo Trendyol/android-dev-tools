@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.mock_interceptor.ext
+package com.trendyol.android.devtools.mock_interceptor.internal.ext
 
 import okhttp3.ResponseBody
 

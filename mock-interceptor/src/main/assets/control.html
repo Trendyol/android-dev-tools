@@ -62,13 +62,12 @@
 
                 var spn = document.createElement('li');
                 spn.className = "list-group-item"
-                spn.innerHTML = data["id"] + " // " + data["request"];
+                spn.innerHTML = data["id"] + " // " + data["requestData"]["body"];
 
                 id = data["id"]
-                request.innerText = data["request"];
-                response.value = data["response"];
+                request.innerText = data["requestData"]["body"];
+                response.value = data["responseData"]["body"];
 
-                console.log(event.data);
                 container.prepend(spn)
 
                 if (autoskip) {
@@ -81,8 +80,10 @@
             function cont() {
                 const d = {
                     "id": id,
-                    "request": request.value,
-                    "response": response.value
+                    "responseData": {
+                        "code": "200",
+                        "body": response.value
+                    }
                 }
                 if (id != "") {
                     socket.send(JSON.stringify(d));
