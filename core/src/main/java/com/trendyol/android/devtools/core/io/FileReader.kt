@@ -1,6 +1,7 @@
 package com.trendyol.android.devtools.core.io
 
 import android.content.Context
+import java.io.File
 
 object FileReader {
 
