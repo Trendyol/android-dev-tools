@@ -4,9 +4,10 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.mock_interceptor.internal.RequestQueue
-import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
 import com.trendyol.android.devtools.mock_interceptor.internal.WebServer
+import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
 import com.trendyol.android.devtools.mock_interceptor.internal.ext.safeParse
+import com.trendyol.android.devtools.mock_interceptor.internal.ext.toHeaders
 import com.trendyol.android.devtools.mock_interceptor.internal.model.Carrier
 import com.trendyol.android.devtools.mock_interceptor.internal.model.RequestData
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseCarrier
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
@@ -76,10 +78,14 @@ class MockInterceptor(context: Context) : Interceptor {
 
         val carrier = requestQueue.add(
             requestData = RequestData(
+                url = request.url.toString(),
+                method = request.method,
+                headers = request.headers.toMultimap(),
                 body = request.body.readString(),
             ),
             responseData = ResponseData(
                 code = response.code,
+                headers = response.headers.toMultimap(),
                 body = response.body.readString(),
             ),
         )
@@ -92,10 +98,7 @@ class MockInterceptor(context: Context) : Interceptor {
             .code(responseData.code)
             .protocol(Protocol.HTTP_2)
             .body(createResponseBody(responseData))
-            .addHeader("content-type", CONTENT_TYPE_JSON)
-            .apply {
-               //addHeader
-            }
+            .headers(responseData.headers.toHeaders())
             .build()
     }
 

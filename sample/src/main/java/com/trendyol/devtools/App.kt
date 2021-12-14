@@ -33,7 +33,10 @@ class App : Application() {
         val bod = "{\"sa\": \"as\", \"deneme\": \"123\"}"
         val reqBody = RequestBody.create("application/json; charset=utf-8".toMediaType(), bod)
         val req = Request.Builder().url("https://jsonplaceholder.typicode.com/todos/1")
-            .post(reqBody)
+            .addHeader("header1", "sdfdsfds")
+            .addHeader("header2", "sdfds")
+            .addHeader("header1", "435435")
+            .get()
             .build()
 
         fixedRateTimer("timer", false, 5000L, 4 * 1000) {
