@@ -2,6 +2,7 @@ package com.trendyol.android.devtools.mock_interceptor.internal
 
 import android.content.Context
 import com.trendyol.android.devtools.core.io.FileReader
+import com.trendyol.android.devtools.mock_interceptor.internal.model.ImportFrame
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -13,6 +14,7 @@ import io.ktor.server.engine.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.onCompletion
@@ -25,9 +27,9 @@ internal class WebServer(
 
     private val sessions = mutableListOf<DefaultWebSocketServerSession>()
 
-    val incomingFlow = MutableSharedFlow<String>()
+    private val importFlow = MutableSharedFlow<ImportFrame>()
 
-    val ongoingFlow = MutableSharedFlow<String>()
+    private val exportFlow = MutableSharedFlow<String>()
 
     init {
         setupWebServer()
@@ -36,6 +38,14 @@ internal class WebServer(
 
     fun hasConnection(): Boolean {
         return sessions.isNotEmpty()
+    }
+
+    fun getImportFlow(): SharedFlow<ImportFrame> {
+        return importFlow
+    }
+
+    fun getExportFlow(): MutableSharedFlow<String> {
+        return exportFlow
     }
 
     private fun setupWebServer() = scope.launch {
@@ -49,7 +59,7 @@ internal class WebServer(
     }
 
     private fun collectOngoingData() = scope.launch {
-        ongoingFlow.collect { json ->
+        exportFlow.collect { json ->
             sessions.forEach { session ->
                 session.send(json)
             }
@@ -69,10 +79,13 @@ internal class WebServer(
         incoming.consumeAsFlow()
             .onCompletion {
                 sessions.remove(this@webSocket)
+                importFlow.emit(ImportFrame.Close)
             }
             .collect { frame ->
-                if (frame is Frame.Text) {
-                    incomingFlow.emit(frame.readText())
+                when (frame) {
+                    is Frame.Text -> importFlow.emit(ImportFrame.Text(frame.readText()))
+                    is Frame.Close -> importFlow.emit(ImportFrame.Close)
+                    else -> {}
                 }
             }
     }

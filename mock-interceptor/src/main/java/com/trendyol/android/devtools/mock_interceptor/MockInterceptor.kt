@@ -9,6 +9,7 @@ import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
 import com.trendyol.android.devtools.mock_interceptor.internal.ext.safeParse
 import com.trendyol.android.devtools.mock_interceptor.internal.ext.toHeaders
 import com.trendyol.android.devtools.mock_interceptor.internal.model.Carrier
+import com.trendyol.android.devtools.mock_interceptor.internal.model.ImportFrame
 import com.trendyol.android.devtools.mock_interceptor.internal.model.RequestData
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseData
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
@@ -49,9 +49,12 @@ class MockInterceptor(context: Context) : Interceptor {
 
     private fun collectSocket() = interceptorScope.launch {
         val responseCarrierAdapter = moshi.adapter(ResponseCarrier::class.java)
-        webServer.incomingFlow.collect { json ->
-            responseCarrierAdapter.safeParse(json)?.let { responseCarrier ->
-                requestQueue.resume(responseCarrier)
+        webServer.getImportFlow().collect { frame ->
+            when (frame) {
+                is ImportFrame.Text -> responseCarrierAdapter.safeParse(frame.content)?.let { responseCarrier ->
+                    requestQueue.resume(responseCarrier)
+                }
+                is ImportFrame.Close -> requestQueue.cancel()
             }
         }
     }
@@ -59,7 +62,7 @@ class MockInterceptor(context: Context) : Interceptor {
     private fun collectRequestQueue() = interceptorScope.launch {
         val carrierAdapter = moshi.adapter(Carrier::class.java)
         requestQueue.getQueueChannel().receiveAsFlow().collect { carrier ->
-            webServer.ongoingFlow.emit(carrierAdapter.toJson(carrier))
+            webServer.getExportFlow().emit(carrierAdapter.toJson(carrier))
         }
     }
 
@@ -75,6 +78,7 @@ class MockInterceptor(context: Context) : Interceptor {
             .request()
 
         val response = chain.proceed(request)
+        val bodyAdapter = moshi.adapter(Any::class.java)
 
         val carrier = requestQueue.add(
             requestData = RequestData(
@@ -86,7 +90,7 @@ class MockInterceptor(context: Context) : Interceptor {
             responseData = ResponseData(
                 code = response.code,
                 headers = response.headers.toMultimap(),
-                body = response.body.readString(),
+                body = bodyAdapter.safeParse(response.body.readString()),
             ),
         )
 

@@ -2,9 +2,13 @@ package com.trendyol.android.devtools
 
 import android.app.Application
 import android.util.Log
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.autofill.AutofillService
 import com.trendyol.android.devtools.internal.debugmenu.DebugActionItem
 import com.trendyol.android.devtools.mock_interceptor.MockInterceptor
+import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
+import com.trendyol.devtools.DummyBody
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -30,35 +34,31 @@ class App : Application() {
             .addInterceptor(MockInterceptor(this))
             .build()
 
-        val bod = "{\"sa\": \"as\", \"deneme\": \"123\"}"
-        val reqBody = RequestBody.create("application/json; charset=utf-8".toMediaType(), bod)
-        val req = Request.Builder().url("https://jsonplaceholder.typicode.com/todos/1")
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
+        val moshiAdapter = moshi.adapter(DummyBody::class.java)
+
+        val body = "{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1 }"
+        val reqBody = RequestBody.create("application/json; charset=utf-8".toMediaType(), body)
+        val req = Request.Builder().url("https://jsonplaceholder.typicode.com/posts")
             .addHeader("header1", "sdfdsfds")
             .addHeader("header2", "sdfds")
             .addHeader("header1", "435435")
-            .get()
+            .addHeader("Content-type", "application/json; charset=UTF-8")
+            .post(reqBody)
             .build()
 
-        fixedRateTimer("timer", false, 5000L, 4 * 1000) {
+        fixedRateTimer("timer", false, 3000L, 2 * 1000) {
             client.newCall(req).enqueue(object: Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.d("###", "req fail: $e")
+                    Log.d("###", "request fail: $e")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    Log.d("###", "req success: ${response.body.toString()}")
-                }
-            })
-        }
-
-        fixedRateTimer("timer2", false, 5010L, 4 * 1000) {
-            client.newCall(req).enqueue(object: Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    Log.d("###", "req2 fail: $e")
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    Log.d("###", "re2 success: ${response.body.toString()}")
+                    val dummyBody = moshiAdapter.fromJson(response.body.readString())
+                    Log.d("###", "request success: $dummyBody")
                 }
             })
         }

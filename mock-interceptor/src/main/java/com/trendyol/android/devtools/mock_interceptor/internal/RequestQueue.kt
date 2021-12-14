@@ -5,6 +5,7 @@ import com.trendyol.android.devtools.mock_interceptor.internal.model.RequestData
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseData
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
@@ -51,5 +52,15 @@ internal class RequestQueue {
                 queueChannel.trySend(next)
             }
         }
+    }
+
+    suspend fun cancel() {
+        pendingList.forEach { pending ->
+            val carrier = queue.firstOrNull { carrier -> carrier.id == pending.key }
+            carrier?.let { pending.value.resume(it.responseData) }
+            delay(200)
+        }
+        queue.clear()
+        pendingList.clear()
     }
 }
