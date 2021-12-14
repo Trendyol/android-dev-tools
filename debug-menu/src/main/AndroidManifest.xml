@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.trendyol.android.devtools.debugmenu">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application>
+
+        <activity
+            android:name=".internal.ui.DebugMenuActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Devtools" />
+
+    </application>
+
+</manifest>

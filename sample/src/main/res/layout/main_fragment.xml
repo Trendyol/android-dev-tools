@@ -23,38 +23,39 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:text="@string/update_environments"
-        app:layout_constraintBottom_toTopOf="@id/buttonDevTools"
+        app:layout_constraintBottom_toTopOf="@id/buttonEnvironmentManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/buttonDevTools"
+        android:id="@+id/buttonEnvironmentManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:text="@string/start_dev_tools"
-        app:layout_constraintBottom_toTopOf="@id/buttonOpenLogin"
+        android:text="@string/environment_manager"
+        app:layout_constraintBottom_toTopOf="@id/buttonDebugMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonOpenLogin"
+        android:id="@+id/buttonDebugMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:text="@string/open_login_page"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/debug_menu"
+        app:layout_constraintBottom_toTopOf="@id/buttonAutofillService"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonOpenCard" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonOpenCard"
+        android:id="@+id/buttonAutofillService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/open_card_page"
+        android:layout_marginBottom="12dp"
+        android:text="@string/autofill_service"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 rootProject.name = "dev-tools"
 include ':sample'
-include ':dev-tools'
-include ':autofill'
 include ':core'
+include ':autofill-service'
+include ':environment-manager'
+include ':debug-menu'

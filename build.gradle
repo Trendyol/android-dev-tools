@@ -1,23 +1,26 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.5.31"
-    ext.lifecycle_version = "2.4.0"
+    ext.lifecycle_version = "2.3.1"
     ext.coroutines_version = "1.4.3"
-    ext.ktx_version = "1.7.0"
-    ext.appcompat_version = "1.3.1"
-    ext.material_version = "1.3.0"
+    ext.ktx_version = "1.3.2"
+    ext.appcompat_version = "1.2.0"
+    ext.material_version = "1.4.0"
 
     repositories {
         google()
         mavenCentral()
         maven { url 'https://plugins.gradle.org/m2/' }
+        maven {
+            url "http://10.10.42.172:8082/repository/maven-releases"
+            allowInsecureProtocol = true
+        }
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
         classpath("org.jlleitschuh.gradle:ktlint-gradle:10.0.0")
-
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -28,6 +31,10 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven {
+            url "http://10.10.42.172:8082/repository/maven-releases"
+            allowInsecureProtocol = true
+        }
     }
 }
 

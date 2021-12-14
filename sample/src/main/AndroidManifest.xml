@@ -3,7 +3,7 @@
     package="com.trendyol.android.devtools">
 
     <application
-        android:name="App"
+        android:name=".App"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"

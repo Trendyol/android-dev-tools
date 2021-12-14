@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.trendyol.devtools.environmentmanager">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application>
+
+    <activity
+        android:name=".internal.ui.MainActivity"
+        android:launchMode="singleInstance"
+        android:theme="@style/Theme.Devtools" />
+
+    <service
+        android:name=".internal.service.EnvironmentService"
+        android:enabled="true"
+        android:exported="false"
+        android:stopWithTask="true" />
+
+    </application>
+
+</manifest>
