@@ -4,12 +4,12 @@ import com.trendyol.android.devtools.mock_interceptor.internal.model.Carrier
 import com.trendyol.android.devtools.mock_interceptor.internal.model.RequestData
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseData
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 
 internal class RequestQueue {
 

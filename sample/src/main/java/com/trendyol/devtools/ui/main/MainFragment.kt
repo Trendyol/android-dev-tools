@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.ui.main
+package com.trendyol.devtools.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import com.trendyol.android.devtools.MainActivity
 import com.trendyol.android.devtools.TrendyolDevTools
 import com.trendyol.android.devtools.databinding.MainFragmentBinding
-import com.trendyol.android.devtools.ui.card.CardFragment
-import com.trendyol.android.devtools.ui.login.LoginFragment
+import com.trendyol.devtools.MainActivity
+import com.trendyol.devtools.ui.card.CardFragment
+import com.trendyol.devtools.ui.login.LoginFragment
 import kotlin.random.Random
 
 class MainFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.ui.login
+package com.trendyol.devtools.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater

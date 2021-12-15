@@ -3,15 +3,20 @@ package com.trendyol.android.devtools.mock_interceptor.internal
 import android.content.Context
 import com.trendyol.android.devtools.core.io.FileReader
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ImportFrame
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.server.cio.*
-import io.ktor.server.engine.*
-import io.ktor.websocket.*
+import io.ktor.application.call
+import io.ktor.application.install
+import io.ktor.http.ContentType
+import io.ktor.http.cio.websocket.Frame
+import io.ktor.http.cio.websocket.readText
+import io.ktor.response.respondText
+import io.ktor.routing.Routing
+import io.ktor.routing.get
+import io.ktor.routing.routing
+import io.ktor.server.cio.CIO
+import io.ktor.server.engine.embeddedServer
+import io.ktor.websocket.DefaultWebSocketServerSession
+import io.ktor.websocket.WebSockets
+import io.ktor.websocket.webSocket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -61,7 +66,7 @@ internal class WebServer(
     private fun collectOngoingData() = scope.launch {
         exportFlow.collect { json ->
             sessions.forEach { session ->
-                session.send(json)
+                session.send(Frame.Text(json))
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.ui.card
+package com.trendyol.devtools.ui.card
 
 import android.os.Bundle
 import android.view.LayoutInflater

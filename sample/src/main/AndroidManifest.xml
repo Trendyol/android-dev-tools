@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="App"
+        android:name="com.trendyol.devtools.App"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +15,7 @@
         android:theme="@style/Theme.DevtoolsSample">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.trendyol.devtools.MainActivity"
             android:exported="true">
 
             <intent-filter>
