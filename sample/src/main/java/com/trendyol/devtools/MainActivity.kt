@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             .post(reqBody)
             .build()
 
-        fixedRateTimer("timer", false, 3000L, 5 * 1000) {
+        fixedRateTimer("timer", false, 3000L, 2 * 1000) {
             client.newCall(req).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Log.d("###", "request fail: $e")

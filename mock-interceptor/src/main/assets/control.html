@@ -75,7 +75,7 @@
             var currentId = "";
             var autoSkip = true;
 
-            const socket = new WebSocket("ws://192.168.1.73:5001/echo");
+            const socket = new WebSocket("ws://127.0.0.1:5001/echo");
 
             socket.onopen = function (event) {
                 console.log("Connection established");
