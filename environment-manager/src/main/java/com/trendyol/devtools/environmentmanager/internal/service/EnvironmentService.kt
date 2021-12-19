@@ -64,7 +64,7 @@ internal class EnvironmentService : Service() {
         val notificationChannel = NotificationChannel(
             CHANNEL_ID,
             getString(R.string.dev_tools_environment_manager_notification_name),
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_LOW
         ).apply {
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
