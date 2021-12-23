@@ -2,7 +2,6 @@ package com.trendyol.devtools.environmentmanager.internal.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.trendyol.devtools.environmentmanager.R
 import com.trendyol.devtools.environmentmanager.databinding.DevToolsActivityMainBinding
 
