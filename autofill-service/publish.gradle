@@ -1,0 +1,38 @@
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId "com.trendyol.android.devtools"
+                artifactId "autofill"
+                version "0.1.0-alpha35"
+                artifact "$buildDir/outputs/aar/autofill-release.aar"
+
+                pom.withXml {
+                    def dependencies = asNode().appendNode('dependencies')
+                    configurations.getByName("releaseCompileClasspath").getResolvedConfiguration().getFirstLevelModuleDependencies().each {
+                        def dependency = dependencies.appendNode('dependency')
+                        dependency.appendNode('groupId', it.moduleGroup)
+                        dependency.appendNode('artifactId', it.moduleName)
+                        dependency.appendNode('version', it.moduleVersion)
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                def properties = new Properties()
+                file("../publish.properties").withInputStream { properties.load(it) }
+
+                name = properties["maven.name"]
+                url = uri(properties["maven.url"])
+                allowInsecureProtocol true
+
+                credentials {
+                    username = properties["maven.username"]
+                    password = properties["maven.password"]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="dev_tools_environment_manager_notification_name">Environment Manager</string>
+    <string name="dev_tools_environment_manager_notification_description">Current Environment: %1$s</string>
+    <string name="dev_tools_environment_manager_title_select_environment">Select Environment</string>
+</resources>

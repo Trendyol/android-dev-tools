@@ -47,8 +47,9 @@ android {
 }
 
 dependencies {
-    debugImplementation project(':dev-tools')
-    debugImplementation project(':autofill')
+    debugImplementation project(':autofill-service')
+    debugImplementation project(':environment-manager')
+    debugImplementation project(':debug-menu')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$ktx_version"
