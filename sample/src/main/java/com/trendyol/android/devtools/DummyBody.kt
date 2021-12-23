@@ -1,4 +1,4 @@
-package com.trendyol.devtools
+package com.trendyol.android.devtools
 
 data class DummyBody(
     val id: Int,

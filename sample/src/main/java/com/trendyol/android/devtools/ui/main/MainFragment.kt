@@ -6,16 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.trendyol.android.devtools.MainActivity
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
-import com.trendyol.android.devtools.TrendyolDevTools
 import com.trendyol.android.devtools.databinding.MainFragmentBinding
 import com.trendyol.android.devtools.debugmenu.DebugMenu
 import com.trendyol.android.devtools.ui.login.LoginFragment
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
-import com.trendyol.devtools.MainActivity
-import com.trendyol.devtools.ui.card.CardFragment
-import com.trendyol.devtools.ui.login.LoginFragment
 import kotlin.random.Random
 
 class MainFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.trendyol.devtools
+package com.trendyol.android.devtools
 
 import android.os.Bundle
 import android.util.Log
@@ -6,10 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.trendyol.android.devtools.R
 import com.trendyol.android.devtools.mock_interceptor.MockInterceptor
 import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
-import com.trendyol.devtools.ui.main.MainFragment
+import com.trendyol.android.devtools.ui.main.MainFragment
 import kotlin.concurrent.fixedRateTimer
 import okhttp3.Call
 import okhttp3.Callback
