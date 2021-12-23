@@ -13,6 +13,7 @@ import com.trendyol.android.devtools.mock_interceptor.internal.model.ImportFrame
 import com.trendyol.android.devtools.mock_interceptor.internal.model.RequestData
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.mock_interceptor.internal.model.ResponseData
+import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -26,7 +27,6 @@ import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
-import java.util.concurrent.TimeUnit
 
 class MockInterceptor(context: Context) : Interceptor {
 
