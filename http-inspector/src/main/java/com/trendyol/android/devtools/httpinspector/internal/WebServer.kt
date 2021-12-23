@@ -1,8 +1,8 @@
-package com.trendyol.android.devtools.mock_interceptor.internal
+package com.trendyol.android.devtools.httpinspector.internal
 
 import android.content.Context
 import com.trendyol.android.devtools.core.io.FileReader
-import com.trendyol.android.devtools.mock_interceptor.internal.model.ImportFrame
+import com.trendyol.android.devtools.httpinspector.internal.model.ImportFrame
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.http.ContentType

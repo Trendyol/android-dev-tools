@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.trendyol.android.devtools.mock_interceptor.MockInterceptor
-import com.trendyol.android.devtools.mock_interceptor.internal.ext.readString
+import com.trendyol.android.devtools.httpinspector.MockInterceptor
+import com.trendyol.android.devtools.httpinspector.internal.ext.readString
 import com.trendyol.android.devtools.ui.main.MainFragment
 import kotlin.concurrent.fixedRateTimer
 import okhttp3.Call

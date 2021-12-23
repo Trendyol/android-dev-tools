@@ -50,7 +50,7 @@ dependencies {
     debugImplementation project(':autofill-service')
     debugImplementation project(':environment-manager')
     debugImplementation project(':debug-menu')
-    debugImplementation project(':mock-interceptor')
+    debugImplementation project(':http-inspector')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$ktx_version"

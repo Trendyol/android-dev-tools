@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.mock_interceptor.internal.model
+package com.trendyol.android.devtools.httpinspector.internal.model
 
 data class RequestData(
     val url: String,
