@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Trendyol Dev Tools</string>
-    <string name="start_dev_tools">Start Dev Tools</string>
+    <string name="environment_manager">Environment Manager</string>
+    <string name="debug_menu">Debug Menu</string>
     <string name="update_environments">Update Environments</string>
-    <string name="open_login_page">Open Login Page</string>
-    <string name="open_card_page">Open Card Page</string>
+    <string name="autofill_service">Autofill Service</string>
 </resources>
