@@ -20,10 +20,10 @@ Autofill data that suitable with inflated form inputs are shown in the selection
 
 <table>
  	<tr>
-  		<td><img src="https://github.com/Trendyol/android-dev-tools/blob/master/art/Screenshot_1.jpg" width="200" /></td>
-   		<td><img src="https://github.com/Trendyol/android-dev-tools/blob/master/art/Screenshot_2.jpg" width="200" /></td>
-		<td><img src="https://github.com/Trendyol/android-dev-tools/blob/master/art/Screenshot_3.jpg" width="200" /></td>
-		<td><img src="https://github.com/Trendyol/android-dev-tools/blob/master/art/Screenshot_4.jpg" width="200" /></td>
+  		<td><img src="/art/Screenshot_1.png" width="200" /></td>
+   		<td><img src="/art/Screenshot_2.png" width="200" /></td>
+		<td><img src="/art/Screenshot_3.png" width="200" /></td>
+		<td><img src="/art/Screenshot_4.png" width="200" /></td>
  	</tr>
 </table>
 
