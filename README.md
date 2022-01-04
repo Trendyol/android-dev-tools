@@ -18,6 +18,7 @@ After each inflation, it seeks for determined input views in the inflated layout
 If it has all required inputs, then shows the autofill action. 
 Autofill data that suitable with inflated form inputs are shown in the selection dialog. 
 
+### Demo
 <table>
  	<tr>
   		<td><img src="/art/Screenshot_1.png" width="200" /></td>
