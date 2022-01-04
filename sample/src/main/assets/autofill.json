@@ -4,16 +4,16 @@
       "fields": ["inputEmail", "inputPassword"],
       "categories": {
         "\ud83d\udcb0 Black Wallet": [
-          { "description": "Has more then one order history. sdfds fds dfs dfsdfs fds fds f dsdf s f sdff ", "values": ["test@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["meal@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["dev@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["tools@trendyol.com", "123456"] }
+          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
         ],
         "\ud83d\udc51 Consumer Lending": [
-          { "description": "Has more then one order history.", "values": ["test@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["meal@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["dev@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["tools@trendyol.com", "123456"] }
+          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
         ]
       }
     },
