@@ -3,29 +3,29 @@
     {
       "fields": ["inputEmail", "inputPassword"],
       "categories": {
-        "\ud83d\udcb0 Black Wallet": [
-          { "description": "Has more then one order history. sdfds fds dfs dfsdfs fds fds f dsdf s f sdff ", "values": ["test@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["meal@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["dev@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["tools@trendyol.com", "123456"] }
+        "\uD83D\uDC51 Temporary Users": [
+          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
         ],
-        "\ud83d\udc51 Consumer Lending": [
-          { "description": "Has more then one order history.", "values": ["test@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["meal@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["dev@trendyol.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["tools@trendyol.com", "123456"] }
+        "\ud83d\udc51 Test Users": [
+          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
         ]
       }
     },
     {
       "fields": ["inputCardNo", "inputCardMonth", "inputCardYear", "inputCardCvv"],
       "categories": {
-        "\uD83D\uDCB0 Black Wallet": [
+        "\uD83D\uDCB0 Have a Balance": [
           { "description": "Has more then one order history.", "values": ["1234 1234 1234 1234", "12", "21", "123"] },
           { "description": "Has more then one order history.", "values": ["1111 1111 1111 1111", "12", "21", "123"] },
           { "description": "Has more then one order history.", "values": ["2222 2222 2222 2222", "12", "21", "123"] }
         ],
-        "\ud83d\udc51 Consumer Lending": [
+        "\uD83D\uDCB0 Does not Have a Balance": [
           { "description": "Has more then one order history.", "values": ["1234 1234 1234 1234", "12", "21", "123"] },
           { "description": "Has more then one order history.", "values": ["1111 1111 1111 1111", "12", "21", "123"] },
           { "description": "Has more then one order history.", "values": ["2222 2222 2222 2222", "12", "21", "123"] }

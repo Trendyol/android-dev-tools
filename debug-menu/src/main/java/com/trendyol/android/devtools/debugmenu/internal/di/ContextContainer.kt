@@ -10,15 +10,13 @@ internal object ContextContainer {
 
     private lateinit var context: Context
 
-    fun getContext(): Context =
-        if (ContextContainer::context.isInitialized) {
-            context
-        } else {
-            throw NullPointerException(
-                "Dev Tools library is not initialized, please call TrendyolDevTools.init(Application) on " +
-                    "Application.onCreate to use Trendyol Dev Tools."
-            )
-        }
+    fun getContext(): Context = if (ContextContainer::context.isInitialized) {
+        context
+    } else {
+        throw NullPointerException(
+            "Library is not initialized, please call init(Application) on Application.onCreate()"
+        )
+    }
 
     fun setContext(context: Context) {
         ContextContainer.context = context

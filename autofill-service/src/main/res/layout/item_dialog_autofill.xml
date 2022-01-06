@@ -18,7 +18,7 @@
         android:ellipsize="end"
         android:textSize="14sp"
         android:textColor="@color/dev_tools_autofill_title_text_color"
-        tools:text="test@trendyol.com" />
+        tools:text="test@mail.com" />
 
     <TextView
         android:id="@+id/textViewDescription"
