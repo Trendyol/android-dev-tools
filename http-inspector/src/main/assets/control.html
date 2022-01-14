@@ -92,9 +92,10 @@
 
             socket.onmessage = function (event) {
                 var data = JSON.parse(event.data);
-
+				updatePreviousItems()
+				
                 currentId = data["id"]
-
+				
                 const requestListItem = document.createElement('li');
                 requestListItem.className = "list-group-item"
                 requestListItem.innerHTML = getListItem(data)
@@ -116,10 +117,11 @@
                 } else {
                     buttonNext.disabled = false;
                 }
+		
             }
 
             function getListItem(data) {
-                return '<span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
+                return '<span class="badge bg-primary">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
                 + '<span class="badge rounded-pill bg-light text-dark">' + data["requestData"]["method"] + '</span>'
                 + '<br>'
                 + '<div class="item-content">' + data["requestData"]["url"] + '</div>';
@@ -132,6 +134,13 @@
                 }
                 return headerString;
             }
+			
+			function updatePreviousItems() {
+				return requestList.innerHTML = requestList.innerHTML.replace(
+					'<span class="badge bg-primary">Active</span>', 
+					'<span class="badge bg-secondary">Done</span>'
+				)
+			}
 
             function next() {
                 if (currentId == "") { return; }
