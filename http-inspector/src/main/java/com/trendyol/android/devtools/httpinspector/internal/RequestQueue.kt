@@ -1,9 +1,9 @@
 package com.trendyol.android.devtools.httpinspector.internal
 
-import com.trendyol.android.devtools.httpinspector.internal.model.Carrier
-import com.trendyol.android.devtools.httpinspector.internal.model.RequestData
-import com.trendyol.android.devtools.httpinspector.internal.model.ResponseCarrier
-import com.trendyol.android.devtools.httpinspector.internal.model.ResponseData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.Carrier
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume

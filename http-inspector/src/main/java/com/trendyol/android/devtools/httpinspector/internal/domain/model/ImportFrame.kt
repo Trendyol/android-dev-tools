@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.httpinspector.internal.model
+package com.trendyol.android.devtools.httpinspector.internal.domain.model
 
 sealed class ImportFrame {
 

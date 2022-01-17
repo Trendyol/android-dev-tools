@@ -2,7 +2,7 @@ package com.trendyol.android.devtools.httpinspector.internal
 
 import android.content.Context
 import com.trendyol.android.devtools.core.io.FileReader
-import com.trendyol.android.devtools.httpinspector.internal.model.ImportFrame
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.http.ContentType
@@ -71,12 +71,27 @@ internal class WebServer(
         }
     }
 
-    private fun Routing.handleWeb() = get(PATH_INDEX) {
-        val fileData = FileReader.readAssetFile(this@WebServer.context, FILE_NAME_INDEX)
-        call.respondText(
-            text = fileData.orEmpty(),
-            contentType = ContentType.Text.Html,
-        )
+    private fun Routing.handleWeb() = with(this) {
+        get(PATH_INDEX) {
+            val fileData = FileReader.readAssetFile(this@WebServer.context, FILE_NAME_INDEX)
+            call.respondText(
+                text = fileData.orEmpty(),
+                contentType = ContentType.Text.Html,
+            )
+        }
+        get("/mock") {
+            val fileData = FileReader.readAssetFile(this@WebServer.context, "mock.html")
+            call.respondText(
+                text = fileData.orEmpty(),
+                contentType = ContentType.Text.Html,
+            )
+        }
+    }
+
+    private fun Routing.handleApi() = with(this) {
+        get("/mock-data") {
+
+        }
     }
 
     private fun Routing.handleWebSocket() = webSocket(PATH_WS) {

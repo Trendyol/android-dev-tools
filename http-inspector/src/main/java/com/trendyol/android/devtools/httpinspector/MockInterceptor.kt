@@ -5,14 +5,18 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.httpinspector.internal.RequestQueue
 import com.trendyol.android.devtools.httpinspector.internal.WebServer
+import com.trendyol.android.devtools.httpinspector.internal.data.database.MockDatabase
+import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepository
+import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepositoryImpl
 import com.trendyol.android.devtools.httpinspector.internal.ext.readString
 import com.trendyol.android.devtools.httpinspector.internal.ext.safeParse
 import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaders
-import com.trendyol.android.devtools.httpinspector.internal.model.Carrier
-import com.trendyol.android.devtools.httpinspector.internal.model.ImportFrame
-import com.trendyol.android.devtools.httpinspector.internal.model.RequestData
-import com.trendyol.android.devtools.httpinspector.internal.model.ResponseCarrier
-import com.trendyol.android.devtools.httpinspector.internal.model.ResponseData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.Carrier
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
+import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.GetMockDataUseCase
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +41,14 @@ class MockInterceptor(context: Context) : Interceptor {
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
+
+    private val mockDatabase: MockDatabase by lazy { MockDatabase.create(context) }
+
+    private val mockRepository: MockRepository by lazy { MockRepositoryImpl(mockDatabase) }
+
+    private val getMockDataUseCase: GetMockDataUseCase by lazy {
+        GetMockDataUseCase(mockRepository)
+    }
 
     private val webServer = WebServer(context, interceptorScope)
 
