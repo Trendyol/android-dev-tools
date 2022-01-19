@@ -3,6 +3,8 @@ package com.trendyol.android.devtools.httpinspector.internal
 import android.content.Context
 import com.trendyol.android.devtools.core.io.FileReader
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
+import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.GetMockDataUseCase
+import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.SaveMockDataUseCase
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.http.ContentType
@@ -11,6 +13,7 @@ import io.ktor.http.cio.websocket.readText
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
+import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -22,12 +25,15 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
 internal class WebServer(
     private val context: Context,
     private val scope: CoroutineScope,
+    private val getMockDataUseCase: GetMockDataUseCase,
+    private val saveMockDataUseCase: SaveMockDataUseCase,
 ) {
 
     private val sessions = mutableListOf<DefaultWebSocketServerSession>()
@@ -58,6 +64,7 @@ internal class WebServer(
             install(WebSockets)
             routing {
                 handleWeb()
+                handleApi()
                 handleWebSocket()
             }
         }.start(wait = true)
@@ -90,6 +97,13 @@ internal class WebServer(
 
     private fun Routing.handleApi() = with(this) {
         get("/mock-data") {
+            val mockData = getMockDataUseCase.invoke().first()
+            call.respondText(
+                contentType = ContentType.Application.Json,
+                text = mockData.toString()
+            )
+        }
+        post("/mock-data") {
 
         }
     }

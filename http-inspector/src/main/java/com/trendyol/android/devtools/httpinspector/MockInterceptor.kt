@@ -17,6 +17,7 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.model.Request
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
 import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.GetMockDataUseCase
+import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.SaveMockDataUseCase
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,11 @@ class MockInterceptor(context: Context) : Interceptor {
         GetMockDataUseCase(mockRepository)
     }
 
-    private val webServer = WebServer(context, interceptorScope)
+    private val saveMockDataUseCase: SaveMockDataUseCase by lazy {
+        SaveMockDataUseCase(mockRepository)
+    }
+
+    private val webServer = WebServer(context, interceptorScope, getMockDataUseCase, saveMockDataUseCase)
 
     private val requestQueue = RequestQueue()
 
