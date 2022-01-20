@@ -124,7 +124,9 @@
                 return '<span class="badge bg-primary">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
                 + '<span class="badge rounded-pill bg-light text-dark">' + data["requestData"]["method"] + '</span>'
                 + '<br>'
-                + '<div class="item-content">' + data["requestData"]["url"] + '</div>';
+                + '<div class="item-content">' + data["requestData"]["url"] + '</div>'
+                + '<br>'
+                + '<small>' + getDate(data) + '</small>';
             }
 
             function getHeadersAsString(headers) {
@@ -138,9 +140,13 @@
 			function updatePreviousItems() {
 				return requestList.innerHTML = requestList.innerHTML.replace(
 					'<span class="badge bg-primary">Active</span>', 
-					'<span class="badge bg-secondary">Done</span>'
+					'<span class="badge bg-secondary">Complete</span>'
 				)
 			}
+
+            function getDate(data) {
+                return new Date(data.information.timeInMillis).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit', second:'2-digit' });
+            }
 
             function next() {
                 if (currentId == "") { return; }

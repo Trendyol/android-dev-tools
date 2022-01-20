@@ -10,6 +10,7 @@ import com.trendyol.android.devtools.httpinspector.internal.ext.safeParse
 import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaders
 import com.trendyol.android.devtools.httpinspector.internal.model.Carrier
 import com.trendyol.android.devtools.httpinspector.internal.model.ImportFrame
+import com.trendyol.android.devtools.httpinspector.internal.model.Information
 import com.trendyol.android.devtools.httpinspector.internal.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.model.ResponseData
@@ -27,6 +28,7 @@ import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
+import java.util.Calendar
 
 class MockInterceptor(context: Context) : Interceptor {
 
@@ -71,6 +73,8 @@ class MockInterceptor(context: Context) : Interceptor {
             return chain.proceed(chain.request())
         }
 
+        val date = Calendar.getInstance()
+
         val request = chain
             .withConnectTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .withReadTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -92,6 +96,9 @@ class MockInterceptor(context: Context) : Interceptor {
                 headers = response.headers.toMultimap(),
                 body = bodyAdapter.safeParse(response.body.readString()),
             ),
+            information = Information(
+                timeInMillis = date.timeInMillis
+            )
         )
 
         val responseData = runBlocking { requestQueue.waitFor(carrier.id) }

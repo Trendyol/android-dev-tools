@@ -1,6 +1,7 @@
 package com.trendyol.android.devtools.httpinspector.internal
 
 import com.trendyol.android.devtools.httpinspector.internal.model.Carrier
+import com.trendyol.android.devtools.httpinspector.internal.model.Information
 import com.trendyol.android.devtools.httpinspector.internal.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.model.ResponseData
@@ -28,8 +29,9 @@ internal class RequestQueue {
     fun add(
         requestData: RequestData,
         responseData: ResponseData,
+        information: Information
     ): Carrier {
-        val carrier = Carrier(id.incrementAndGet(), requestData, responseData)
+        val carrier = Carrier(id.incrementAndGet(), requestData, responseData, information)
         if (queue.isEmpty()) queueChannel.trySend(carrier)
         queue.add(carrier)
         return carrier
