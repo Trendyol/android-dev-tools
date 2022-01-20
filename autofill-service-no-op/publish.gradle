@@ -3,7 +3,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 groupId "com.trendyol.android.devtools"
-                artifactId "autofill-no-opt"
+                artifactId "autofill-no-op"
                 version "0.1.0-alpha35"
                 artifact "$buildDir/outputs/aar/autofill-no-opt-release.aar"
 
