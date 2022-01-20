@@ -14,6 +14,7 @@ import com.trendyol.android.devtools.httpinspector.internal.model.Information
 import com.trendyol.android.devtools.httpinspector.internal.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.model.ResponseData
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,6 @@ import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
-import java.util.Calendar
 
 class MockInterceptor(context: Context) : Interceptor {
 
