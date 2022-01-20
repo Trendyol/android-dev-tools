@@ -29,9 +29,16 @@ internal class RequestQueue {
     fun add(
         requestData: RequestData,
         responseData: ResponseData,
-        information: Information
+        requestTimeInMillis: Long,
+        responseTimeInMillis: Long
     ): Carrier {
-        val carrier = Carrier(id.incrementAndGet(), requestData, responseData, information)
+        val carrier = Carrier(
+            id.incrementAndGet(),
+            requestData,
+            responseData,
+            requestTimeInMillis,
+            responseTimeInMillis
+        )
         if (queue.isEmpty()) queueChannel.trySend(carrier)
         queue.add(carrier)
         return carrier

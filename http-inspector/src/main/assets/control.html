@@ -126,7 +126,7 @@
                 + '<br>'
                 + '<div class="item-content">' + data["requestData"]["url"] + '</div>'
                 + '<br>'
-                + '<small>' + getDate(data) + '</small>';
+                + '<small>' + getRequestDate(data) + '</small>';
             }
 
             function getHeadersAsString(headers) {
@@ -144,8 +144,8 @@
 				)
 			}
 
-            function getDate(data) {
-                return new Date(data.information.timeInMillis).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit', second:'2-digit' });
+            function getRequestDate(data) {
+                return new Date(data.requestTimeInMillis).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit', second:'2-digit' });
             }
 
             function next() {

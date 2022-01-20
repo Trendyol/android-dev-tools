@@ -73,15 +73,15 @@ class MockInterceptor(context: Context) : Interceptor {
             return chain.proceed(chain.request())
         }
 
-        val date = Calendar.getInstance()
-
         val request = chain
             .withConnectTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .withReadTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .withWriteTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .request()
 
+        val requestTimeInMillis = Calendar.getInstance().timeInMillis
         val response = chain.proceed(request)
+        val responseTimeInMillis = Calendar.getInstance().timeInMillis
         val bodyAdapter = moshi.adapter(Any::class.java)
 
         val carrier = requestQueue.add(
@@ -96,9 +96,8 @@ class MockInterceptor(context: Context) : Interceptor {
                 headers = response.headers.toMultimap(),
                 body = bodyAdapter.safeParse(response.body.readString()),
             ),
-            information = Information(
-                timeInMillis = date.timeInMillis
-            )
+            requestTimeInMillis = requestTimeInMillis,
+            responseTimeInMillis = responseTimeInMillis
         )
 
         val responseData = runBlocking { requestQueue.waitFor(carrier.id) }
