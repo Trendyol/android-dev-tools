@@ -13,6 +13,7 @@ class MockManagerImpl(
     override suspend fun getAll(): List<MockData> {
         return mockRepository.getAll().map { entity ->
             MockData(
+                uid = entity.uid,
                 requestData = RequestData(
                     url = entity.url.orEmpty(),
                     method = "sa",
@@ -40,6 +41,6 @@ class MockManagerImpl(
     }
 
     override suspend fun delete(uid: Int) {
-        TODO("Not yet implemented")
+        mockRepository.delete(uid)
     }
 }

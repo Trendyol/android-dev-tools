@@ -135,13 +135,13 @@ internal class WebServer(
             val request = call.receive<AddMockResponse>()
 
             mockManager.insert(MockData(
-                RequestData(
+                requestData = RequestData(
                     request.url.orEmpty(),
                     request.method.orEmpty(),
                     mapOf(),
                     request.requestBody.orEmpty(),
                 ),
-                ResponseData(
+                responseData = ResponseData(
                     200,
                     mapOf(),
                     request.responseBody.orEmpty(),
@@ -154,8 +154,23 @@ internal class WebServer(
             )
         }
         post("/delete-mock") {
-            val uid = call.parameters.get("uid")
+            val uid = call.parameters["uid"]
 
+            if (uid.isNullOrEmpty()) {
+                call.respondText(
+                    status = HttpStatusCode.BadRequest,
+                    contentType = ContentType.Application.Json,
+                    text = "{\"status\": \"400\"}"
+                )
+                return@post
+            }
+
+            mockManager.delete(uid.toInt())
+            call.respondText(
+                status = HttpStatusCode.OK,
+                contentType = ContentType.Application.Json,
+                text = "{\"status\": \"ok\"}"
+            )
         }
     }
 
