@@ -1,172 +1,62 @@
 <html>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <style>
-            .container-custom {
-                width: 96%;
-                margin: 20px auto;
-            }
-            .list-group{
-                max-height: 650px;
-                overflow: scroll;
-                -webkit-overflow-scrolling: touch;
-            }
-            .item-content {
-                margin: 10px 0 0 0;
-                cursor: pointer;
-            }
-            .input-filter {
-                margin: 0 0 10px 0;
-            }
-        </style>
     </head>
     <body>
-        <div class="container-custom">
-            <div class="row justify-content-start">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-8">
-                            <h6>Request URL</h6>
-                            <input type="text" class="form-control" id="requestUrl" disabled>
-                        </div>
-                        <div class="col-4">
-                            <h6>Method</h6>
-                            <input type="text" class="form-control" id="requestMethod" disabled>
-                        </div>
-                    </div>
-                    <br>
-                    <h6>Request Headers</h6>
-                    <textarea class="form-control" id="requestHeaders" rows="6" disabled></textarea>
-                    <br>
-                    <h6>Request Body</h6>
-                    <textarea class="form-control" id="requestBody" rows="14" disabled></textarea>
-                </div>
-                <div class="col">
-                    <h6>Response Headers</h6>
-                    <textarea class="form-control" id="responseHeaders" rows="6"></textarea>
-                    <br>
-                    <h6>Response Body</h6>
-                    <textarea class="form-control" id="responseBody" rows="12"></textarea>
-                    <br>
-                    <h6>Response Code</h6>
-                    <input type="text" class="form-control" id="responseCode">
-                    <br>
-                    <div class="row justify-content-start">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary" id="next" onClick="next()" disabled>Continue</button>
-
-                            <input type="checkbox" class="btn-check" id="autoSkip" autocomplete="off" onchange="toggleAutoSkip()" checked>
-                            <label class="btn btn-outline-primary" for="autoSkip">Auto Skip</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <h6>Request History</h6>
-                    <input type="text" class="form-control input-filter" id="inputFilter" placeholder="Filter requests...">
-                    <ul class="list-group" id="requestList"></ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Mock Server</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./mock.html">Mock Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./add-mock.html">Create New</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+        <br><br>
+        <div class="container">
+            <div class="row justify-content-start">
+                <table class="table table-hover mock-list">
+                    <tr>
+                        <th>Status</th>
+                        <th>URL</th>
+                        <th>Method</th>
+                        <th>Body</th>
+                    </tr>
+                </table>
+            </div>
         </div>
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            const inputRequestUrl = document.getElementById("requestUrl")
-            const inputRequestMethod = document.getElementById("requestMethod")
-            const inputRequestHeaders = document.getElementById("requestHeaders")
-            const inputRequestBody = document.getElementById("requestBody")
+            $.ajax({
+                url: "http://127.0.0.1:5001/mock-data",
+                type: "GET",
+                success: function (response) {
+                    const data = response.data;
+                    data.forEach((element) => {
+                        console.log(element);
+                        const row = "<tr>" +
+                            "<td><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\"></td>" +
+                            "<td>" + element.requestData.url + "</td>" +
+                            "<td>" + element.requestData.method + "</td>" +
+                            "<td>" + element.requestData.body + "</td>" +
+                            "</tr>";
 
-            const inputResponseHeaders = document.getElementById("responseHeaders")
-            const inputResponseBody = document.getElementById("responseBody")
-            const inputResponseCode = document.getElementById("responseCode");
-
-            const requestList = document.getElementById("requestList")
-            const buttonNext = document.getElementById("next")
-
-            var currentId = "";
-            var autoSkip = true;
-
-            const socket = new WebSocket("ws://127.0.0.1:5001/echo");
-
-            socket.onopen = function (event) {
-                console.log("Connection established");
-            };
-
-            socket.onmessage = function (event) {
-                var data = JSON.parse(event.data);
-
-                currentId = data["id"]
-
-                const requestListItem = document.createElement('li');
-                requestListItem.className = "list-group-item"
-                requestListItem.innerHTML = getListItem(data)
-                requestList.prepend(requestListItem)
-
-                console.log(JSON.stringify(data["responseData"]["body"]));
-
-                inputRequestUrl.value = data["requestData"]["url"];
-                inputRequestMethod.value = data["requestData"]["method"];
-                inputRequestHeaders.value = getHeadersAsString(data["requestData"]["headers"]);
-                inputRequestBody.value = data["requestData"]["body"];
-
-                inputResponseHeaders.value = JSON.stringify(data["responseData"]["headers"], null, 2);
-                inputResponseBody.value = JSON.stringify(data["responseData"]["body"], null, 2);
-                inputResponseCode.value = data["responseData"]["code"];
-
-                if (autoSkip) {
-                    next();
-                } else {
-                    buttonNext.disabled = false;
+                        $( ".mock-list" ).append(row);
+                    })
+                },
+                error: function (xhr, status) {
+                    alert("error" + xhr + status);
                 }
-            }
-
-            function getListItem(data) {
-                return '<span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
-                + '<span class="badge rounded-pill bg-light text-dark">' + data["requestData"]["method"] + '</span>'
-                + '<br>'
-                + '<div class="item-content">' + data["requestData"]["url"] + '</div>';
-            }
-
-            function getHeadersAsString(headers) {
-                var headerString = "";
-                for (const [key, value] of Object.entries(headers)) {
-                    headerString += (key + ": " + value + "\n");
-                }
-                return headerString;
-            }
-
-            function next() {
-                if (currentId == "") { return; }
-
-                const newData = {
-                    "id": currentId,
-                    "responseData": {
-                        "code": inputResponseCode.value,
-                        "headers": JSON.parse(inputResponseHeaders.value),
-                        "body": JSON.parse(inputResponseBody.value)
-                    }
-                }
-
-                socket.send(JSON.stringify(newData));
-
-                currentId = "";
-                buttonNext.disabled = true;
-                clearInputs();
-            }
-
-            function toggleAutoSkip() {
-                autoSkip = !autoSkip;
-                next();
-            }
-
-            function clearInputs() {
-                inputRequestUrl.value = ""
-                inputRequestMethod.value = ""
-                inputRequestHeaders.value = ""
-                inputRequestBody.value = ""
-
-                inputResponseHeaders.value = ""
-                inputResponseBody.value = ""
-                inputResponseCode.value = ""
-            }
+            });
         </script>
     </body>
 </html>

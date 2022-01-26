@@ -8,6 +8,8 @@ import com.trendyol.android.devtools.httpinspector.internal.WebServer
 import com.trendyol.android.devtools.httpinspector.internal.data.database.MockDatabase
 import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepository
 import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepositoryImpl
+import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
+import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManagerImpl
 import com.trendyol.android.devtools.httpinspector.internal.ext.readString
 import com.trendyol.android.devtools.httpinspector.internal.ext.safeParse
 import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaders
@@ -16,8 +18,6 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportF
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
-import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.GetMockDataUseCase
-import com.trendyol.android.devtools.httpinspector.internal.domain.usecase.SaveMockDataUseCase
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,15 +47,14 @@ class MockInterceptor(context: Context) : Interceptor {
 
     private val mockRepository: MockRepository by lazy { MockRepositoryImpl(mockDatabase) }
 
-    private val getMockDataUseCase: GetMockDataUseCase by lazy {
-        GetMockDataUseCase(mockRepository)
-    }
+    private val mockManager: MockManager by lazy { MockManagerImpl(mockRepository) }
 
-    private val saveMockDataUseCase: SaveMockDataUseCase by lazy {
-        SaveMockDataUseCase(mockRepository)
-    }
-
-    private val webServer = WebServer(context, interceptorScope, getMockDataUseCase, saveMockDataUseCase)
+    private val webServer = WebServer(
+        context,
+        interceptorScope,
+        moshi,
+        mockManager,
+    )
 
     private val requestQueue = RequestQueue()
 

@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MockRepository {
 
-    fun getAll(): Flow<List<MockEntity>>
+    suspend fun getAll(): List<MockEntity>
 
     suspend fun insert(mockEntity: MockEntity)
+
+    suspend fun delete(uid: Int)
 }

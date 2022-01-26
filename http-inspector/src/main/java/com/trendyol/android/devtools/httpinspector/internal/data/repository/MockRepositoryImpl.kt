@@ -6,11 +6,15 @@ import kotlinx.coroutines.flow.Flow
 
 class MockRepositoryImpl(private val mockDatabase: MockDatabase) : MockRepository {
 
-    override fun getAll(): Flow<List<MockEntity>> {
+    override suspend fun getAll(): List<MockEntity> {
         return mockDatabase.mockDao().getAll()
     }
 
     override suspend fun insert(mockEntity: MockEntity) {
         return mockDatabase.mockDao().insert(mockEntity)
+    }
+
+    override suspend fun delete(uid: Int) {
+        return mockDatabase.mockDao().delete(uid)
     }
 }
