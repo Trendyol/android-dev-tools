@@ -1,28 +1,19 @@
 package com.trendyol.android.devtools.httpinspector.internal
 
 import android.content.Context
-import android.util.Log
 import com.squareup.moshi.Moshi
-import com.trendyol.android.devtools.core.io.FileReader
+import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpController
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.AddMockResponse
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
-import io.ktor.application.call
+import com.trendyol.android.devtools.httpinspector.internal.router.ApiRouter
+import com.trendyol.android.devtools.httpinspector.internal.router.StaticRouter
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readText
-import io.ktor.request.receive
-import io.ktor.response.respondText
 import io.ktor.routing.Routing
-import io.ktor.routing.get
-import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -42,6 +33,7 @@ internal class WebServer(
     private val scope: CoroutineScope,
     private val moshi: Moshi,
     private val mockManager: MockManager,
+    private val httpController: HttpController,
 ) {
 
     private val sessions = mutableListOf<DefaultWebSocketServerSession>()
@@ -70,14 +62,10 @@ internal class WebServer(
     private fun setupWebServer() = scope.launch {
         embeddedServer(CIO, PORT, watchPaths = emptyList()) {
             install(WebSockets)
-            install(ContentNegotiation) {
-                gson()
-            }
-            routing {
-                handleWeb()
-                handleApi()
-                handleWebSocket()
-            }
+            install(ContentNegotiation) { gson() }
+            StaticRouter(context).run(this)
+            ApiRouter(httpController).run(this)
+            routing { handleWebSocket() }
         }.start(wait = true)
     }
 
@@ -89,90 +77,8 @@ internal class WebServer(
         }
     }
 
-    private fun Routing.handleWeb() = with(this) {
-        get(PATH_INDEX) {
-            val fileData = FileReader.readAssetFile(this@WebServer.context, FILE_NAME_INDEX)
-            call.respondText(
-                status = HttpStatusCode.OK,
-                text = fileData.orEmpty(),
-                contentType = ContentType.Text.Html,
-            )
-        }
-        get("/mock.html") {
-            val fileData = FileReader.readAssetFile(this@WebServer.context, "mock.html")
-            call.respondText(
-                status = HttpStatusCode.OK,
-                text = fileData.orEmpty(),
-                contentType = ContentType.Text.Html,
-            )
-        }
-        get("/add-mock.html") {
-            val fileData = FileReader.readAssetFile(this@WebServer.context, "add-mock.html")
-            call.respondText(
-                status = HttpStatusCode.OK,
-                text = fileData.orEmpty(),
-                contentType = ContentType.Text.Html,
-            )
-        }
-    }
-
     data class Wrapper(val data: List<MockData>)
 
-    private fun Routing.handleApi() = with(this) {
-        get("/mock-data") {
-            val adapter = moshi.adapter(Wrapper::class.java)
-            val mockData = runCatching { mockManager.getAll() }.getOrElse {
-                Log.d("###", "errr: $it")
-                listOf()
-            }
-            call.respondText(
-                status = HttpStatusCode.OK,
-                contentType = ContentType.Application.Json,
-                text = adapter.toJson(Wrapper(mockData))
-            )
-        }
-        post("/add-mock") {
-            val request = call.receive<AddMockResponse>()
-
-            mockManager.insert(MockData(
-                requestData = RequestData(
-                    request.url.orEmpty(),
-                    request.method.orEmpty(),
-                    mapOf(),
-                    request.requestBody.orEmpty(),
-                ),
-                responseData = ResponseData(
-                    200,
-                    mapOf(),
-                    request.responseBody.orEmpty(),
-                )
-            ))
-            call.respondText(
-                status = HttpStatusCode.OK,
-                contentType = ContentType.Application.Json,
-                text = "{\"status\": \"ok\"}"
-            )
-        }
-        post("/delete-mock") {
-            val uid = call.parameters["uid"]
-
-            if (uid.isNullOrEmpty()) {
-                call.respondText(
-                    status = HttpStatusCode.BadRequest,
-                    contentType = ContentType.Application.Json,
-                    text = "{\"status\": \"400\"}"
-                )
-                return@post
-            }
-
-            mockManager.delete(uid.toInt())
-            call.respondText(
-                status = HttpStatusCode.OK,
-                contentType = ContentType.Application.Json,
-                text = "{\"status\": \"ok\"}"
-            )
-        }
-    }
 
     private fun Routing.handleWebSocket() = webSocket(PATH_WS) {
         sessions.add(this)
