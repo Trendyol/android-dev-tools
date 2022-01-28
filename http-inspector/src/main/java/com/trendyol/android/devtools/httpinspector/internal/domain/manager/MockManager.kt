@@ -4,9 +4,11 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockDat
 
 interface MockManager {
 
-    suspend fun getAll(): List<MockData>
+    suspend fun getAll(): Result<String>
 
     suspend fun insert(mockData: MockData)
 
     suspend fun delete(uid: Int)
+
+    suspend fun setActive(uid: Int, isActive: Boolean)
 }

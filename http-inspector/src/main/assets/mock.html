@@ -38,15 +38,43 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
+                getMockData();
+
+                $(".table").on("click", ".delete", function () {
+                    const uid = $(this).data().id;
+                    $.ajax({
+                        url: "/delete-mock?uid=" + uid,
+                        method: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function(res) {
+                            getMockData();
+                        },
+                        error: function(xhr, status, err) {
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+                });
+            });
+
+            function getMockData() {
                 $.ajax({
                     url: "http://127.0.0.1:5001/mock-data",
                     type: "GET",
                     success: function (response) {
                         const data = response.data;
+                        $( ".data-row" ).remove();
                         data.forEach((element) => {
                             console.log(element);
-                            const row = "<tr>" +
-                                "<td><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\"></td>" +
+
+                            const s = element.isActive === true ?
+                                "<td><input class=\"form-check-input\" type=\"checkbox\" id=\"flexCheckDefault\" checked></td>"
+                            : "<td><input class=\"form-check-input\" type=\"checkbox\" id=\"flexCheckDefault\"></td>";
+
+                            const row = "<tr class='data-row'>" +
+                                s +
                                 "<td>" + element.requestData.url + "</td>" +
                                 "<td>" + element.requestData.method + "</td>" +
                                 "<td>" + element.requestData.body + "</td>" +
@@ -60,20 +88,18 @@
                         alert("error" + xhr + status);
                     }
                 });
+            }
 
+            function setIsActive(isActive) {
                 $(".table").on("click", ".delete", function () {
-                    alert(23);
                     const uid = $(this).data().id;
-                    console.log(uid)
-                    alert(uid);
                     $.ajax({
                         url: "/delete-mock?uid=" + uid,
                         method: "POST",
                         contentType: "application/json",
                         dataType: "json",
                         success: function(res) {
-                            alert(res);
-                            //window.location.href = "mock.html"
+                            getMockData();
                         },
                         error: function(xhr, status, err) {
                             console.log(xhr);
@@ -82,7 +108,7 @@
                         }
                     });
                 });
-            });
+            }
         </script>
     </body>
 </html>

@@ -8,6 +8,8 @@ import com.trendyol.android.devtools.httpinspector.internal.WebServer
 import com.trendyol.android.devtools.httpinspector.internal.data.database.MockDatabase
 import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepository
 import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepositoryImpl
+import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpController
+import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpControllerImpl
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManagerImpl
 import com.trendyol.android.devtools.httpinspector.internal.ext.readString
@@ -47,13 +49,16 @@ class MockInterceptor(context: Context) : Interceptor {
 
     private val mockRepository: MockRepository by lazy { MockRepositoryImpl(mockDatabase) }
 
-    private val mockManager: MockManager by lazy { MockManagerImpl(mockRepository) }
+    private val mockManager: MockManager by lazy { MockManagerImpl(mockRepository, moshi) }
+
+    private val httpController: HttpController by lazy { HttpControllerImpl(mockManager) }
 
     private val webServer = WebServer(
         context,
         interceptorScope,
         moshi,
         mockManager,
+        httpController,
     )
 
     private val requestQueue = RequestQueue()

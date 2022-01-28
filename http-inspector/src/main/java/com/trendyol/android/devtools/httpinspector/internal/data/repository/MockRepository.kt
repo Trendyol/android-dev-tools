@@ -10,4 +10,6 @@ interface MockRepository {
     suspend fun insert(mockEntity: MockEntity)
 
     suspend fun delete(uid: Int)
+
+    suspend fun setActive(uid: Int, isActive: Boolean)
 }

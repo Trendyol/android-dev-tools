@@ -98,8 +98,6 @@ internal class WebServer(
 
     companion object {
         private const val PORT = 5001
-        private const val PATH_INDEX = "/"
         private const val PATH_WS = "/echo"
-        private const val FILE_NAME_INDEX = "control.html"
     }
 }

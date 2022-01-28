@@ -17,4 +17,8 @@ class MockRepositoryImpl(private val mockDatabase: MockDatabase) : MockRepositor
     override suspend fun delete(uid: Int) {
         return mockDatabase.mockDao().delete(uid)
     }
+
+    override suspend fun setActive(uid: Int, isActive: Boolean) {
+        return mockDatabase.mockDao().setActive(uid, isActive)
+    }
 }

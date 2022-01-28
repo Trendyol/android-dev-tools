@@ -1,7 +1,6 @@
 package com.trendyol.android.devtools.httpinspector.internal.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
@@ -17,4 +16,7 @@ interface MockDao {
 
     @Query("DELETE FROM mock_entities WHERE uid = :uid")
     suspend fun delete(uid: Int)
+
+    @Query("UPDATE mock_entities SET isActive = :isActive WHERE uid = :uid")
+    suspend fun setActive(uid: Int, isActive: Boolean)
 }

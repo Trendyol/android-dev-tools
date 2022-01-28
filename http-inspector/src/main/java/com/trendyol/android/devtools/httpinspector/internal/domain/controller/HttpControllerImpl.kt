@@ -1,7 +1,5 @@
 package com.trendyol.android.devtools.httpinspector.internal.domain.controller
 
-import android.util.Log
-import com.trendyol.android.devtools.httpinspector.internal.WebServer
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.AddMockResponse
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
@@ -18,15 +16,19 @@ class HttpControllerImpl(
 ) : HttpController {
 
     override suspend fun getMockData(call: ApplicationCall) {
-        val adapter = moshi.adapter(WebServer.Wrapper::class.java)
-        val mockData = runCatching { mockManager.getAll() }.getOrElse {
-            Log.d("###", "errr: $it")
-            listOf()
+        val mockData = mockManager.getAll()
+        if (mockData.isFailure) {
+            call.respondText(
+                status = HttpStatusCode.BadRequest,
+                contentType = ContentType.Application.Json,
+                text = ""
+            )
+            return
         }
         call.respondText(
             status = HttpStatusCode.OK,
             contentType = ContentType.Application.Json,
-            text = adapter.toJson(WebServer.Wrapper(mockData))
+            text = mockData.getOrNull().orEmpty()
         )
     }
 
@@ -68,6 +70,20 @@ class HttpControllerImpl(
         }
 
         mockManager.delete(uid.toInt())
+
+        call.respondText(
+            status = HttpStatusCode.OK,
+            contentType = ContentType.Application.Json,
+            text = "{\"status\": \"ok\"}"
+        )
+    }
+
+    override suspend fun setActive(call: ApplicationCall) {
+        val uid = call.parameters["uid"]
+        val isActive = call.parameters["isActive"]
+
+        mockManager.setActive(uid.orEmpty().toInt(), isActive == "1")
+
         call.respondText(
             status = HttpStatusCode.OK,
             contentType = ContentType.Application.Json,

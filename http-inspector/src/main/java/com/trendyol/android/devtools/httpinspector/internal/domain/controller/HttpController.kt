@@ -9,4 +9,6 @@ interface HttpController {
     suspend fun saveMockData(call: ApplicationCall)
 
     suspend fun deleteMockData(call: ApplicationCall)
+
+    suspend fun setActive(call: ApplicationCall)
 }

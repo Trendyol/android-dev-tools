@@ -15,6 +15,7 @@ class ApiRouter(
             get("/mock-data") { httpController.getMockData(call) }
             post("/add-mock") { httpController.saveMockData(call) }
             post("/delete-mock") { httpController.deleteMockData(call) }
+            post("/set-active") { httpController.setActive(call) }
         }
     }
 }
