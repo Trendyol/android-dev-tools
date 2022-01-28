@@ -3,7 +3,9 @@ package com.trendyol.android.devtools
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.ui.main.MainFragment
+import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +14,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             navigateToFragment(MainFragment.newInstance())
+        }
+
+        var inc = 0
+        fixedRateTimer("asd", false, 2000, 2000) {
+            AnalyticsLogger.report("key: $inc", "value: $inc")
+            inc++
         }
     }
 
