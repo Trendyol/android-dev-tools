@@ -3,7 +3,9 @@ package com.trendyol.android.devtools.analyticslogger
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -13,6 +15,7 @@ import com.trendyol.android.devtools.analyticslogger.internal.data.repository.Ev
 import com.trendyol.android.devtools.analyticslogger.internal.domain.manager.EventManager
 import com.trendyol.android.devtools.analyticslogger.internal.domain.manager.EventManagerImpl
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
+import com.trendyol.android.devtools.analyticslogger.internal.ui.EventsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -40,11 +43,17 @@ class AnalyticsLogger private constructor(
     }
 
     private fun updateNotification(event: Event) {
+        val intent = Intent(context, EventsActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
         val builder = NotificationCompat.Builder(context, "ch")
             .setSmallIcon(R.drawable.ic_insights_black_24dp)
             .setContentTitle("Analytics Logger")
             .setContentText("sa: ${event.uid} ${event.key} -> ${event.value}")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
             notify(2, builder.build())
