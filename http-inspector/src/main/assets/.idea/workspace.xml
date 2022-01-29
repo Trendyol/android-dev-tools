@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9965519-2135-408c-8109-448679a18894" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/mock.html" beforeDir="false" afterPath="$PROJECT_DIR$/mock.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/MockInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/MockInterceptor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/WebServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/WebServer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/dao/MockDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/dao/MockDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/database/MockDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/database/MockDatabase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/model/MockEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/model/MockEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/repository/MockRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/repository/MockRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/repository/MockRepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/data/repository/MockRepositoryImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/controller/HttpController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/controller/HttpController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/controller/HttpControllerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/controller/HttpControllerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/manager/MockManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/manager/MockManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/manager/MockManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/manager/MockManagerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/model/MockData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/domain/model/MockData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/router/ApiRouter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/router/ApiRouter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/router/WebSocketRouter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../analytics-logger/src/main/java/com/trendyol/android/devtools/analyticslogger/internal/ui/EventsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../analytics-logger/src/main/java/com/trendyol/android/devtools/analyticslogger/internal/ui/EventsViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +52,7 @@
       <option name="presentableId" value="Default" />
       <updated>1642612637578</updated>
       <workItem from="1642612638519" duration="11512000" />
-      <workItem from="1643213629306" duration="5159000" />
+      <workItem from="1643213629306" duration="5510000" />
     </task>
     <servers />
   </component>

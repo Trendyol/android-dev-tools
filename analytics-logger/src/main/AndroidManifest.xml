@@ -5,7 +5,7 @@
     <application>
 
         <activity
-            android:name=".internal.ui.EventsActivity"
+            android:name=".internal.ui.MainActivity"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AnalyticsReporter" />
 

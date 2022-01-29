@@ -9,13 +9,10 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.trendyol.android.devtools.analyticslogger.internal.data.database.EventDatabase
-import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
-import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepositoryImpl
-import com.trendyol.android.devtools.analyticslogger.internal.domain.manager.EventManager
-import com.trendyol.android.devtools.analyticslogger.internal.domain.manager.EventManagerImpl
+import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsContainer
+import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
-import com.trendyol.android.devtools.analyticslogger.internal.ui.EventsActivity
+import com.trendyol.android.devtools.analyticslogger.internal.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -31,19 +28,15 @@ class AnalyticsLogger private constructor(
 
     private val scope = CoroutineScope(superVisorJob + Dispatchers.IO)
 
-    private val eventDatabase: EventDatabase by lazy { EventDatabase.create(context) }
-
-    private val eventRepository: EventRepository by lazy { EventRepositoryImpl(eventDatabase) }
-
-    private val eventManager: EventManager by lazy { EventManagerImpl(eventRepository) }
+    private val analyticsContainer: AnalyticsContainer by lazy { ContextContainer.analyticsContainer }
 
     private fun reportEvent(event: Event) = scope.launch {
-        eventManager.insert(event)
+        analyticsContainer.eventManager.insert(event)
         updateNotification(event)
     }
 
     private fun updateNotification(event: Event) {
-        val intent = Intent(context, EventsActivity::class.java).apply {
+        val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
@@ -79,6 +72,7 @@ class AnalyticsLogger private constructor(
         fun init(application: Application) {
             instance = AnalyticsLogger(application)
             instance?.initNotificationChannel()
+            ContextContainer.initialize(application)
         }
 
         fun report(

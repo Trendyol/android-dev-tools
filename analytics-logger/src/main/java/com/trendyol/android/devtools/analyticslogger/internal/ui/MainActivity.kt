@@ -3,30 +3,24 @@ package com.trendyol.android.devtools.analyticslogger.internal.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.android.devtools.analyticslogger.R
+import com.trendyol.android.devtools.analyticslogger.internal.ui.events.EventsFragment
 
-class EventsActivity : AppCompatActivity() {
-
-    private val eventAdapter: EventAdapter by lazy { EventAdapter() }
-
-    private lateinit var recyclerView: RecyclerView
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_events)
+        setContentView(R.layout.activity_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = "Analytics Events"
-        initView()
+        initializeNavigation()
     }
 
-    private fun initView() {
-        recyclerView = findViewById(R.id.recyclerView)
-
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = eventAdapter
+    private fun initializeNavigation() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, EventsFragment.newInstance())
+            .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

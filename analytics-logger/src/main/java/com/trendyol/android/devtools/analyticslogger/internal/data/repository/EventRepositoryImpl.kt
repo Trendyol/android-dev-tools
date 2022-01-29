@@ -2,14 +2,13 @@ package com.trendyol.android.devtools.analyticslogger.internal.data.repository
 
 import com.trendyol.android.devtools.analyticslogger.internal.data.database.EventDatabase
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
-import kotlinx.coroutines.flow.Flow
 
 internal class EventRepositoryImpl(
     private val eventDatabase: EventDatabase,
 ) : EventRepository {
 
-    override fun getAll(): Flow<List<EventEntity>> {
-        return eventDatabase.eventDao().getAll()
+    override suspend fun find(query: String, limit: Int, offset: Int): List<EventEntity> {
+        return eventDatabase.eventDao().find(query, limit, offset)
     }
 
     override suspend fun insert(eventEntity: EventEntity) {
