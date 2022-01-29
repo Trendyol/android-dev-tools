@@ -43,10 +43,15 @@ class EventsFragment : Fragment() {
 
     private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.events.collectLatest {
+            viewModel.eventsFlow.collectLatest {
                 eventAdapter.submitData(it)
             }
         }
+    }
+    
+    private fun setQuery(query: String?) {
+        viewModel.setQuery(query)
+        eventAdapter.refresh()
     }
 
     companion object {
