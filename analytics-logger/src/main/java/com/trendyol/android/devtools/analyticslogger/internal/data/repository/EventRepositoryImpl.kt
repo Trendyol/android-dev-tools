@@ -15,7 +15,7 @@ internal class EventRepositoryImpl(
         return eventDatabase.eventDao().insert(eventEntity)
     }
 
-    override suspend fun delete(uid: Int) {
-        return eventDatabase.eventDao().delete(uid)
+    override suspend fun deleteAll() {
+        return eventDatabase.eventDao().deleteAll()
     }
 }

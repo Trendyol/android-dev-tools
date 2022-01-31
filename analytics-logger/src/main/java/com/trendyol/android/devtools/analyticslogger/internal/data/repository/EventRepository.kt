@@ -8,5 +8,5 @@ internal interface EventRepository {
 
     suspend fun insert(eventEntity: EventEntity)
 
-    suspend fun delete(uid: Int)
+    suspend fun deleteAll()
 }

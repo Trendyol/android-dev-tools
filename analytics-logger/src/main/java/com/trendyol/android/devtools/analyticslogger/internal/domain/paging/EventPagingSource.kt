@@ -12,8 +12,11 @@ internal class EventPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Event> {
         val nextPage = params.key ?: 1
-        val response = eventManager.find(query = query, page = nextPage)
-
+        val response = eventManager.find(
+            query = query,
+            page = nextPage,
+            pageSize = params.loadSize,
+        )
         return LoadResult.Page(
             data = response,
             prevKey = if (nextPage == 1) null else nextPage - 1,

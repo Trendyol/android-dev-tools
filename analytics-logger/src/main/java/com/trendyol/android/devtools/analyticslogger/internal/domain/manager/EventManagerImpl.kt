@@ -11,7 +11,7 @@ internal class EventManagerImpl(
     private val eventRepository: EventRepository,
 ) : EventManager {
 
-    override suspend fun find(query: String?, page: Int): List<Event> {
+    override suspend fun find(query: String?, page: Int, pageSize: Int): List<Event> {
         val limit = 20
         val offset = (page - 1) * limit
 
@@ -49,7 +49,7 @@ internal class EventManagerImpl(
         )
     }
 
-    override suspend fun delete(uid: Int) {
-        return eventRepository.delete(uid)
+    override suspend fun deleteAll() {
+        return eventRepository.deleteAll()
     }
 }

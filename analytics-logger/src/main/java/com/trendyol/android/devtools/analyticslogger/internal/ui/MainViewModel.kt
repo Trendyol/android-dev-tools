@@ -13,6 +13,7 @@ import com.trendyol.android.devtools.analyticslogger.internal.ui.detail.DetailSt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 internal class MainViewModel(
     private val eventManager: EventManager,
@@ -23,7 +24,7 @@ internal class MainViewModel(
     private val _detailState = MutableStateFlow<DetailState>(DetailState.Initial)
     val detailState: StateFlow<DetailState> = _detailState
 
-    val eventsFlow: Flow<PagingData<Event>> = Pager(PagingConfig(pageSize = 20)) {
+    val eventsFlow: Flow<PagingData<Event>> = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
         EventPagingSource(
             eventManager = eventManager,
             query = queryState.value,
@@ -33,10 +34,18 @@ internal class MainViewModel(
         .cachedIn(viewModelScope)
 
     fun setQuery(query: String?) {
-        queryState.value = ""
+        queryState.value = query.orEmpty()
+    }
+
+    fun deleteAll() = viewModelScope.launch {
+        eventManager.deleteAll()
     }
 
     fun onEventSelected(event: Event) {
         _detailState.value = DetailState.Selected(event)
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 20
     }
 }

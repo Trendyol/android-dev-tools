@@ -43,27 +43,30 @@ class AnalyticsLogger private constructor(
         )
         updateNotification(
             key = key,
-            value = value,
+            platform = platform,
         )
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    private fun updateNotification(
-        key: String?,
-        value: String?,
-    ) {
+    private fun updateNotification(key: String?, platform: EventPlatform?) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
+        val content = context.getString(
+            R.string.analytics_logger_notification_content,
+            platform?.title,
+            key
+        )
+
         val builder = NotificationCompat.Builder(
             context,
             context.getString(R.string.analytics_logger_notification_channel_id),
         )
-            .setSmallIcon(R.drawable.ic_insights_black_24dp)
+            .setSmallIcon(R.drawable.analytics_logger_insights)
             .setContentTitle(context.getString(R.string.analytics_logger_notification_title))
-            .setContentText("sa:  $key -> $value")
+            .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setContentIntent(pendingIntent)
 

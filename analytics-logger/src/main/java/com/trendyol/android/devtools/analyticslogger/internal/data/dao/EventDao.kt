@@ -14,6 +14,6 @@ internal interface EventDao {
     @Insert
     suspend fun insert(vararg eventEntities: EventEntity)
 
-    @Query("DELETE FROM event_entities WHERE uid = :uid")
-    suspend fun delete(uid: Int)
+    @Query("DELETE FROM event_entities")
+    suspend fun deleteAll()
 }
