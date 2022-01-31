@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 
-class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
+internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
     diffCallback = object : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
             return oldItem.uid == newItem.uid

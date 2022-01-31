@@ -5,6 +5,7 @@ import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
+import com.trendyol.android.devtools.analyticslogger.internal.ext.beautify
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +28,7 @@ internal class EventManagerImpl(
                 uid = eventEntity.uid,
                 key = eventEntity.key,
                 value = eventEntity.value,
+                json = eventEntity.value.beautify(moshi),
                 platform = eventEntity.platform,
                 date = eventEntity.date,
             )

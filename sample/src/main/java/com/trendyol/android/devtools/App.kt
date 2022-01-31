@@ -24,6 +24,7 @@ class App : Application() {
             .withFilePath("autofill.json")
             .build()
 
+        // Analytics Logger
         AnalyticsLogger.init(this)
     }
 }

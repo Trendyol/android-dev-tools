@@ -25,7 +25,7 @@ import com.trendyol.android.devtools.analyticslogger.internal.ui.detail.DetailFr
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class EventsFragment : Fragment() {
+internal class EventsFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels {
         ContextContainer.mainContainer.MainViewModelFactory()

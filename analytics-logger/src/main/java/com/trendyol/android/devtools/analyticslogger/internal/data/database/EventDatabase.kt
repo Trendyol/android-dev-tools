@@ -19,7 +19,7 @@ internal abstract class EventDatabase : RoomDatabase() {
         fun create(context: Context, moshi: Moshi): EventDatabase {
             return Room.databaseBuilder(
                 context,
-                EventDatabase::class.java, "event-database-5"
+                EventDatabase::class.java, "analytics-logger-database"
             )
                 .addTypeConverter(PlatformConverter(moshi))
                 .build()

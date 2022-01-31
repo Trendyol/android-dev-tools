@@ -6,7 +6,7 @@ import com.squareup.moshi.Moshi
 import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 
 @ProvidedTypeConverter
-class PlatformConverter(private val moshi: Moshi) {
+internal class PlatformConverter(private val moshi: Moshi) {
 
     @TypeConverter
     fun toPlatform(value: String?): EventPlatform? {

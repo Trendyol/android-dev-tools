@@ -2,7 +2,7 @@ package com.trendyol.android.devtools.analyticslogger.internal.ui.detail
 
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 
-sealed class DetailState {
+internal sealed class DetailState {
 
     object Initial : DetailState()
 

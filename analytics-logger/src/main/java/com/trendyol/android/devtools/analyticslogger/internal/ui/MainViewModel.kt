@@ -42,7 +42,7 @@ internal class MainViewModel(
     }
 
     fun onEventSelected(event: Event) {
-        _detailState.value = DetailState.Selected(event)
+        _detailState.value = DetailState.Selected(event.copy())
     }
 
     companion object {
