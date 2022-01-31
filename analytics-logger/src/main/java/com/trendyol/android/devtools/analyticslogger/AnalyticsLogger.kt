@@ -45,7 +45,7 @@ class AnalyticsLogger private constructor(
             .setSmallIcon(R.drawable.ic_insights_black_24dp)
             .setContentTitle("Analytics Logger")
             .setContentText("sa: ${event.uid} ${event.key} -> ${event.value}")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             .setContentIntent(pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
@@ -55,7 +55,7 @@ class AnalyticsLogger private constructor(
 
     private fun initNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel("ch", "test", importance).apply {
                 description = "test"
             }

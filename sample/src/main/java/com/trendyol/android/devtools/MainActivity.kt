@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         var inc = 0
-        fixedRateTimer("asd", false, 2000, 2000) {
+        fixedRateTimer("asd", false, 5000, 5000) {
             AnalyticsLogger.report("key: $inc", "value: $inc")
             inc++
         }

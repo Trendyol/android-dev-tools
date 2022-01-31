@@ -48,7 +48,7 @@ class EventsFragment : Fragment() {
             }
         }
     }
-    
+
     private fun setQuery(query: String?) {
         viewModel.setQuery(query)
         eventAdapter.refresh()
