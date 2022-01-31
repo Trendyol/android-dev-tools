@@ -1,5 +1,6 @@
 package com.trendyol.android.devtools.analyticslogger
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -46,6 +47,7 @@ class AnalyticsLogger private constructor(
         )
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun updateNotification(
         key: String?,
         value: String?,
@@ -55,24 +57,28 @@ class AnalyticsLogger private constructor(
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        val builder = NotificationCompat.Builder(context, "ch")
+        val builder = NotificationCompat.Builder(
+            context,
+            context.getString(R.string.analytics_logger_notification_channel_id),
+        )
             .setSmallIcon(R.drawable.ic_insights_black_24dp)
-            .setContentTitle("Analytics Logger")
+            .setContentTitle(context.getString(R.string.analytics_logger_notification_title))
             .setContentText("sa:  $key -> $value")
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setContentIntent(pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
-            notify(2, builder.build())
+            notify(1, builder.build())
         }
     }
 
     private fun initNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel("ch", "test", importance).apply {
-                description = "test"
-            }
+            val channel = NotificationChannel(
+                context.getString(R.string.analytics_logger_notification_channel_id),
+                context.getString(R.string.analytics_logger_notification_channel_name),
+                NotificationManager.IMPORTANCE_LOW
+            )
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)

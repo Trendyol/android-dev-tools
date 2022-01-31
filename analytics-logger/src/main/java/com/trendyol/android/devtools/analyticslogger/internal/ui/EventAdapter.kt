@@ -26,6 +26,8 @@ class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
     }
 ) {
 
+    var onItemSelected: ((event: Event) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
@@ -38,6 +40,8 @@ class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
 
     inner class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
+        private var boundItem: Event? = null
+
         private val textViewKey: TextView by lazy { view.findViewById(R.id.textViewKey) }
 
         private val textViewValue: TextView by lazy { view.findViewById(R.id.textViewValue) }
@@ -46,7 +50,15 @@ class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
 
         private val textViewDate: TextView by lazy { view.findViewById(R.id.textViewDate) }
 
+        init {
+            itemView.setOnClickListener {
+                boundItem?.let { item -> onItemSelected?.invoke(item) }
+            }
+        }
+
         fun bind(event: Event) {
+            boundItem = event
+
             textViewKey.text = event.key
             textViewValue.text = event.value
             textViewPlatform.text = event.platform?.title.orEmpty()
