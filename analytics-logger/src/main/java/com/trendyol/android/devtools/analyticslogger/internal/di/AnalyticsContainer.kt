@@ -19,5 +19,5 @@ internal class AnalyticsContainer(private val context: Context) {
 
     private val eventRepository: EventRepository by lazy { EventRepositoryImpl(eventDatabase) }
 
-    val eventManager: EventManager by lazy { EventManagerImpl(eventRepository) }
+    val eventManager: EventManager by lazy { EventManagerImpl(eventRepository, moshi) }
 }

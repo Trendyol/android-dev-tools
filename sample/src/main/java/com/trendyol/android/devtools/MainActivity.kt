@@ -16,12 +16,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             navigateToFragment(MainFragment.newInstance())
         }
-
-        var inc = 0
-        fixedRateTimer("asd", false, 5000, 5000) {
-            AnalyticsLogger.report("key: $inc", "value: $inc", EventPlatform.FIREBASE)
-            inc++
-        }
     }
 
     fun navigateToFragment(fragment: Fragment, backStack: String? = null) {

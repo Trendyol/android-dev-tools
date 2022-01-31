@@ -1,5 +1,6 @@
 package com.trendyol.android.devtools.analyticslogger.internal.domain.manager
 
+import com.squareup.moshi.Moshi
 import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
@@ -9,6 +10,7 @@ import java.util.*
 
 internal class EventManagerImpl(
     private val eventRepository: EventRepository,
+    private val moshi: Moshi,
 ) : EventManager {
 
     override suspend fun find(query: String?, page: Int, pageSize: Int): List<Event> {
@@ -33,16 +35,19 @@ internal class EventManagerImpl(
 
     override suspend fun insert(
         key: String?,
-        value: String?,
+        value: Any?,
         platform: EventPlatform?,
     ) {
-        val dateFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("hh:mm:SS", Locale.getDefault())
         val date = dateFormat.format(Calendar.getInstance().time)
+
+        val adapter = moshi.adapter(Any::class.java)
+        val jsonValue = runCatching { adapter.toJson(value) }.getOrNull()
 
         return eventRepository.insert(
             EventEntity(
                 key = key,
-                value = value,
+                value = jsonValue,
                 platform = platform,
                 date = date,
             )

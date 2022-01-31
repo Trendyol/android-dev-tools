@@ -11,12 +11,12 @@ class PlatformConverter(private val moshi: Moshi) {
     @TypeConverter
     fun toPlatform(value: String?): EventPlatform? {
         val adapter = moshi.adapter(EventPlatform::class.java)
-        return value?.let { adapter.fromJson(it) }
+        return value?.let { runCatching { adapter.fromJson(it) }.getOrNull() }
     }
 
     @TypeConverter
     fun toString(platform: EventPlatform?): String? {
         val adapter = moshi.adapter(EventPlatform::class.java)
-        return adapter.toJson(platform)
+        return runCatching { adapter.toJson(platform) }.getOrNull()
     }
 }

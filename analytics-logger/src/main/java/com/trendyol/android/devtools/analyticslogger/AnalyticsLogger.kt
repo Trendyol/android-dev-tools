@@ -33,7 +33,7 @@ class AnalyticsLogger private constructor(
 
     private fun reportEvent(
         key: String?,
-        value: String?,
+        value: Any?,
         platform: EventPlatform?,
     ) = scope.launch {
         analyticsContainer.eventManager.insert(
@@ -99,9 +99,9 @@ class AnalyticsLogger private constructor(
         }
 
         fun report(
-            key: String,
-            value: String,
-            platform: EventPlatform,
+            key: String?,
+            value: Any?,
+            platform: EventPlatform?,
         ) {
             instance?.reportEvent(
                 key = key,
