@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
+import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 import com.trendyol.android.devtools.ui.main.MainFragment
 import kotlin.concurrent.fixedRateTimer
 
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         var inc = 0
         fixedRateTimer("asd", false, 5000, 5000) {
-            AnalyticsLogger.report("key: $inc", "value: $inc")
+            AnalyticsLogger.report("key: $inc", "value: $inc", EventPlatform.FIREBASE)
             inc++
         }
     }

@@ -9,9 +9,9 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsContainer
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
-import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,12 +30,26 @@ class AnalyticsLogger private constructor(
 
     private val analyticsContainer: AnalyticsContainer by lazy { ContextContainer.analyticsContainer }
 
-    private fun reportEvent(event: Event) = scope.launch {
-        analyticsContainer.eventManager.insert(event)
-        updateNotification(event)
+    private fun reportEvent(
+        key: String?,
+        value: String?,
+        platform: EventPlatform?,
+    ) = scope.launch {
+        analyticsContainer.eventManager.insert(
+            key = key,
+            value = value,
+            platform = platform,
+        )
+        updateNotification(
+            key = key,
+            value = value,
+        )
     }
 
-    private fun updateNotification(event: Event) {
+    private fun updateNotification(
+        key: String?,
+        value: String?,
+    ) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -44,7 +58,7 @@ class AnalyticsLogger private constructor(
         val builder = NotificationCompat.Builder(context, "ch")
             .setSmallIcon(R.drawable.ic_insights_black_24dp)
             .setContentTitle("Analytics Logger")
-            .setContentText("sa: ${event.uid} ${event.key} -> ${event.value}")
+            .setContentText("sa:  $key -> $value")
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setContentIntent(pendingIntent)
 
@@ -78,12 +92,13 @@ class AnalyticsLogger private constructor(
         fun report(
             key: String,
             value: String,
+            platform: EventPlatform,
         ) {
-            val event = Event(
+            instance?.reportEvent(
                 key = key,
                 value = value,
+                platform = platform,
             )
-            instance?.reportEvent(event)
         }
     }
 }

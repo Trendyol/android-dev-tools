@@ -1,13 +1,13 @@
 package com.trendyol.android.devtools.analyticslogger.internal.ui
 
-import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.annotation.ColorInt
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +17,11 @@ import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
     diffCallback = object : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return false
+            return oldItem.uid == newItem.uid
         }
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return false
+            return oldItem == newItem
         }
     }
 ) {
@@ -49,16 +49,18 @@ class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
         fun bind(event: Event) {
             textViewKey.text = event.key
             textViewValue.text = event.value
-            textViewPlatform.text = "Firebase"
-            textViewDate.text = "01:01:01"
+            textViewPlatform.text = event.platform?.title.orEmpty()
+            textViewDate.text = event.date
 
-            textViewPlatform.background = createPlatformBackground(view.context, R.color.analytics_logger_red_soft)
+            textViewPlatform.background = createPlatformBackground(
+                Color.parseColor(event.platform?.color.orEmpty())
+            )
         }
 
-        private fun createPlatformBackground(context: Context, colorRes: Int): GradientDrawable {
+        private fun createPlatformBackground(@ColorInt colorInt: Int): GradientDrawable {
             return GradientDrawable().apply {
                 cornerRadius = 20f
-                color = ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
+                color = ColorStateList.valueOf(colorInt)
             }
         }
     }

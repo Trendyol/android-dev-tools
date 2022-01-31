@@ -1,8 +1,11 @@
 package com.trendyol.android.devtools.analyticslogger.internal.domain.manager
 
+import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
+import java.text.SimpleDateFormat
+import java.util.*
 
 internal class EventManagerImpl(
     private val eventRepository: EventRepository,
@@ -22,21 +25,31 @@ internal class EventManagerImpl(
                 uid = eventEntity.uid,
                 key = eventEntity.key,
                 value = eventEntity.value,
+                platform = eventEntity.platform,
+                date = eventEntity.date,
             )
         }
     }
 
-    override suspend fun insert(event: Event) {
+    override suspend fun insert(
+        key: String?,
+        value: String?,
+        platform: EventPlatform?,
+    ) {
+        val dateFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
+        val date = dateFormat.format(Calendar.getInstance().time)
+
         return eventRepository.insert(
             EventEntity(
-                uid = event.uid,
-                key = event.key,
-                value = event.value,
+                key = key,
+                value = value,
+                platform = platform,
+                date = date,
             )
         )
     }
 
-    override suspend fun delete(event: Event) {
-        return eventRepository.delete(event.uid)
+    override suspend fun delete(uid: Int) {
+        return eventRepository.delete(uid)
     }
 }
