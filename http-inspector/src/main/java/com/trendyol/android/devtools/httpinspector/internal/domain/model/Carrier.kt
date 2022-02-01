@@ -4,4 +4,6 @@ internal data class Carrier(
     val id: Int,
     val requestData: RequestData,
     val responseData: ResponseData,
+    val requestTimeInMillis: Long,
+    val responseTimeInMillis: Long,
 )

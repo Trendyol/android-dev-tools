@@ -148,7 +148,9 @@
                 return '<span class="badge bg-primary">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
                 + '<span class="badge rounded-pill bg-light text-dark">' + data["requestData"]["method"] + '</span>'
                 + '<br>'
-                + '<div class="item-content">' + data["requestData"]["url"] + '</div>';
+                + '<div class="item-content">' + data["requestData"]["url"] + '</div>'
+                + '<br>'
+                + '<small>' + getRequestDate(data) + '</small>';
             }
 
             function getHeadersAsString(headers) {
@@ -162,7 +164,7 @@
 			function updatePreviousItems() {
 				return requestList.innerHTML = requestList.innerHTML.replace(
 					'<span class="badge bg-primary">Active</span>', 
-					'<span class="badge bg-secondary">Done</span>'
+					'<span class="badge bg-secondary">Complete</span>'
 				)
 			}
 
@@ -190,6 +192,10 @@
             function toggleAutoSkip() {
                 autoSkip = !autoSkip;
                 next();
+            }
+
+            function getRequestDate(data) {
+                return new Date(data.requestTimeInMillis).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit', second:'2-digit' });
             }
 
             function clearInputs() {
