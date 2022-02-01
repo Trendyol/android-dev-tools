@@ -1,6 +1,5 @@
 package com.trendyol.android.devtools.httpinspector.internal.domain.manager
 
-import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepository
@@ -21,9 +20,7 @@ internal class MockManagerImpl(
         val adapter = moshi.adapter<List<MockData>>(
             Types.newParameterizedType(List::class.java, MockData::class.java)
         )
-        val s = runCatching { adapter.toJson(getAll()) }.getOrNull()
-        Log.d("####", "s: $s")
-        return s
+        return runCatching { adapter.toJson(getAll()) }.getOrNull()
     }
 
     override suspend fun find(
