@@ -2,12 +2,19 @@ package com.trendyol.android.devtools.httpinspector.internal.data.repository
 
 import com.trendyol.android.devtools.httpinspector.internal.data.database.MockDatabase
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
-import kotlinx.coroutines.flow.Flow
 
 class MockRepositoryImpl(private val mockDatabase: MockDatabase) : MockRepository {
 
     override suspend fun getAll(): List<MockEntity> {
         return mockDatabase.mockDao().getAll()
+    }
+
+    override suspend fun find(
+        url: String,
+        method: String,
+        requestBody: String,
+    ): MockEntity? {
+        return mockDatabase.mockDao().find(url, method, requestBody)
     }
 
     override suspend fun insert(mockEntity: MockEntity) {

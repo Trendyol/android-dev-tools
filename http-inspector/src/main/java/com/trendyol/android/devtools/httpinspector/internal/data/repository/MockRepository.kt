@@ -7,6 +7,12 @@ interface MockRepository {
 
     suspend fun getAll(): List<MockEntity>
 
+    suspend fun find(
+        url: String,
+        method: String,
+        requestBody: String,
+    ): MockEntity?
+
     suspend fun insert(mockEntity: MockEntity)
 
     suspend fun delete(uid: Int)

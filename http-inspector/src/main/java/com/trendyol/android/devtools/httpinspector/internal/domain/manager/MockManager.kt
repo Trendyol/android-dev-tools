@@ -4,7 +4,15 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockDat
 
 interface MockManager {
 
-    suspend fun getAll(): Result<String>
+    suspend fun getAll(): List<MockData>
+
+    suspend fun getAllAsJson(): Result<String>
+
+    suspend fun find(
+        url: String,
+        method: String,
+        requestBody: String,
+    ): MockData?
 
     suspend fun insert(mockData: MockData)
 

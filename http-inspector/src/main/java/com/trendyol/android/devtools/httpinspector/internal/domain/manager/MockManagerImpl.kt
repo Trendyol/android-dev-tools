@@ -13,7 +13,27 @@ class MockManagerImpl(
     private val moshi: Moshi,
 ) : MockManager {
 
-    override suspend fun getAll(): Result<String> {
+    override suspend fun getAll(): List<MockData> {
+        return mockRepository.getAll().map { entity ->
+            MockData(
+                uid = entity.uid,
+                isActive = entity.isActive,
+                requestData = RequestData(
+                    url = entity.url.orEmpty(),
+                    method = entity.method.orEmpty(),
+                    headers = entity.requestHeaders.orEmpty(),
+                    body = entity.requestBody.orEmpty(),
+                ),
+                responseData = ResponseData(
+                    code = 200,
+                    headers = entity.responseHeaders.orEmpty(),
+                    body = entity.responseBody.orEmpty(),
+                )
+            )
+        }
+    }
+
+    override suspend fun getAllAsJson(): Result<String> {
         val adapter = moshi.adapter(WebServer.Wrapper::class.java)
         return runCatching {
             val data = mockRepository.getAll().map { entity ->
@@ -22,13 +42,13 @@ class MockManagerImpl(
                     isActive = entity.isActive,
                     requestData = RequestData(
                         url = entity.url.orEmpty(),
-                        method = "sa",
-                        headers = mapOf(),
+                        method = entity.method.orEmpty(),
+                        headers = entity.requestHeaders.orEmpty(),
                         body = entity.requestBody.orEmpty(),
                     ),
                     responseData = ResponseData(
                         code = 200,
-                        headers = mapOf(),
+                        headers = entity.responseHeaders.orEmpty(),
                         body = entity.responseBody.orEmpty(),
                     )
                 )
@@ -37,12 +57,37 @@ class MockManagerImpl(
         }
     }
 
+    override suspend fun find(
+        url: String,
+        method: String,
+        requestBody: String,
+    ): MockData? {
+        val entity = mockRepository.find(url, method, requestBody) ?: return null
+        return MockData(
+            uid = entity.uid,
+            isActive = entity.isActive,
+            requestData = RequestData(
+                url = entity.url.orEmpty(),
+                method = entity.method.orEmpty(),
+                headers = entity.requestHeaders.orEmpty(),
+                body = entity.requestBody.orEmpty(),
+            ),
+            responseData = ResponseData(
+                code = 200,
+                headers = entity.responseHeaders.orEmpty(),
+                body = entity.responseBody.orEmpty(),
+            )
+        )
+    }
+
     override suspend fun insert(mockData: MockData) {
         mockRepository.insert(
             MockEntity(
                 url = mockData.requestData.url,
                 method = mockData.requestData.method,
+                requestHeaders = mockData.requestData.headers,
                 requestBody = mockData.requestData.body,
+                responseHeaders = mockData.responseData.headers,
                 responseBody = mockData.responseData.body.toString(),
             )
         )

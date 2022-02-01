@@ -1,6 +1,7 @@
 package com.trendyol.android.devtools.httpinspector
 
 import android.content.Context
+import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.httpinspector.internal.RequestQueue
@@ -12,15 +13,16 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.controller.Ht
 import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpControllerImpl
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManagerImpl
-import com.trendyol.android.devtools.httpinspector.internal.ext.readString
-import com.trendyol.android.devtools.httpinspector.internal.ext.safeParse
-import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaders
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.Carrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
-import java.util.concurrent.TimeUnit
+import com.trendyol.android.devtools.httpinspector.internal.ext.readString
+import com.trendyol.android.devtools.httpinspector.internal.ext.safeParse
+import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaderMap
+import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaders
+import com.trendyol.android.devtools.httpinspector.internal.ext.toJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,8 +34,8 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Response
-import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
+import java.util.concurrent.TimeUnit
 
 class MockInterceptor(context: Context) : Interceptor {
 
@@ -88,6 +90,33 @@ class MockInterceptor(context: Context) : Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
+        val r = chain.request()
+        val requestBody = r.body.readString()
+
+        val mockRequest = runBlocking {
+            mockManager.find(
+                url = r.url.toString(),
+                method = r.method,
+                requestBody = requestBody,
+            )
+        }
+
+        if (mockRequest != null) {
+            return Response.Builder()
+                .request(r)
+                .message(DEFAULT_RESPONSE_MESSAGE)
+                .code(mockRequest.responseData.code)
+                .protocol(Protocol.HTTP_2)
+                .body(mockRequest.responseData.body.orEmpty().toByteArray().toResponseBody(CONTENT_TYPE_JSON.toMediaTypeOrNull()))
+                .addHeader("content-type", CONTENT_TYPE_JSON)
+                .apply {
+                    mockRequest.responseData.headers.toHeaderMap(moshi).forEach { pair ->
+                        addHeader(pair.key, pair.value.first())
+                    }
+                }
+                .build()
+        }
+
         if (webServer.hasConnection().not()) {
             return chain.proceed(chain.request())
         }
@@ -99,19 +128,18 @@ class MockInterceptor(context: Context) : Interceptor {
             .request()
 
         val response = chain.proceed(request)
-        val bodyAdapter = moshi.adapter(Any::class.java)
 
         val carrier = requestQueue.add(
             requestData = RequestData(
                 url = request.url.toString(),
                 method = request.method,
-                headers = request.headers.toMultimap(),
+                headers = request.headers.toJson(moshi),
                 body = request.body.readString(),
             ),
             responseData = ResponseData(
                 code = response.code,
-                headers = response.headers.toMultimap(),
-                body = bodyAdapter.safeParse(response.body.readString()),
+                headers = response.headers.toJson(moshi),
+                body = response.body.readString(),
             ),
         )
 
@@ -122,17 +150,11 @@ class MockInterceptor(context: Context) : Interceptor {
             .message(DEFAULT_RESPONSE_MESSAGE)
             .code(responseData.code)
             .protocol(Protocol.HTTP_2)
-            .body(createResponseBody(responseData))
-            .headers(responseData.headers.toHeaders())
+            .body(responseData.body.orEmpty().toByteArray().toResponseBody(CONTENT_TYPE_JSON.toMediaTypeOrNull()))
+            .headers(responseData.headers.toHeaderMap(moshi).toHeaders())
             .build()
     }
 
-    private fun createResponseBody(responseData: ResponseData): ResponseBody {
-        return moshi.adapter(Any::class.java)
-            .toJson(responseData.body)
-            .toByteArray()
-            .toResponseBody(CONTENT_TYPE_JSON.toMediaTypeOrNull())
-    }
 
     companion object {
         private const val CONTENT_TYPE_JSON = "application/json"

@@ -29,7 +29,10 @@
                         <th>Status</th>
                         <th>URL</th>
                         <th>Method</th>
-                        <th>Body</th>
+                        <th>Request Headers</th>
+                        <th>Request Body</th>
+                        <th>Response Headers</th>
+                        <th>Response Body</th>
                         <th>Delete</th>
                     </tr>
                 </table>
@@ -50,13 +53,16 @@
                         success: function(res) {
                             getMockData();
                         },
-                        error: function(xhr, status, err) {
+                        error: function(xhr) {
                             console.log(xhr);
-                            console.log(status);
-                            console.log(err);
                         }
                     });
                 });
+
+                $(".table").on("click", ".status", function() {
+                    const uid = $(this).data().id;
+                    setIsActive(uid, $(this).is(':checked'))
+                })
             });
 
             function getMockData() {
@@ -70,14 +76,17 @@
                             console.log(element);
 
                             const s = element.isActive === true ?
-                                "<td><input class=\"form-check-input\" type=\"checkbox\" id=\"flexCheckDefault\" checked></td>"
-                            : "<td><input class=\"form-check-input\" type=\"checkbox\" id=\"flexCheckDefault\"></td>";
+                                "<td><input class=\"form-check-input status\" type=\"checkbox\" id=\"flexCheckDefault\" data-id=\"" + element.uid + "\" checked></td>"
+                            : "<td><input class=\"form-check-input status\" type=\"checkbox\" id=\"flexCheckDefault\" data-id=\"" + element.uid + "\"></td>";
 
                             const row = "<tr class='data-row'>" +
                                 s +
                                 "<td>" + element.requestData.url + "</td>" +
                                 "<td>" + element.requestData.method + "</td>" +
+                                "<td>" + element.requestData.headers + "</td>" +
                                 "<td>" + element.requestData.body + "</td>" +
+                                "<td>" + element.responseData.headers + "</td>" +
+                                "<td>" + element.responseData.body + "</td>" +
                                 "<td><a href=\"#\" class=\"delete\" data-id=\"" + element.uid + "\">Delete</a></td>" +
                                 "</tr>";
 
@@ -90,23 +99,20 @@
                 });
             }
 
-            function setIsActive(isActive) {
-                $(".table").on("click", ".delete", function () {
-                    const uid = $(this).data().id;
-                    $.ajax({
-                        url: "/delete-mock?uid=" + uid,
-                        method: "POST",
-                        contentType: "application/json",
-                        dataType: "json",
-                        success: function(res) {
-                            getMockData();
-                        },
-                        error: function(xhr, status, err) {
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                    });
+            function setIsActive(uid, isActive) {
+                $.ajax({
+                    url: "/set-active?uid=" + uid + "&isActive=" + isActive,
+                    method: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function(res) {
+
+                    },
+                    error: function(xhr, status, err) {
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(err);
+                    }
                 });
             }
         </script>

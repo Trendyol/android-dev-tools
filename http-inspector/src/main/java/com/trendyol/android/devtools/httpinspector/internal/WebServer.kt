@@ -1,6 +1,7 @@
 package com.trendyol.android.devtools.httpinspector.internal
 
 import android.content.Context
+import android.util.Log
 import com.squareup.moshi.Moshi
 import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpController
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
@@ -72,6 +73,7 @@ internal class WebServer(
     private fun collectOngoingData() = scope.launch {
         exportFlow.collect { json ->
             sessions.forEach { session ->
+                Log.d("###", "ws gitti: $json")
                 session.send(Frame.Text(json))
             }
         }
@@ -89,7 +91,11 @@ internal class WebServer(
             }
             .collect { frame ->
                 when (frame) {
-                    is Frame.Text -> importFlow.emit(ImportFrame.Text(frame.readText()))
+                    is Frame.Text -> {
+                        val t = frame.readText()
+                        Log.d("###", "import: $t")
+                        importFlow.emit(ImportFrame.Text(t))
+                    }
                     is Frame.Close -> importFlow.emit(ImportFrame.Close)
                     else -> {}
                 }

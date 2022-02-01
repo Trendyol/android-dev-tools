@@ -11,6 +11,9 @@ interface MockDao {
     @Query("SELECT * FROM mock_entities")
     suspend fun getAll(): List<MockEntity>
 
+    @Query("SELECT * FROM mock_entities WHERE url = :url AND (method = :method OR :method IS '') AND (requestBody = :requestBody or :requestBody IS '') AND isActive = 1 LIMIT 1")
+    suspend fun find(url: String?, method: String?, requestBody: String?): MockEntity?
+
     @Insert
     suspend fun insert(vararg mockEntities: MockEntity)
 

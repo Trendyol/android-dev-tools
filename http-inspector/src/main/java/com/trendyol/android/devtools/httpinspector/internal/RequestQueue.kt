@@ -4,12 +4,11 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.model.Carrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
+import kotlinx.coroutines.channels.Channel
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 
 internal class RequestQueue {
 
@@ -30,8 +29,10 @@ internal class RequestQueue {
         responseData: ResponseData,
     ): Carrier {
         val carrier = Carrier(id.incrementAndGet(), requestData, responseData)
-        if (queue.isEmpty()) queueChannel.trySend(carrier)
-        queue.add(carrier)
+        synchronized(queue) {
+            if (queue.isEmpty()) queueChannel.trySend(carrier)
+            queue.add(carrier)
+        }
         return carrier
     }
 
@@ -54,13 +55,16 @@ internal class RequestQueue {
         }
     }
 
-    suspend fun cancel() {
-        pendingList.forEach { pending ->
-            val carrier = queue.firstOrNull { carrier -> carrier.id == pending.key }
-            carrier?.let { pending.value.resume(it.responseData) }
-            delay(200)
+    fun cancel() {
+        synchronized(pendingList) {
+            pendingList.forEach { pending ->
+                val carrier = queue.firstOrNull { carrier -> carrier.id == pending.key }
+                carrier?.let { pending.value.resume(it.responseData) }
+            }
+            pendingList.clear()
         }
-        queue.clear()
-        pendingList.clear()
+        synchronized(queue) {
+            queue.clear()
+        }
     }
 }

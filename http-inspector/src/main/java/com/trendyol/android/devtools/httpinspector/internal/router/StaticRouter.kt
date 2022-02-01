@@ -12,8 +12,8 @@ import io.ktor.routing.get
 class StaticRouter(private val appContext: Context) : Router() {
 
     override fun init(routing: Routing)  {
-        routing.get(    "/") {
-            val fileData = FileReader.readAssetFile(appContext, "index.html")
+        routing.get("/") {
+            val fileData = FileReader.readAssetFile(appContext, "control.html")
             call.respondText(
                 status = HttpStatusCode.OK,
                 text = fileData.orEmpty(),

@@ -1,5 +1,6 @@
 package com.trendyol.android.devtools.httpinspector.internal.domain.controller
 
+import android.util.Log
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.AddMockResponse
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
@@ -16,7 +17,7 @@ class HttpControllerImpl(
 ) : HttpController {
 
     override suspend fun getMockData(call: ApplicationCall) {
-        val mockData = mockManager.getAll()
+        val mockData = mockManager.getAllAsJson()
         if (mockData.isFailure) {
             call.respondText(
                 status = HttpStatusCode.BadRequest,
@@ -40,13 +41,13 @@ class HttpControllerImpl(
                 requestData = RequestData(
                     request.url.orEmpty(),
                     request.method.orEmpty(),
-                    mapOf(),
+                    request.requestHeaders.orEmpty(),
                     request.requestBody.orEmpty(),
                 ),
                 responseData = ResponseData(
                     200,
-                    mapOf(),
-                    request.responseBody.orEmpty(),
+                    request.responseHeaders,
+                    request.responseBody,
                 )
             )
         )
@@ -82,7 +83,9 @@ class HttpControllerImpl(
         val uid = call.parameters["uid"]
         val isActive = call.parameters["isActive"]
 
-        mockManager.setActive(uid.orEmpty().toInt(), isActive == "1")
+        Log.d("###", "isActive: $isActive")
+
+        mockManager.setActive(uid.orEmpty().toInt(), isActive == "true")
 
         call.respondText(
             status = HttpStatusCode.OK,

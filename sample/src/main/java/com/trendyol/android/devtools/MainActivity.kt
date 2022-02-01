@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val dummyBody = moshiAdapter.fromJson(response.body.readString())
+                    val dummyBody = runCatching { moshiAdapter.fromJson(response.body.readString()) }.getOrNull()
                     Log.d("###", "request success: $dummyBody")
                 }
             })

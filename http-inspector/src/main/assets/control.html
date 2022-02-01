@@ -103,14 +103,15 @@
                 requestList.prepend(requestListItem)
 
                 console.log(JSON.stringify(data["responseData"]["body"]));
+                console.log("autoskip: " + autoSkip)
 
                 inputRequestUrl.value = data["requestData"]["url"];
                 inputRequestMethod.value = data["requestData"]["method"];
-                inputRequestHeaders.value = getHeadersAsString(data["requestData"]["headers"]);
+                inputRequestHeaders.value = data["requestData"]["headers"];
                 inputRequestBody.value = data["requestData"]["body"];
 
-                inputResponseHeaders.value = JSON.stringify(data["responseData"]["headers"], null, 2);
-                inputResponseBody.value = JSON.stringify(data["responseData"]["body"], null, 2);
+                inputResponseHeaders.value = JSON.stringify(JSON.parse(data["responseData"]["headers"]), null, 2);
+                inputResponseBody.value = JSON.stringify(JSON.parse(data["responseData"]["body"]), null, 2);
                 inputResponseCode.value = data["responseData"]["code"];
 
                 if (autoSkip) {
@@ -118,7 +119,6 @@
                 } else {
                     buttonNext.disabled = false;
                 }
-		
             }
 
             function getListItem(data) {
@@ -144,14 +144,16 @@
 			}
 
             function next() {
-                if (currentId == "") { return; }
+                if (currentId === "") { return; }
+
+                console.log("go next")
 
                 const newData = {
                     "id": currentId,
                     "responseData": {
                         "code": inputResponseCode.value,
-                        "headers": JSON.parse(inputResponseHeaders.value),
-                        "body": JSON.parse(inputResponseBody.value)
+                        "headers": inputResponseHeaders.value,
+                        "body": inputResponseBody.value,
                     }
                 }
 
