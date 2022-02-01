@@ -36,6 +36,7 @@ import okhttp3.Interceptor
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
 class MockInterceptor(context: Context) : Interceptor {
@@ -112,8 +113,10 @@ class MockInterceptor(context: Context) : Interceptor {
             .withWriteTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .request()
 
+        val requestTimeInMillis = Calendar.getInstance().timeInMillis
         // Get the actual response.
         val response = chain.proceed(requestWithTimeout)
+        val responseTimeInMillis = Calendar.getInstance().timeInMillis
 
         val carrier = requestQueue.add(
             requestData = RequestData(
@@ -127,6 +130,8 @@ class MockInterceptor(context: Context) : Interceptor {
                 headers = response.headers.toJson(moshi),
                 body = response.body.readString(),
             ),
+            requestTimeInMillis = requestTimeInMillis,
+            responseTimeInMillis = responseTimeInMillis
         )
 
         // Wait manipulated response from the web client.
