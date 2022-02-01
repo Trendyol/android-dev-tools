@@ -1,40 +1,30 @@
 package com.trendyol.android.devtools.httpinspector.internal.domain.controller
 
-import android.util.Log
 import com.trendyol.android.devtools.httpinspector.internal.domain.manager.MockManager
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.AddMockResponse
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.request.AddMockRequest
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.mock.MockData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
+import com.trendyol.android.devtools.httpinspector.internal.ext.orZero
+import com.trendyol.android.devtools.httpinspector.internal.ext.respondBadRequest
+import com.trendyol.android.devtools.httpinspector.internal.ext.respondSuccess
 import io.ktor.application.ApplicationCall
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
-import io.ktor.response.respondText
 
-class HttpControllerImpl(
+internal class HttpControllerImpl(
     private val mockManager: MockManager,
 ) : HttpController {
 
     override suspend fun getMockData(call: ApplicationCall) {
         val mockData = mockManager.getAllAsJson()
-        if (mockData.isFailure) {
-            call.respondText(
-                status = HttpStatusCode.BadRequest,
-                contentType = ContentType.Application.Json,
-                text = ""
-            )
-            return
+        if (mockData.isNullOrEmpty()) {
+            return call.respondBadRequest()
         }
-        call.respondText(
-            status = HttpStatusCode.OK,
-            contentType = ContentType.Application.Json,
-            text = mockData.getOrNull().orEmpty()
-        )
+        call.respondSuccess(mockData)
     }
 
     override suspend fun saveMockData(call: ApplicationCall) {
-        val request = call.receive<AddMockResponse>()
+        val request = call.receive<AddMockRequest>()
 
         mockManager.insert(
             MockData(
@@ -45,52 +35,30 @@ class HttpControllerImpl(
                     request.requestBody.orEmpty(),
                 ),
                 responseData = ResponseData(
-                    200,
+                    request.code.orZero(),
                     request.responseHeaders,
                     request.responseBody,
                 )
             )
         )
-        call.respondText(
-            status = HttpStatusCode.OK,
-            contentType = ContentType.Application.Json,
-            text = "{\"status\": \"ok\"}"
-        )
+        call.respondSuccess()
     }
 
     override suspend fun deleteMockData(call: ApplicationCall) {
         val uid = call.parameters["uid"]
 
         if (uid.isNullOrEmpty()) {
-            call.respondText(
-                status = HttpStatusCode.BadRequest,
-                contentType = ContentType.Application.Json,
-                text = "{\"status\": \"400\"}"
-            )
-            return
+            return call.respondBadRequest()
         }
-
         mockManager.delete(uid.toInt())
-
-        call.respondText(
-            status = HttpStatusCode.OK,
-            contentType = ContentType.Application.Json,
-            text = "{\"status\": \"ok\"}"
-        )
+        call.respondSuccess()
     }
 
     override suspend fun setActive(call: ApplicationCall) {
-        val uid = call.parameters["uid"]
+        val uid = call.parameters["uid"].orEmpty().toIntOrNull().orZero()
         val isActive = call.parameters["isActive"]
 
-        Log.d("###", "isActive: $isActive")
-
-        mockManager.setActive(uid.orEmpty().toInt(), isActive == "true")
-
-        call.respondText(
-            status = HttpStatusCode.OK,
-            contentType = ContentType.Application.Json,
-            text = "{\"status\": \"ok\"}"
-        )
+        mockManager.setActive(uid, isActive == "true")
+        call.respondSuccess()
     }
 }

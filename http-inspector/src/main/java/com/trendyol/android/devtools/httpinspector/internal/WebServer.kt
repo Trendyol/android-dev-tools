@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpController
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
 import com.trendyol.android.devtools.httpinspector.internal.router.ApiRouter
 import com.trendyol.android.devtools.httpinspector.internal.router.StaticRouter
 import io.ktor.application.install
@@ -74,8 +73,6 @@ internal class WebServer(
             }
         }
     }
-
-    data class Wrapper(val data: List<MockData>)
 
     private fun Routing.handleWebSocket() = webSocket(PATH_WS) {
         sessions.add(this)

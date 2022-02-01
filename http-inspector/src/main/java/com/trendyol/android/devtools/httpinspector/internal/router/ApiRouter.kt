@@ -6,7 +6,7 @@ import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.post
 
-class ApiRouter(
+internal class ApiRouter(
     private val httpController: HttpController,
 ) : Router() {
 

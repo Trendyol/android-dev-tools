@@ -3,7 +3,9 @@ package com.trendyol.android.devtools.httpinspector.internal.data.repository
 import com.trendyol.android.devtools.httpinspector.internal.data.database.MockDatabase
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
 
-class MockRepositoryImpl(private val mockDatabase: MockDatabase) : MockRepository {
+internal class MockRepositoryImpl(
+    private val mockDatabase: MockDatabase,
+) : MockRepository {
 
     override suspend fun getAll(): List<MockEntity> {
         return mockDatabase.mockDao().getAll()

@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
 
 @Dao
-interface MockDao {
+internal interface MockDao {
 
     @Query("SELECT * FROM mock_entities")
     suspend fun getAll(): List<MockEntity>

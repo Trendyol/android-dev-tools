@@ -70,7 +70,7 @@
                     url: "http://127.0.0.1:5001/mock-data",
                     type: "GET",
                     success: function (response) {
-                        const data = response.data;
+                        const data = response;
                         $( ".data-row" ).remove();
                         data.forEach((element) => {
                             console.log(element);

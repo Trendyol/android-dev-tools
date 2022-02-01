@@ -2,61 +2,28 @@ package com.trendyol.android.devtools.httpinspector.internal.domain.manager
 
 import android.util.Log
 import com.squareup.moshi.Moshi
-import com.trendyol.android.devtools.httpinspector.internal.WebServer
-import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
+import com.squareup.moshi.Types
 import com.trendyol.android.devtools.httpinspector.internal.data.repository.MockRepository
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
-import com.trendyol.android.devtools.httpinspector.internal.ext.orZero
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.mock.MockData
+import com.trendyol.android.devtools.httpinspector.internal.ext.mapToMockData
+import com.trendyol.android.devtools.httpinspector.internal.ext.mapToMockEntity
 
-class MockManagerImpl(
+internal class MockManagerImpl(
     private val mockRepository: MockRepository,
     private val moshi: Moshi,
 ) : MockManager {
 
     override suspend fun getAll(): List<MockData> {
-        return mockRepository.getAll().map { entity ->
-            MockData(
-                uid = entity.uid,
-                isActive = entity.isActive,
-                requestData = RequestData(
-                    url = entity.url.orEmpty(),
-                    method = entity.method.orEmpty(),
-                    headers = entity.requestHeaders.orEmpty(),
-                    body = entity.requestBody.orEmpty(),
-                ),
-                responseData = ResponseData(
-                    code = entity.code.orZero(),
-                    headers = entity.responseHeaders.orEmpty(),
-                    body = entity.responseBody.orEmpty(),
-                )
-            )
-        }
+        return mockRepository.getAll().map { entity -> entity.mapToMockData() }
     }
 
-    override suspend fun getAllAsJson(): Result<String> {
-        val adapter = moshi.adapter(WebServer.Wrapper::class.java)
-        return runCatching {
-            val data = mockRepository.getAll().map { entity ->
-                MockData(
-                    uid = entity.uid,
-                    isActive = entity.isActive,
-                    requestData = RequestData(
-                        url = entity.url.orEmpty(),
-                        method = entity.method.orEmpty(),
-                        headers = entity.requestHeaders.orEmpty(),
-                        body = entity.requestBody.orEmpty(),
-                    ),
-                    responseData = ResponseData(
-                        code = entity.code.orZero(),
-                        headers = entity.responseHeaders.orEmpty(),
-                        body = entity.responseBody.orEmpty(),
-                    )
-                )
-            }
-            adapter.toJson(WebServer.Wrapper(data))
-        }
+    override suspend fun getAllAsJson(): String? {
+        val adapter = moshi.adapter<List<MockData>>(
+            Types.newParameterizedType(List::class.java, MockData::class.java)
+        )
+        val s = runCatching { adapter.toJson(getAll()) }.getOrNull()
+        Log.d("####", "s: $s")
+        return s
     }
 
     override suspend fun find(
@@ -64,37 +31,12 @@ class MockManagerImpl(
         method: String,
         requestBody: String,
     ): MockData? {
-        Log.d("###", "find: u:$url m:$method b:$requestBody")
         val entity = mockRepository.find(url, method, requestBody) ?: return null
-        return MockData(
-            uid = entity.uid,
-            isActive = entity.isActive,
-            requestData = RequestData(
-                url = entity.url.orEmpty(),
-                method = entity.method.orEmpty(),
-                headers = entity.requestHeaders.orEmpty(),
-                body = entity.requestBody.orEmpty(),
-            ),
-            responseData = ResponseData(
-                code = entity.code.orZero(),
-                headers = entity.responseHeaders.orEmpty(),
-                body = entity.responseBody.orEmpty(),
-            )
-        )
+        return entity.mapToMockData()
     }
 
     override suspend fun insert(mockData: MockData) {
-        mockRepository.insert(
-            MockEntity(
-                url = mockData.requestData.url,
-                method = mockData.requestData.method,
-                requestHeaders = mockData.requestData.headers,
-                requestBody = mockData.requestData.body,
-                responseHeaders = mockData.responseData.headers,
-                responseBody = mockData.responseData.body.toString(),
-                code = mockData.responseData.code,
-            )
-        )
+        mockRepository.insert(mockData.mapToMockEntity())
     }
 
     override suspend fun delete(uid: Int) {

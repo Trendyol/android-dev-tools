@@ -17,11 +17,14 @@ import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportF
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseCarrier
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.mock.MockData
 import com.trendyol.android.devtools.httpinspector.internal.ext.readString
 import com.trendyol.android.devtools.httpinspector.internal.ext.safeParse
 import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaderMap
 import com.trendyol.android.devtools.httpinspector.internal.ext.toHeaders
 import com.trendyol.android.devtools.httpinspector.internal.ext.toJson
+import com.trendyol.android.devtools.httpinspector.internal.ext.toResponseBody
+import com.trendyol.android.devtools.httpinspector.internal.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -30,10 +33,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
+import okhttp3.Request
 import okhttp3.Response
-import okhttp3.ResponseBody.Companion.toResponseBody
 import java.util.concurrent.TimeUnit
 
 class MockInterceptor(context: Context) : Interceptor {
@@ -85,7 +87,8 @@ class MockInterceptor(context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        val mockRequest = runBlocking {
+        // Find if there is a defined mock data related with this request.
+        val mockData = runBlocking {
             mockManager.find(
                 url = request.url.toString(),
                 method = request.method,
@@ -93,22 +96,12 @@ class MockInterceptor(context: Context) : Interceptor {
             )
         }
 
-        if (mockRequest != null) {
-            return Response.Builder()
-                .request(request)
-                .message(DEFAULT_RESPONSE_MESSAGE)
-                .code(mockRequest.responseData.code)
-                .protocol(Protocol.HTTP_2)
-                .body(mockRequest.responseData.body.orEmpty().toByteArray().toResponseBody(CONTENT_TYPE_JSON.toMediaTypeOrNull()))
-                .addHeader("content-type", CONTENT_TYPE_JSON)
-                .apply {
-                    mockRequest.responseData.headers.toHeaderMap(moshi).forEach { pair ->
-                        addHeader(pair.key, pair.value.first())
-                    }
-                }
-                .build()
+        // If there is a defined mock data, stop chain and return mock response.
+        if (mockData != null) {
+            return mockData.createOkHttpResponse(request)
         }
 
+        // Continue with current chain if there is no connected web client.
         if (webServer.hasConnection().not()) {
             return chain.proceed(chain.request())
         }
@@ -119,6 +112,7 @@ class MockInterceptor(context: Context) : Interceptor {
             .withWriteTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .request()
 
+        // Get the actual response.
         val response = chain.proceed(requestWithTimeout)
 
         val carrier = requestQueue.add(
@@ -135,6 +129,7 @@ class MockInterceptor(context: Context) : Interceptor {
             ),
         )
 
+        // Wait manipulated response from the web client.
         val responseData = runBlocking { requestQueue.waitFor(carrier.id) }
 
         return Response.Builder()
@@ -142,14 +137,29 @@ class MockInterceptor(context: Context) : Interceptor {
             .message(DEFAULT_RESPONSE_MESSAGE)
             .code(responseData.code)
             .protocol(Protocol.HTTP_2)
-            .body(responseData.body.orEmpty().toByteArray().toResponseBody(CONTENT_TYPE_JSON.toMediaTypeOrNull()))
+            .body(responseData.body.toResponseBody())
             .headers(responseData.headers.toHeaderMap(moshi).toHeaders())
             .build()
     }
 
+    private fun MockData.createOkHttpResponse(request: Request): Response {
+        return Response.Builder()
+            .request(request)
+            .message(DEFAULT_RESPONSE_MESSAGE)
+            .code(responseData.code)
+            .protocol(Protocol.HTTP_2)
+            .body(responseData.body.toResponseBody())
+            .addHeader(HEADER_CONTENT_TYPE, Constants.CONTENT_TYPE_JSON)
+            .apply {
+                responseData.headers.toHeaderMap(moshi).forEach { pair ->
+                    pair.value.forEach { value -> addHeader(pair.key, value) }
+                }
+            }
+            .build()
+    }
 
     companion object {
-        private const val CONTENT_TYPE_JSON = "application/json"
+        private const val HEADER_CONTENT_TYPE = "content-type"
         private const val DEFAULT_RESPONSE_MESSAGE = ""
         private const val REQUEST_TIMEOUT = 50000
     }

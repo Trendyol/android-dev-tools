@@ -8,7 +8,7 @@ import com.trendyol.android.devtools.httpinspector.internal.data.dao.MockDao
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
 
 @Database(entities = [MockEntity::class], version = 1)
-abstract class MockDatabase : RoomDatabase() {
+internal abstract class MockDatabase : RoomDatabase() {
 
     abstract fun mockDao(): MockDao
 

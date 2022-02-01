@@ -2,7 +2,7 @@ package com.trendyol.android.devtools.httpinspector.internal.domain.controller
 
 import io.ktor.application.ApplicationCall
 
-interface HttpController {
+internal interface HttpController {
 
     suspend fun getMockData(call: ApplicationCall)
 

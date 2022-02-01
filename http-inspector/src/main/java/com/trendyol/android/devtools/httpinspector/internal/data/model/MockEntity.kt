@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "mock_entities")
-data class MockEntity(
+internal data class MockEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @ColumnInfo(name = "url") val url: String?,
     @ColumnInfo(name = "method") val method: String?,

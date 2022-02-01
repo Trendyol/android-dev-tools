@@ -1,12 +1,12 @@
 package com.trendyol.android.devtools.httpinspector.internal.domain.manager
 
-import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
+import com.trendyol.android.devtools.httpinspector.internal.domain.model.mock.MockData
 
-interface MockManager {
+internal interface MockManager {
 
     suspend fun getAll(): List<MockData>
 
-    suspend fun getAllAsJson(): Result<String>
+    suspend fun getAllAsJson(): String?
 
     suspend fun find(
         url: String,

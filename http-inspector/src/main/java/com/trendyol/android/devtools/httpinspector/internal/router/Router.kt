@@ -4,7 +4,7 @@ import io.ktor.application.Application
 import io.ktor.routing.Routing
 import io.ktor.routing.routing
 
-abstract class Router() {
+internal abstract class Router {
 
     abstract fun init(routing: Routing)
 

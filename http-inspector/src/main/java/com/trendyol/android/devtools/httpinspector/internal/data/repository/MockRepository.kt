@@ -3,7 +3,7 @@ package com.trendyol.android.devtools.httpinspector.internal.data.repository
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
 import kotlinx.coroutines.flow.Flow
 
-interface MockRepository {
+internal interface MockRepository {
 
     suspend fun getAll(): List<MockEntity>
 

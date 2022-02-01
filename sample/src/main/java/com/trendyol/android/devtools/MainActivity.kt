@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.httpinspector.MockInterceptor
-import com.trendyol.android.devtools.httpinspector.internal.ext.readString
 import com.trendyol.android.devtools.ui.main.MainFragment
 import kotlin.concurrent.fixedRateTimer
 import okhttp3.Call
@@ -60,14 +59,16 @@ class MainActivity : AppCompatActivity() {
             .post(reqBody)
             .build()
 
-        fixedRateTimer("timer", false, 3000L, 2 * 1000) {
+        fixedRateTimer("timer", false, 3000L, 2000) {
             client.newCall(req).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Log.d("###", "request fail: $e")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val dummyBody = runCatching { moshiAdapter.fromJson(response.body.readString()) }.getOrNull()
+                    val dummyBody = runCatching {
+                        moshiAdapter.fromJson(response.body?.string().orEmpty())
+                    }.getOrNull()
                     Log.d("###", "request success: $dummyBody")
                 }
             })
