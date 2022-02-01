@@ -16,7 +16,7 @@ abstract class MockDatabase : RoomDatabase() {
         fun create(context: Context): MockDatabase {
             return Room.databaseBuilder(
                 context,
-                MockDatabase::class.java, "mock-database-4"
+                MockDatabase::class.java, "mock-database-5"
             ).build()
         }
     }

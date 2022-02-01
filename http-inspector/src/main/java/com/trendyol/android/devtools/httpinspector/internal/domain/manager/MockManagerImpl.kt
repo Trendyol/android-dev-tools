@@ -1,5 +1,6 @@
 package com.trendyol.android.devtools.httpinspector.internal.domain.manager
 
+import android.util.Log
 import com.squareup.moshi.Moshi
 import com.trendyol.android.devtools.httpinspector.internal.WebServer
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
@@ -7,6 +8,7 @@ import com.trendyol.android.devtools.httpinspector.internal.data.repository.Mock
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.MockData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.RequestData
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ResponseData
+import com.trendyol.android.devtools.httpinspector.internal.ext.orZero
 
 class MockManagerImpl(
     private val mockRepository: MockRepository,
@@ -25,7 +27,7 @@ class MockManagerImpl(
                     body = entity.requestBody.orEmpty(),
                 ),
                 responseData = ResponseData(
-                    code = 200,
+                    code = entity.code.orZero(),
                     headers = entity.responseHeaders.orEmpty(),
                     body = entity.responseBody.orEmpty(),
                 )
@@ -47,7 +49,7 @@ class MockManagerImpl(
                         body = entity.requestBody.orEmpty(),
                     ),
                     responseData = ResponseData(
-                        code = 200,
+                        code = entity.code.orZero(),
                         headers = entity.responseHeaders.orEmpty(),
                         body = entity.responseBody.orEmpty(),
                     )
@@ -62,6 +64,7 @@ class MockManagerImpl(
         method: String,
         requestBody: String,
     ): MockData? {
+        Log.d("###", "find: u:$url m:$method b:$requestBody")
         val entity = mockRepository.find(url, method, requestBody) ?: return null
         return MockData(
             uid = entity.uid,
@@ -73,7 +76,7 @@ class MockManagerImpl(
                 body = entity.requestBody.orEmpty(),
             ),
             responseData = ResponseData(
-                code = 200,
+                code = entity.code.orZero(),
                 headers = entity.responseHeaders.orEmpty(),
                 body = entity.responseBody.orEmpty(),
             )
@@ -89,6 +92,7 @@ class MockManagerImpl(
                 requestBody = mockData.requestData.body,
                 responseHeaders = mockData.responseData.headers,
                 responseBody = mockData.responseData.body.toString(),
+                code = mockData.responseData.code,
             )
         )
     }

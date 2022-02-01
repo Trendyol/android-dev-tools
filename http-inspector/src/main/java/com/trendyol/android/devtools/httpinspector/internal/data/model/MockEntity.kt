@@ -13,5 +13,6 @@ data class MockEntity(
     @ColumnInfo(name = "requestBody") val requestBody: String?,
     @ColumnInfo(name = "responseHeaders") val responseHeaders: String?,
     @ColumnInfo(name = "responseBody") val responseBody: String?,
+    @ColumnInfo(name = "code") val code: Int?,
     @ColumnInfo(name = "isActive") val isActive: Boolean = true,
 )

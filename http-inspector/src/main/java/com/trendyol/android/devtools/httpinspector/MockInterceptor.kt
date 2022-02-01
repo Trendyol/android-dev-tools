@@ -1,7 +1,6 @@
 package com.trendyol.android.devtools.httpinspector
 
 import android.content.Context
-import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.httpinspector.internal.RequestQueue
@@ -55,13 +54,7 @@ class MockInterceptor(context: Context) : Interceptor {
 
     private val httpController: HttpController by lazy { HttpControllerImpl(mockManager) }
 
-    private val webServer = WebServer(
-        context,
-        interceptorScope,
-        moshi,
-        mockManager,
-        httpController,
-    )
+    private val webServer = WebServer(context, interceptorScope, httpController)
 
     private val requestQueue = RequestQueue()
 
@@ -90,20 +83,19 @@ class MockInterceptor(context: Context) : Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val r = chain.request()
-        val requestBody = r.body.readString()
+        val request = chain.request()
 
         val mockRequest = runBlocking {
             mockManager.find(
-                url = r.url.toString(),
-                method = r.method,
-                requestBody = requestBody,
+                url = request.url.toString(),
+                method = request.method,
+                requestBody = request.body.readString(),
             )
         }
 
         if (mockRequest != null) {
             return Response.Builder()
-                .request(r)
+                .request(request)
                 .message(DEFAULT_RESPONSE_MESSAGE)
                 .code(mockRequest.responseData.code)
                 .protocol(Protocol.HTTP_2)
@@ -121,20 +113,20 @@ class MockInterceptor(context: Context) : Interceptor {
             return chain.proceed(chain.request())
         }
 
-        val request = chain
+        val requestWithTimeout = chain
             .withConnectTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .withReadTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .withWriteTimeout(REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
             .request()
 
-        val response = chain.proceed(request)
+        val response = chain.proceed(requestWithTimeout)
 
         val carrier = requestQueue.add(
             requestData = RequestData(
-                url = request.url.toString(),
-                method = request.method,
-                headers = request.headers.toJson(moshi),
-                body = request.body.readString(),
+                url = requestWithTimeout.url.toString(),
+                method = requestWithTimeout.method,
+                headers = requestWithTimeout.headers.toJson(moshi),
+                body = requestWithTimeout.body.readString(),
             ),
             responseData = ResponseData(
                 code = response.code,
@@ -146,7 +138,7 @@ class MockInterceptor(context: Context) : Interceptor {
         val responseData = runBlocking { requestQueue.waitFor(carrier.id) }
 
         return Response.Builder()
-            .request(request)
+            .request(requestWithTimeout)
             .message(DEFAULT_RESPONSE_MESSAGE)
             .code(responseData.code)
             .protocol(Protocol.HTTP_2)
