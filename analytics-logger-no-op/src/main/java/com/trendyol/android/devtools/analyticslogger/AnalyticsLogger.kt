@@ -15,7 +15,7 @@ class AnalyticsLogger private constructor(
         fun report(
             key: String?,
             value: Any?,
-            platform: EventPlatform?,
+            platform: String?,
         ) {
             // no-op
         }

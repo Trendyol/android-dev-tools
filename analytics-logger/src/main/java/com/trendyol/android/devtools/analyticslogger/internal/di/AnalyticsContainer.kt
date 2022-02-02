@@ -15,7 +15,7 @@ internal class AnalyticsContainer(private val context: Context) {
         Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
     }
 
-    private val eventDatabase: EventDatabase by lazy { EventDatabase.create(context, moshi) }
+    private val eventDatabase: EventDatabase by lazy { EventDatabase.create(context) }
 
     private val eventRepository: EventRepository by lazy { EventRepositoryImpl(eventDatabase) }
 

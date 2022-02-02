@@ -1,18 +1,17 @@
 package com.trendyol.android.devtools.analyticslogger.internal.ui
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
+import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 
 internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
     diffCallback = object : DiffUtil.ItemCallback<Event>() {
@@ -61,18 +60,17 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
 
             textViewKey.text = event.key
             textViewValue.text = event.value
-            textViewPlatform.text = event.platform?.title.orEmpty()
+            textViewPlatform.text = event.platform
             textViewDate.text = event.date
-
-            textViewPlatform.background = createPlatformBackground(
-                Color.parseColor(event.platform?.color.orEmpty())
-            )
+            textViewPlatform.background = createPlatformBackground(event.platform)
         }
 
-        private fun createPlatformBackground(@ColorInt colorInt: Int): GradientDrawable {
+        private fun createPlatformBackground(platform: String?): GradientDrawable {
             return GradientDrawable().apply {
                 cornerRadius = 20f
-                color = ColorStateList.valueOf(colorInt)
+                color = ColorStateList.valueOf(
+                    ColorFactory.getColor(platform.orEmpty())
+                )
             }
         }
     }

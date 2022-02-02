@@ -1,7 +1,6 @@
 package com.trendyol.android.devtools.analyticslogger.internal.domain.manager
 
 import com.squareup.moshi.Moshi
-import com.trendyol.android.devtools.analyticslogger.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
@@ -38,7 +37,7 @@ internal class EventManagerImpl(
     override suspend fun insert(
         key: String?,
         value: Any?,
-        platform: EventPlatform?,
+        platform: String?,
     ) {
         val dateFormat = SimpleDateFormat("hh:mm:SS", Locale.getDefault())
         val date = dateFormat.format(Calendar.getInstance().time)

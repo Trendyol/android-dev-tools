@@ -33,7 +33,7 @@ class AnalyticsLogger private constructor(
     private fun reportEvent(
         key: String?,
         value: Any?,
-        platform: EventPlatform?,
+        platform: String?,
     ) = scope.launch {
         analyticsContainer.eventManager.insert(
             key = key,
@@ -47,7 +47,7 @@ class AnalyticsLogger private constructor(
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    private fun updateNotification(key: String?, platform: EventPlatform?) {
+    private fun updateNotification(key: String?, platform: String?) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -55,7 +55,7 @@ class AnalyticsLogger private constructor(
 
         val content = context.getString(
             R.string.analytics_logger_notification_content,
-            platform?.title,
+            platform,
             key
         )
 
@@ -100,7 +100,7 @@ class AnalyticsLogger private constructor(
         fun report(
             key: String?,
             value: Any?,
-            platform: EventPlatform?,
+            platform: String?,
         ) {
             instance?.reportEvent(
                 key = key,
