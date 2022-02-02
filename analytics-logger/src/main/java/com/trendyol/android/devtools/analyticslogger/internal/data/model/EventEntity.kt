@@ -3,7 +3,7 @@ package com.trendyol.android.devtools.analyticslogger.internal.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
+import com.trendyol.android.devtools.analyticslogger.EventPlatform
 
 @Entity(tableName = "event_entities")
 internal data class EventEntity(

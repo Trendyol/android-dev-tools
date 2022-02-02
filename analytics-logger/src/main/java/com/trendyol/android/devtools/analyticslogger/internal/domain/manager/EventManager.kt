@@ -1,6 +1,6 @@
 package com.trendyol.android.devtools.analyticslogger.internal.domain.manager
 
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
+import com.trendyol.android.devtools.analyticslogger.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 
 internal interface EventManager {

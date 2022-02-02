@@ -3,7 +3,7 @@ package com.trendyol.android.devtools.analyticslogger.internal.data.database
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
+import com.trendyol.android.devtools.analyticslogger.EventPlatform
 
 @ProvidedTypeConverter
 internal class PlatformConverter(private val moshi: Moshi) {

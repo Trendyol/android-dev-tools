@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.analyticslogger.api.platform
+package com.trendyol.android.devtools.analyticslogger
 
 enum class EventPlatform(val title: String, val color: String) {
 

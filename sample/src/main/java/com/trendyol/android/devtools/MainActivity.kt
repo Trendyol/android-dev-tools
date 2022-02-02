@@ -3,10 +3,7 @@ package com.trendyol.android.devtools
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
 import com.trendyol.android.devtools.ui.main.MainFragment
-import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity() {
 

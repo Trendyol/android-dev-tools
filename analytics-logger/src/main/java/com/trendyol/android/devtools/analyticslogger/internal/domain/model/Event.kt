@@ -1,6 +1,6 @@
 package com.trendyol.android.devtools.analyticslogger.internal.domain.model
 
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
+import com.trendyol.android.devtools.analyticslogger.EventPlatform
 
 internal data class Event(
     val uid: Int,

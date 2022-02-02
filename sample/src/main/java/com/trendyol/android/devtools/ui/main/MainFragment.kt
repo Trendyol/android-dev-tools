@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.trendyol.android.devtools.MainActivity
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
+import com.trendyol.android.devtools.analyticslogger.EventPlatform
 import com.trendyol.android.devtools.databinding.MainFragmentBinding
 import com.trendyol.android.devtools.debugmenu.DebugMenu
 import com.trendyol.android.devtools.ui.login.LoginFragment

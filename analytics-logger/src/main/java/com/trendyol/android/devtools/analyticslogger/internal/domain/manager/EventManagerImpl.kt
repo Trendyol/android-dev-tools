@@ -1,7 +1,7 @@
 package com.trendyol.android.devtools.analyticslogger.internal.domain.manager
 
 import com.squareup.moshi.Moshi
-import com.trendyol.android.devtools.analyticslogger.api.platform.EventPlatform
+import com.trendyol.android.devtools.analyticslogger.EventPlatform
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
