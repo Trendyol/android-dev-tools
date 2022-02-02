@@ -3,13 +3,11 @@ package com.trendyol.android.devtools.analyticslogger.internal.ui
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.trendyol.android.devtools.analyticslogger.R
+import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerItemEventBinding
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 
@@ -29,7 +27,11 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.analytics_logger_item_event, parent, false)
+            AnalyticsLoggerItemEventBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
         )
     }
 
@@ -37,17 +39,11 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
         getItem(position)?.let { holder.bind(it) }
     }
 
-    inner class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class EventViewHolder(
+        private val binding: AnalyticsLoggerItemEventBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private var boundItem: Event? = null
-
-        private val textViewKey: TextView by lazy { view.findViewById(R.id.textViewKey) }
-
-        private val textViewValue: TextView by lazy { view.findViewById(R.id.textViewValue) }
-
-        private val textViewPlatform: TextView by lazy { view.findViewById(R.id.textViewPlatform) }
-
-        private val textViewDate: TextView by lazy { view.findViewById(R.id.textViewDate) }
 
         init {
             itemView.setOnClickListener {
@@ -55,7 +51,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
             }
         }
 
-        fun bind(event: Event) {
+        fun bind(event: Event) = with(binding) {
             boundItem = event
 
             textViewKey.text = event.key

@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.trendyol.android.devtools.analyticslogger.R
+import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentDetailBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
@@ -23,29 +22,16 @@ internal class DetailFragment : Fragment() {
         ContextContainer.mainContainer.MainViewModelFactory()
     }
 
-    private lateinit var textViewKey: TextView
+    private lateinit var binding: AnalyticsLoggerFragmentDetailBinding
 
-    private lateinit var textViewValue: TextView
-
-    private lateinit var textViewDate: TextView
-
-    private lateinit var textViewPlatform: TextView
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.analytics_logger_fragment_detail, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = AnalyticsLoggerFragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(view)
         observeData()
-    }
-
-    private fun initView(view: View) {
-        textViewKey = view.findViewById(R.id.textViewKey)
-        textViewValue = view.findViewById(R.id.textViewValue)
-        textViewDate = view.findViewById(R.id.textViewDate)
-        textViewPlatform = view.findViewById(R.id.textViewPlatform)
     }
 
     private fun observeData() {
@@ -56,7 +42,7 @@ internal class DetailFragment : Fragment() {
         }
     }
 
-    private fun renderState(state: DetailState) {
+    private fun renderState(state: DetailState) = with(binding) {
         if (state is DetailState.Selected) {
             textViewKey.text = state.event.key
             textViewValue.text = state.event.json

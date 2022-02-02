@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.android.devtools.analyticslogger.R
+import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentEventsBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.ui.EventAdapter
@@ -33,24 +33,23 @@ internal class EventsFragment : Fragment() {
 
     private val eventAdapter: EventAdapter by lazy { EventAdapter() }
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: AnalyticsLoggerFragmentEventsBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.analytics_logger_fragment_events, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = AnalyticsLoggerFragmentEventsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        initView(view)
+        initView()
         observeData()
     }
 
-    private fun initView(view: View) {
-        recyclerView = view.findViewById(R.id.recyclerView)
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = eventAdapter
+    private fun initView() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = eventAdapter
 
         eventAdapter.onItemSelected = { event ->
             navigateToEventDetail(event)
