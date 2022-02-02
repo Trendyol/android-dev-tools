@@ -22,10 +22,12 @@ internal class DetailFragment : Fragment() {
         ContextContainer.mainContainer.MainViewModelFactory()
     }
 
-    private lateinit var binding: AnalyticsLoggerFragmentDetailBinding
+    private var _binding: AnalyticsLoggerFragmentDetailBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = AnalyticsLoggerFragmentDetailBinding.inflate(inflater, container, false)
+        _binding = AnalyticsLoggerFragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,6 +61,11 @@ internal class DetailFragment : Fragment() {
                 ColorFactory.getColor(platform.orEmpty())
             )
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     companion object {

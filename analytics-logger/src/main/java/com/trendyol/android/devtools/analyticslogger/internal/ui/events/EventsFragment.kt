@@ -31,12 +31,14 @@ internal class EventsFragment : Fragment() {
         ContextContainer.mainContainer.MainViewModelFactory()
     }
 
-    private val eventAdapter: EventAdapter by lazy { EventAdapter() }
+    private var _binding: AnalyticsLoggerFragmentEventsBinding? = null
 
-    private lateinit var binding: AnalyticsLoggerFragmentEventsBinding
+    private val binding get() = _binding!!
+
+    private var eventAdapter: EventAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = AnalyticsLoggerFragmentEventsBinding.inflate(inflater, container, false)
+        _binding = AnalyticsLoggerFragmentEventsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,10 +50,11 @@ internal class EventsFragment : Fragment() {
     }
 
     private fun initView() {
+        eventAdapter = EventAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = eventAdapter
 
-        eventAdapter.onItemSelected = { event ->
+        eventAdapter?.onItemSelected = { event ->
             navigateToEventDetail(event)
         }
     }
@@ -59,19 +62,19 @@ internal class EventsFragment : Fragment() {
     private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.eventsFlow.collectLatest {
-                eventAdapter.submitData(it)
+                eventAdapter?.submitData(it)
             }
         }
     }
 
     private fun setQuery(query: String?) {
         viewModel.setQuery(query)
-        eventAdapter.refresh()
+        eventAdapter?.refresh()
     }
 
     private fun deleteAll() {
         viewModel.deleteAll()
-        eventAdapter.refresh()
+        eventAdapter?.refresh()
     }
 
     private fun navigateToEventDetail(event: Event) {
@@ -111,6 +114,12 @@ internal class EventsFragment : Fragment() {
         inflater.inflate(R.menu.analytics_logger_menu_events, menu)
         initSearchView(menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        eventAdapter = null
+        super.onDestroyView()
     }
 
     companion object {

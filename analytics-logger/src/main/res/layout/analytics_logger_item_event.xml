@@ -65,5 +65,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="16:53:43" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
