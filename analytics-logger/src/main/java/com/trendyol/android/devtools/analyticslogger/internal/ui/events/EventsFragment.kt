@@ -36,7 +36,7 @@ internal class EventsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_events, container, false)
+        return inflater.inflate(R.layout.analytics_logger_fragment_events, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,7 +109,7 @@ internal class EventsFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_events, menu)
+        inflater.inflate(R.menu.analytics_logger_menu_events, menu)
         initSearchView(menu)
         super.onCreateOptionsMenu(menu, inflater)
     }

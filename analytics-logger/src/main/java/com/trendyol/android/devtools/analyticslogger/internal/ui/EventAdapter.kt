@@ -29,7 +29,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.analytics_logger_item_event, parent, false)
         )
     }
 

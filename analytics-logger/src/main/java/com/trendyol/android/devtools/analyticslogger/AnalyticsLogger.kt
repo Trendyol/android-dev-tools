@@ -79,7 +79,7 @@ class AnalyticsLogger private constructor(
             val channel = NotificationChannel(
                 context.getString(R.string.analytics_logger_notification_channel_id),
                 context.getString(R.string.analytics_logger_notification_channel_name),
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_LOW,
             )
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

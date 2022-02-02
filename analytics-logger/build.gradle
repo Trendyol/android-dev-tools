@@ -32,19 +32,18 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
-    implementation("androidx.room:room-runtime:2.4.1")
-    implementation("androidx.room:room-ktx:2.4.1")
-    implementation("androidx.room:room-paging:2.4.1")
-    kapt("androidx.room:room-compiler:2.4.1")
-    annotationProcessor("androidx.room:room-compiler:2.4.1")
+    implementation("androidx.room:room-runtime:2.3.0")
+    implementation("androidx.room:room-ktx:2.3.0")
+    kapt("androidx.room:room-compiler:2.3.0")
+    annotationProcessor("androidx.room:room-compiler:2.3.0")
 
     implementation "com.squareup.moshi:moshi-kotlin:1.13.0"
-    implementation "androidx.paging:paging-runtime-ktx:3.1.0"
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0"
 }
 
 apply from: 'publish.gradle'
