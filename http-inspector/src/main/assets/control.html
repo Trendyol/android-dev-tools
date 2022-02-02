@@ -86,27 +86,36 @@
                 </div>
                 <div class="col">
                     <h6>Request History</h6>
-                    <input type="text" class="form-control input-filter" id="inputFilter" placeholder="Filter requests...">
                     <ul class="list-group" id="requestList"></ul>
                 </div>
             </div>
         </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                ...
+            </div>
+        </div>
         <script src="./js/jquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script>
-            const inputRequestUrl = document.getElementById("requestUrl")
-            const inputRequestMethod = document.getElementById("requestMethod")
-            const inputRequestHeaders = document.getElementById("requestHeaders")
-            const inputRequestBody = document.getElementById("requestBody")
+            let currentId = "";
+            let autoSkip = true;
 
-            const inputResponseHeaders = document.getElementById("responseHeaders")
-            const inputResponseBody = document.getElementById("responseBody")
-            const inputResponseCode = document.getElementById("responseCode");
+            const inputRequestUrl = $("#requestUrl");
+            const inputRequestMethod = $("#requestMethod");
+            const inputRequestHeaders = $("#requestHeaders");
+            const inputRequestBody = $("#requestBody");
 
-            const requestList = document.getElementById("requestList")
-            const buttonNext = document.getElementById("next")
+            const inputResponseHeaders = $("#responseHeaders");
+            const inputResponseBody = $("#responseBody");
+            const inputResponseCode = $("#responseCode");
 
-            var currentId = "";
-            var autoSkip = true;
+            const requestList = $("#requestList");
+            const buttonNext = $("#next");
 
             const socket = new WebSocket("ws://127.0.0.1:5001/echo");
 
@@ -115,57 +124,46 @@
             };
 
             socket.onmessage = function (event) {
-                var data = JSON.parse(event.data);
-				updatePreviousItems()
-				
+                const data = JSON.parse(event.data);
+                updatePreviousItems()
+
                 currentId = data["id"]
-				
-                const requestListItem = document.createElement('li');
-                requestListItem.className = "list-group-item"
-                requestListItem.innerHTML = getListItem(data)
-                requestList.prepend(requestListItem)
+
+                requestList.prepend(getListItem(data))
 
                 console.log(JSON.stringify(data["responseData"]["body"]));
-                console.log("autoskip: " + autoSkip)
 
-                inputRequestUrl.value = data["requestData"]["url"];
-                inputRequestMethod.value = data["requestData"]["method"];
-                inputRequestHeaders.value = data["requestData"]["headers"];
-                inputRequestBody.value = data["requestData"]["body"];
+                inputRequestUrl.val(data["requestData"]["url"]);
+                inputRequestMethod.val(data["requestData"]["method"]);
+                inputRequestHeaders.val(data["requestData"]["headers"]);
+                inputRequestBody.val(data["requestData"]["body"]);
 
-                inputResponseHeaders.value = JSON.stringify(JSON.parse(data["responseData"]["headers"]), null, 2);
-                inputResponseBody.value = JSON.stringify(JSON.parse(data["responseData"]["body"]), null, 2);
-                inputResponseCode.value = data["responseData"]["code"];
+                inputResponseHeaders.val(JSON.stringify(JSON.parse(data["responseData"]["headers"]), null, 2));
+                inputResponseBody.val(JSON.stringify(JSON.parse(data["responseData"]["body"]), null, 2));
+                inputResponseCode.val(data["responseData"]["code"]);
 
                 if (autoSkip) {
                     next();
                 } else {
-                    buttonNext.disabled = false;
+                    buttonNext.attr("disabled", false);
                 }
             }
 
             function getListItem(data) {
-                return '<span class="badge bg-primary">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
+                return '<li class="list-group-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">'
+                + '<span class="badge bg-primary" data-bs-toggle="offcanvas">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
                 + '<span class="badge rounded-pill bg-light text-dark">' + data["requestData"]["method"] + '</span>'
                 + '<br>'
                 + '<div class="item-content">' + data["requestData"]["url"] + '</div>'
-                + '<br>'
-                + '<small>' + getRequestDate(data) + '</small>';
-            }
-
-            function getHeadersAsString(headers) {
-                var headerString = "";
-                for (const [key, value] of Object.entries(headers)) {
-                    headerString += (key + ": " + value + "\n");
-                }
-                return headerString;
+                + '<small>' + getRequestDate(data) + '</small>'
+                + '</li>';
             }
 			
 			function updatePreviousItems() {
-				return requestList.innerHTML = requestList.innerHTML.replace(
+				/*return requestList.innerHTML = requestList.innerHTML.replace(
 					'<span class="badge bg-primary">Active</span>', 
 					'<span class="badge bg-secondary">Complete</span>'
-				)
+				)*/
 			}
 
             function next() {
@@ -176,16 +174,16 @@
                 const newData = {
                     "id": currentId,
                     "responseData": {
-                        "code": inputResponseCode.value,
-                        "headers": inputResponseHeaders.value,
-                        "body": inputResponseBody.value,
+                        "code": inputResponseCode.val(),
+                        "headers": inputResponseHeaders.val(),
+                        "body": inputResponseBody.val(),
                     }
                 }
 
                 socket.send(JSON.stringify(newData));
 
                 currentId = "";
-                buttonNext.disabled = true;
+                buttonNext.attr("disabled", true)
                 clearInputs();
             }
 
@@ -199,14 +197,14 @@
             }
 
             function clearInputs() {
-                inputRequestUrl.value = ""
-                inputRequestMethod.value = ""
-                inputRequestHeaders.value = ""
-                inputRequestBody.value = ""
+                inputRequestUrl.val("")
+                inputRequestMethod.val("")
+                inputRequestHeaders.val("")
+                inputRequestBody.val("")
 
-                inputResponseHeaders.value = ""
-                inputResponseBody.value = ""
-                inputResponseCode.value = ""
+                inputResponseHeaders.val("")
+                inputResponseBody.val("")
+                inputResponseCode.val("")
             }
         </script>
     </body>
