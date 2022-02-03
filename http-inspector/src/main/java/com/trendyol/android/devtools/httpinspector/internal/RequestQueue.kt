@@ -28,14 +28,16 @@ internal class RequestQueue {
         requestData: RequestData,
         responseData: ResponseData,
         requestTimeInMillis: Long,
-        responseTimeInMillis: Long
+        responseTimeInMillis: Long,
+        cURL: String
     ): Carrier {
         val carrier = Carrier(
             id.incrementAndGet(),
             requestData,
             responseData,
             requestTimeInMillis,
-            responseTimeInMillis
+            responseTimeInMillis,
+            cURL
         )
         synchronized(queue) {
             if (queue.isEmpty()) queueChannel.trySend(carrier)

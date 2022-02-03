@@ -6,4 +6,5 @@ internal data class Carrier(
     val responseData: ResponseData,
     val requestTimeInMillis: Long,
     val responseTimeInMillis: Long,
+    val cURL: String
 )

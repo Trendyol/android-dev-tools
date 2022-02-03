@@ -36,6 +36,7 @@ import okhttp3.Interceptor
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
+import java.lang.StringBuilder
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -131,7 +132,8 @@ class MockInterceptor(context: Context) : Interceptor {
                 body = response.body.readString(),
             ),
             requestTimeInMillis = requestTimeInMillis,
-            responseTimeInMillis = responseTimeInMillis
+            responseTimeInMillis = responseTimeInMillis,
+            cURL = request.toCurl()
         )
 
         // Wait manipulated response from the web client.
@@ -161,6 +163,17 @@ class MockInterceptor(context: Context) : Interceptor {
                 }
             }
             .build()
+    }
+
+    private fun Request.toCurl(): String {
+        return StringBuilder().apply {
+            append("curl -X ${this@toCurl.method}")
+            this@toCurl.headers.forEach { header ->
+                append(" -H \"${header.first}: ${header.second}\"")
+            }
+            append(" ")
+            append(this@toCurl.url.toString())
+        }.toString()
     }
 
     companion object {
