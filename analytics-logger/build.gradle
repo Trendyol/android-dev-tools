@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         minSdk 21
-        targetSdk 30
+        targetSdk 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -40,13 +40,13 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
-    implementation("androidx.room:room-runtime:2.3.0")
-    implementation("androidx.room:room-ktx:2.3.0")
-    kapt("androidx.room:room-compiler:2.3.0")
-    annotationProcessor("androidx.room:room-compiler:2.3.0")
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt("androidx.room:room-compiler:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
 
-    implementation "com.squareup.moshi:moshi-kotlin:1.13.0"
-    implementation "androidx.paging:paging-runtime-ktx:3.0.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "androidx.paging:paging-runtime-ktx:3.1.0"
 }
 
 apply from: 'publish.gradle'

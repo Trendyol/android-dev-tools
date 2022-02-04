@@ -91,7 +91,7 @@ internal class EventsFragment : Fragment() {
             searchManager.getSearchableInfo(requireActivity().componentName)
         )
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }

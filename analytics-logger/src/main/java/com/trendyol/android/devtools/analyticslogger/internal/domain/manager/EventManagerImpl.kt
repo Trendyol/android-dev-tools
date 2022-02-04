@@ -6,7 +6,6 @@ import com.trendyol.android.devtools.analyticslogger.internal.data.repository.Ev
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.ext.beautify
 import java.text.SimpleDateFormat
-import java.util.*
 
 internal class EventManagerImpl(
     private val eventRepository: EventRepository,
