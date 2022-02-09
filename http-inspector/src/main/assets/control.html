@@ -17,9 +17,6 @@
                 margin: 10px 0 0 0;
                 cursor: pointer;
             }
-            .input-filter {
-                margin: 0 0 10px 0;
-            }
         </style>
     </head>
     <body>
@@ -80,7 +77,7 @@
                             <button type="button" class="btn btn-primary" id="next" onClick="next()" disabled>Continue</button>
 
                             <input type="checkbox" class="btn-check" id="autoSkip" autocomplete="off" onchange="toggleAutoSkip()" checked>
-                            <label class="btn btn-outline-primary" for="autoSkip">Auto Skip</label>
+                            <label class="btn btn-outline-primary" for="autoSkip">Toggle Auto Skip</label>
                         </div>
                     </div>
                 </div>
@@ -90,17 +87,8 @@
                 </div>
             </div>
         </div>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-            <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                ...
-            </div>
-        </div>
         <script src="./js/jquery.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="./js/bootstrap.js"></script>
         <script>
             let currentId = "";
             let autoSkip = true;
@@ -158,12 +146,9 @@
                 + '<small>' + getRequestDate(data) + '</small>'
                 + '</li>';
             }
-			
+
 			function updatePreviousItems() {
-				/*return requestList.innerHTML = requestList.innerHTML.replace(
-					'<span class="badge bg-primary">Active</span>', 
-					'<span class="badge bg-secondary">Complete</span>'
-				)*/
+                requestList.find(".badge").removeClass("bg-primary").addClass("bg-secondary")
 			}
 
             function next() {

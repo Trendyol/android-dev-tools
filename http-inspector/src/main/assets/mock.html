@@ -3,6 +3,13 @@
         <meta charset="UTF-8">
         <title>Mock Data</title>
         <link href="./css/bootstrap.css" rel="stylesheet">
+        <style>
+            .container-custom {
+                width: 96%;
+                margin: 20px auto;
+            }
+            textarea { resize: none !important; }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -27,7 +34,7 @@
             </div>
         </nav>
         <br><br>
-        <div class="container">
+        <div class="container-custom">
             <div class="row justify-content-start">
                 <table class="table table-hover mock-list">
                     <tr>
@@ -76,30 +83,28 @@
                     type: "GET",
                     success: function (response) {
                         const data = response;
-                        $( ".data-row" ).remove();
+                        $(".data-row").remove();
                         data.forEach((element) => {
-                            console.log(element);
-
-                            const s = element.isActive === true ?
+                            const checkbox = element.isActive === true ?
                                 "<td><input class=\"form-check-input status\" type=\"checkbox\" id=\"flexCheckDefault\" data-id=\"" + element.uid + "\" checked></td>"
                             : "<td><input class=\"form-check-input status\" type=\"checkbox\" id=\"flexCheckDefault\" data-id=\"" + element.uid + "\"></td>";
 
                             const row = "<tr class='data-row'>" +
-                                s +
-                                "<td>" + element.requestData.url + "</td>" +
+                                checkbox +
+                                "<td><textarea rows='4' cols='24' disabled>" + element.requestData.url + "sdffdsdfsdfsdfsdfsdfsfdsfdsdfsdfsdfsasdsawqwqeqewqweqwqeweqewqweqwqeweqwqewqeweqwq</textarea></td>" +
                                 "<td>" + element.requestData.method + "</td>" +
-                                "<td>" + element.requestData.headers + "</td>" +
-                                "<td>" + element.requestData.body + "</td>" +
-                                "<td>" + element.responseData.headers + "</td>" +
-                                "<td>" + element.responseData.body + "</td>" +
+                                "<td><textarea rows='4' cols='24' disabled>" + element.requestData.headers + "</textarea></td>" +
+                                "<td><textarea rows='4' cols='24' disabled>" + element.requestData.body + "</textarea></td>" +
+                                "<td><textarea rows='4' cols='24' disabled>" + element.responseData.headers + "</textarea></td>" +
+                                "<td><textarea rows='4' cols='24' disabled>" + element.responseData.body + "</textarea></td>" +
                                 "<td><a href=\"#\" class=\"delete\" data-id=\"" + element.uid + "\">Delete</a></td>" +
                                 "</tr>";
 
                             $( ".mock-list" ).append(row);
                         })
                     },
-                    error: function (xhr, status) {
-                        alert("error" + xhr + status);
+                    error: function (xhr) {
+                        console.log(xhr);
                     }
                 });
             }
@@ -113,10 +118,8 @@
                     success: function(res) {
 
                     },
-                    error: function(xhr, status, err) {
+                    error: function(xhr) {
                         console.log(xhr);
-                        console.log(status);
-                        console.log(err);
                     }
                 });
             }

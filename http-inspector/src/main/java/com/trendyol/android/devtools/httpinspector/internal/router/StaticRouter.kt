@@ -52,5 +52,13 @@ internal class StaticRouter(private val appContext: Context) : Router() {
                 contentType = ContentType.Text.JavaScript,
             )
         }
+        routing.get("/js/bootstrap.js") {
+            val fileData = FileReader.readAssetFile(appContext, "js/bootstrap.js")
+            call.respondText(
+                status = HttpStatusCode.OK,
+                text = fileData.orEmpty(),
+                contentType = ContentType.Text.JavaScript,
+            )
+        }
     }
 }
