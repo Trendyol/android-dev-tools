@@ -1,7 +1,7 @@
 <resources>
     <string name="dev_tools_notification_title">Dev Tools</string>
     <string name="dev_tools_notification_description">Tap to open Dev Tools</string>
-    <string name="dev_tools_notification_name">Trendyol Dev Tools</string>
+    <string name="dev_tools_notification_name">Android Dev Tools</string>
 
     <string name="dev_tools_action_change_environment">Change Environment</string>
     <string name="dev_tools_action_debug_page">Debug Page</string>

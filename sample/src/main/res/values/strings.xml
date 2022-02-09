@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Trendyol Dev Tools</string>
+    <string name="app_name">Android Dev Tools</string>
     <string name="environment_manager">Environment Manager</string>
     <string name="debug_menu">Debug Menu</string>
     <string name="update_environments">Update Environments</string>
