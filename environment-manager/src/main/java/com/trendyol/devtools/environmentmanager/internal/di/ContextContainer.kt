@@ -16,8 +16,7 @@ internal object ContextContainer {
             context
         } else {
             throw NullPointerException(
-                "Dev Tools library is not initialized, please call TrendyolDevTools.init(Application) on " +
-                    "Application.onCreate to use Trendyol Dev Tools."
+                "Library is not initialized, please call init(Application) on Application.onCreate()"
             )
         }
 

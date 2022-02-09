@@ -1,6 +1,27 @@
+# Root EditorConfig that specifies project-level essential code-style rules.
+# See: https://editorconfig.org
+
 root = true
 
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+tab_width = 4
+max_line_length = 120
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[.editorconfig]
+# Disable space after comma because it can break rule patterns
+# See: https://youtrack.jetbrains.com/issue/IDEA-242506
+ij_editorconfig_space_after_comma = false
+
 [*.{kt,kts}]
-indent_size=4
-insert_final_newline=true
-max_line_length=120
+ij_kotlin_imports_layout = *
+# Don't use star imports:
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+# Disabled Ktlint rules:
+disabled_rules = max-line-length,import-ordering

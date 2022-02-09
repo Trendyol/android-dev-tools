@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dev_tools_autofill_dialog_title">Input Autofill</string>
+    <string name="dev_tools_autofill_dialog_title">Autofill Service</string>
 
-    <string name="dev_tools_autofill_message">Test inputs detected. Do you want to autofill?</string>
+    <string name="dev_tools_autofill_message">Test inputs are detected. Do you want to autofill?</string>
     <string name="dev_tools_autofill_action_autofill">Autofill</string>
     <string name="dev_tools_autofill_history_list_item_description">Last used</string>
 </resources>
