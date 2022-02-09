@@ -37,8 +37,8 @@ android {
 dependencies {
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "com.google.android.material:material:$material_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
