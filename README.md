@@ -3,9 +3,10 @@
 Android Dev Tools is a library that contains various QA/Debug tools to speed up and streamline the development progress.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
- 
-## Tools ## 
+
+## Tools ##
 * [Autofill Service](#autofill-service)
+* [Analytics Logger](#analytics-logger)
 * [Environment Manager](#environment-manager)
 * [Debug Menu](#debug-menu)
 
@@ -15,18 +16,48 @@ Autofill Service allows developers and QA to fill form inputs automatically with
 ### How it Works?
 It observes both activity and fragment lifecycle events via application class to detect layout inflations.
 After each inflation, it seeks for determined input views in the inflated layout.
-If it has all required inputs, then shows the autofill action. 
-Autofill data that suitable with inflated form inputs are shown in the selection dialog. 
+If it has all required inputs, then shows the autofill action.
+Autofill data that suitable with inflated form inputs are shown in the selection dialog.
 
 ### Demo
 <table>
  	<tr>
-  		<td><img src="/art/Screenshot_1.png" width="200" /></td>
-   		<td><img src="/art/Screenshot_2.png" width="200" /></td>
-		<td><img src="/art/Screenshot_3.png" width="200" /></td>
-		<td><img src="/art/Screenshot_4.png" width="200" /></td>
+  		<td><img src="/art/autofill_service_1.png" width="200" /></td>
+  		<td><img src="/art/autofill_service_2.png" width="200" /></td>
+  		<td><img src="/art/autofill_service_3.png" width="200" /></td>
+  		<td><img src="/art/autofill_service_4.png" width="200" /></td>
  	</tr>
 </table>
+
+### Setup
+```gradle
+dependencies {
+    debugImplementation ''
+}
+```
+
+## Analytics Logger
+It allows to log & inspect sent analytics events.
+
+### Demo
+<table>
+ 	<tr>
+  		<td><img src="/art/analytics_logger_1.png" width="200" /></td>
+  		<td><img src="/art/analytics_logger_2.png" width="200" /></td>
+  		<td><img src="/art/analytics_logger_3.png" width="200" /></td>
+ 	</tr>
+</table>
+
+### Usage
+```kotlin
+    AnalyticsLogger.init(this)
+    
+    AnalyticsLogger.report(
+        key = "eventKey",
+        value = EventModel("TestAction", "TestCategory", "TestScreen"), // :Any
+        platform = "EventPlatform",
+    )
+```
 
 ### Setup
 ```gradle
@@ -46,7 +77,7 @@ dependencies {
 ```
 
 ## Debug Menu
-It provides a debug page build with predefined custom action and events. 
+It provides a debug page build with predefined custom action and events.
 
 ### Setup
 ```gradle
