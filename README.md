@@ -7,7 +7,7 @@ Android Dev Tools is a library that contains various QA/Debug tools to speed up 
 ## Tools ##
 * [Autofill Service](#autofill-service)
 * [Analytics Logger](#analytics-logger)
-* [Http Inspector (Alpha)](#http-inspector)
+* [Http Inspector (Alpha)](#http-inspector-alpha)
 * [Environment Manager](#environment-manager)
 * [Debug Menu](#debug-menu)
 
