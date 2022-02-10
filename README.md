@@ -29,6 +29,40 @@ Autofill data that suitable with inflated form inputs are shown in the selection
  	</tr>
 </table>
 
+## Usage
+```kotlin
+AutofillService.Builder(this)
+    .withFilePath("autofill.json")
+    .build()
+```
+
+## Configuration
+Configuration Json file can be located in /assets folder. You can define autofill data by following this structure.
+You should also note that the order of the defined form field resource id's and order of input values must match.
+```json
+{
+  "forms": [
+    {
+      "fields": ["inputEmail", "inputPassword"], // Form input resource id's
+      "categories": {
+        "Temporary Users": [ // Autofill data category
+          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
+        ],
+        "Test Users": [
+          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
+          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
+        ]
+      }
+    }
+  ]
+}
+```
+
 ### Setup
 ```gradle
 dependencies {
@@ -50,13 +84,13 @@ It allows to log & inspect sent analytics events.
 
 ### Usage
 ```kotlin
-    AnalyticsLogger.init(this)
-    
-    AnalyticsLogger.report(
-        key = "eventKey",
-        value = EventModel("TestAction", "TestCategory", "TestScreen"), // :Any
-        platform = "EventPlatform",
-    )
+AnalyticsLogger.init(this)
+
+AnalyticsLogger.report(
+    key = "eventKey",
+    value = EventModel("TestAction", "TestCategory", "TestScreen"), // :Any
+    platform = "EventPlatform",
+)
 ```
 
 ### Setup
