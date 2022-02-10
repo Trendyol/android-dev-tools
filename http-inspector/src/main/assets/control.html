@@ -138,8 +138,8 @@
             }
 
             function getListItem(data) {
-                return '<li class="list-group-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">'
-                + '<span class="badge bg-primary" data-bs-toggle="offcanvas">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
+                return '<li class="list-group-item">'
+                + '<span class="badge bg-primary">Active</span> <span class="badge bg-success">' + data["responseData"]["code"] + '</span> '
                 + '<span class="badge rounded-pill bg-light text-dark">' + data["requestData"]["method"] + '</span>'
                 + '<br>'
                 + '<div class="item-content">' + data["requestData"]["url"] + '</div>'
