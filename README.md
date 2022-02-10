@@ -7,7 +7,7 @@ Android Dev Tools is a library that contains various QA/Debug tools to speed up 
 ## Tools ##
 * [Autofill Service](#autofill-service)
 * [Analytics Logger](#analytics-logger)
-* [Http Inspector](#http-inspector)
+* [Http Inspector (Alpha)](#http-inspector)
 * [Environment Manager](#environment-manager)
 * [Debug Menu](#debug-menu)
 
@@ -67,12 +67,12 @@ You should also note that the order of the defined form field resource id's and 
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation ''
+    debugImplementation "com.trendyol"
 }
 ```
 
 ## Analytics Logger
-It allows to log & inspect sent analytics events.
+It allows to log & inspect analytics events sent by client.
 
 ### Demo
 <table>
@@ -97,11 +97,11 @@ AnalyticsLogger.report(
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation ''
+    debugImplementation "com.trendyol"
 }
 ```
 
-## Http Inspector
+## Http Inspector (Alpha)
 It provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
 
 ### Manipulating Responses
@@ -128,13 +128,27 @@ With this feature, we can imitate the API by preparing mock request and response
 It provides a web interface where we can enter mock request and response data, and allows us to enable/disable the previously added mock data.
 The point to be considered is which requests will be answered with mock data rather than going to the real API is decided by comparing the URL, method and request body data of the request in the real request and mock data. If this data is completely matched, the mock response will be served to the client.
 
+### Usage
+```kotlin
+val client = OkHttpClient.Builder()
+    .addInterceptor(MockInterceptor(context))
+    .build()
+```
+
+### Setup
+```gradle
+dependencies {
+    debugImplementation "com.trendyol"
+}
+```
+
 ## Environment Manager
 It provides environment selection dialog can be opened from the app notifications with predefined environment data.
 
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation ''
+    debugImplementation "com.trendyol"
 }
 ```
 
@@ -144,7 +158,7 @@ It provides a debug page build with predefined custom action and events.
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation ''
+    debugImplementation "com.trendyol"
 }
 ```
 

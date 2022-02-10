@@ -50,16 +50,6 @@ class MainFragment : Fragment() {
             value = EventModel("TestAction", "TestCategory", "TestScreen"),
             platform = "Firebase",
         )
-        AnalyticsLogger.report(
-            key = "OnMainFragmentSeenEvent",
-            value = EventModel("TestAction", "TestCategory", "TestScreen"),
-            platform = "Delphoi",
-        )
-        AnalyticsLogger.report(
-            key = "OnMainFragmentSeenEvent",
-            value = EventModel("TestAction", "TestCategory", "TestScreen"),
-            platform = "Custom",
-        )
     }
 
     data class EventModel(
