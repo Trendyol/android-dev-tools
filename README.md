@@ -105,6 +105,11 @@ dependencies {
 It provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
 
 ### Manipulating Responses
+<table>
+ 	<tr>
+  		<td><img src="/art/http_inspector_1.png" width="400" /></td>
+ 	</tr>
+</table>
 Initially, the request manipulation is not active and requests sent from the client won't be blocked.
 By pressing the "Toggle Auto Skip" button, we can start blocking the requests sent from the client.
 Blocked requests will shown in the web interface in order and will allow manipulating the response data from the panel.
@@ -113,6 +118,12 @@ The next request will be sent to the interface only after the current one is con
 Thus, all requests will be synced and it will be possible to manipulate all of them.
 
 ### Mocking Requests
+<table>
+ 	<tr>
+  		<td><img src="/art/http_inspector_2.png" width="400" /></td>
+  		<td><img src="/art/http_inspector_3.png" width="400" /></td>
+ 	</tr>
+</table>
 With this feature, we can imitate the API by preparing mock request and response data for the REST API that has not been prepared yet.
 It provides a web interface where we can enter mock request and response data, and allows us to enable/disable the previously added mock data.
 The point to be considered is which requests will be answered with mock data rather than going to the real API is decided by comparing the URL, method and request body data of the request in the real request and mock data. If this data is completely matched, the mock response will be served to the client.
