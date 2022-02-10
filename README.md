@@ -7,6 +7,7 @@ Android Dev Tools is a library that contains various QA/Debug tools to speed up 
 ## Tools ##
 * [Autofill Service](#autofill-service)
 * [Analytics Logger](#analytics-logger)
+* [Http Inspector](#http-inspector)
 * [Environment Manager](#environment-manager)
 * [Debug Menu](#debug-menu)
 
@@ -29,14 +30,14 @@ Autofill data that suitable with inflated form inputs are shown in the selection
  	</tr>
 </table>
 
-## Usage
+### Usage
 ```kotlin
 AutofillService.Builder(this)
     .withFilePath("autofill.json")
     .build()
 ```
 
-## Configuration
+### Configuration
 Configuration Json file can be located in /assets folder. You can define autofill data by following this structure.
 You should also note that the order of the defined form field resource id's and order of input values must match.
 ```json
@@ -45,7 +46,7 @@ You should also note that the order of the defined form field resource id's and 
     {
       "fields": ["inputEmail", "inputPassword"], // Form input resource id's
       "categories": {
-        "Temporary Users": [ // Autofill data category
+        "Temporary Users": [
           { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
           { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
           { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
@@ -99,6 +100,22 @@ dependencies {
     debugImplementation ''
 }
 ```
+
+## Http Inspector
+It provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
+
+### Manipulating Responses
+Initially, the request manipulation is not active and requests sent from the client won't be blocked.
+By pressing the "Toggle Auto Skip" button, we can start blocking the requests sent from the client.
+Blocked requests will shown in the web interface in order and will allow manipulating the response data from the panel.
+During this period, other requests sent will be held in a queue on the client.
+The next request will be sent to the interface only after the current one is confirmed.
+Thus, all requests will be synced and it will be possible to manipulate all of them.
+
+### Mocking Requests
+With this feature, we can imitate the API by preparing mock request and response data for the REST API that has not been prepared yet.
+It provides a web interface where we can enter mock request and response data, and allows us to enable/disable the previously added mock data.
+The point to be considered is which requests will be answered with mock data rather than going to the real API is decided by comparing the URL, method and request body data of the request in the real request and mock data. If this data is completely matched, the mock response will be served to the client.
 
 ## Environment Manager
 It provides environment selection dialog can be opened from the app notifications with predefined environment data.
