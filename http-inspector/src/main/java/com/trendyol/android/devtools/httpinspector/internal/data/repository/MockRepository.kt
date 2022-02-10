@@ -1,7 +1,6 @@
 package com.trendyol.android.devtools.httpinspector.internal.data.repository
 
 import com.trendyol.android.devtools.httpinspector.internal.data.model.MockEntity
-import kotlinx.coroutines.flow.Flow
 
 internal interface MockRepository {
 
