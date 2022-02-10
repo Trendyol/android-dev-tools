@@ -16,21 +16,6 @@
           { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
         ]
       }
-    },
-    {
-      "fields": ["inputCardNo", "inputCardMonth", "inputCardYear", "inputCardCvv"],
-      "categories": {
-        "\uD83D\uDCB0 Have a Balance": [
-          { "description": "Has more then one order history.", "values": ["1234 1234 1234 1234", "12", "21", "123"] },
-          { "description": "Has more then one order history.", "values": ["1111 1111 1111 1111", "12", "21", "123"] },
-          { "description": "Has more then one order history.", "values": ["2222 2222 2222 2222", "12", "21", "123"] }
-        ],
-        "\uD83D\uDCB0 Does not Have a Balance": [
-          { "description": "Has more then one order history.", "values": ["1234 1234 1234 1234", "12", "21", "123"] },
-          { "description": "Has more then one order history.", "values": ["1111 1111 1111 1111", "12", "21", "123"] },
-          { "description": "Has more then one order history.", "values": ["2222 2222 2222 2222", "12", "21", "123"] }
-        ]
-      }
     }
   ]
 }
