@@ -49,12 +49,11 @@ class MainActivity : AppCompatActivity() {
 
         val moshiAdapter = moshi.adapter(DummyBody::class.java)
 
-        val body = "{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1 }"
+        val body = "{\"username\": \"admin\", \"password\": \"123456\" }"
         val reqBody = body.toRequestBody("application/json; charset=utf-8".toMediaType())
         val req = Request.Builder().url("https://jsonplaceholder.typicode.com/posts")
-            .addHeader("header1", "test")
-            .addHeader("header2", "test")
-            .addHeader("header1", "test")
+            .addHeader("TestHeader1", "value")
+            .addHeader("TestHeader2", "value")
             .addHeader("Content-type", "application/json; charset=UTF-8")
             .post(reqBody)
             .build()
