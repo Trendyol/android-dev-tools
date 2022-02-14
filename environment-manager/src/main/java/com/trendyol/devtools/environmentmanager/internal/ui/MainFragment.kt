@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.trendyol.android.devtools.core.ext.viewBinding
 import com.trendyol.devtools.environmentmanager.R
 import com.trendyol.devtools.environmentmanager.databinding.DevToolsFragmentMainBinding
 import com.trendyol.devtools.environmentmanager.internal.di.ContextContainer
+import com.trendyol.devtools.environmentmanager.internal.ext.viewBinding
 import com.trendyol.uicomponents.dialogs.selectionDialog
 
 internal class MainFragment : Fragment(R.layout.dev_tools_fragment_main) {

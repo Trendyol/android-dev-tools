@@ -1,6 +1,5 @@
 rootProject.name = "dev-tools"
 include ':sample'
-include ':core'
 include ':autofill-service'
 include ':autofill-service-no-op'
 include ':environment-manager'

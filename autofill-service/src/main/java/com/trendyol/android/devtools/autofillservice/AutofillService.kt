@@ -13,6 +13,7 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.trendyol.android.devtools.autofillservice.internal.coroutines.CoroutineRunner
 import com.trendyol.android.devtools.autofillservice.internal.data.HistoryRepository
 import com.trendyol.android.devtools.autofillservice.internal.data.HistoryRepositoryImpl
 import com.trendyol.android.devtools.autofillservice.internal.ext.findAllInputs
@@ -20,15 +21,14 @@ import com.trendyol.android.devtools.autofillservice.internal.ext.getAutofillLis
 import com.trendyol.android.devtools.autofillservice.internal.ext.getCategoryListItems
 import com.trendyol.android.devtools.autofillservice.internal.ext.getSupportFragmentManager
 import com.trendyol.android.devtools.autofillservice.internal.ext.getView
+import com.trendyol.android.devtools.autofillservice.internal.ext.launchDefault
+import com.trendyol.android.devtools.autofillservice.internal.ext.launchIO
+import com.trendyol.android.devtools.autofillservice.internal.io.FileReader
 import com.trendyol.android.devtools.autofillservice.internal.lifecycle.AutofillViewLifecycleCallback
 import com.trendyol.android.devtools.autofillservice.internal.model.Form
 import com.trendyol.android.devtools.autofillservice.internal.model.Forms
 import com.trendyol.android.devtools.autofillservice.internal.model.ListItem
 import com.trendyol.android.devtools.autofillservice.internal.ui.AutofillDialog
-import com.trendyol.android.devtools.core.coroutines.CoroutineRunner
-import com.trendyol.android.devtools.core.ext.launchDefault
-import com.trendyol.android.devtools.core.ext.launchIO
-import com.trendyol.android.devtools.core.io.FileReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow

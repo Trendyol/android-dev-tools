@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.core.lifecycle
+package com.trendyol.android.devtools.debugmenu.internal.lifecycle
 
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable

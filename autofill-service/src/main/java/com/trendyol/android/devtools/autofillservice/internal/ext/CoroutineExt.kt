@@ -1,6 +1,6 @@
-package com.trendyol.android.devtools.core.ext
+package com.trendyol.android.devtools.autofillservice.internal.ext
 
-import com.trendyol.android.devtools.core.coroutines.CoroutineRunner
+import com.trendyol.android.devtools.autofillservice.internal.coroutines.CoroutineRunner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

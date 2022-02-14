@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.trendyol.android.devtools.core.ext.viewBinding
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
 import com.trendyol.android.devtools.debugmenu.R
 import com.trendyol.android.devtools.debugmenu.databinding.DevToolsFragmentDebugMenuBinding
 import com.trendyol.android.devtools.debugmenu.internal.di.ContextContainer
+import com.trendyol.android.devtools.debugmenu.internal.ext.viewBinding
 
 internal class DebugMenuFragment : Fragment(R.layout.dev_tools_fragment_debug_menu) {
 
