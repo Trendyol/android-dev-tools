@@ -7,5 +7,7 @@ internal fun String?.beautify(moshi: Moshi): String? {
     return runCatching {
         val jsonObject = adapter.fromJson(this.orEmpty())
         adapter.indent("    ").toJson(jsonObject)
-    }.getOrNull()
+    }.getOrElse {
+        "Json parse error: $it"
+    }
 }
