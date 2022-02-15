@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9965519-2135-408c-8109-448679a18894" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../analytics-logger/src/main/java/com/trendyol/android/devtools/analyticslogger/internal/ui/EventsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../analytics-logger/src/main/java/com/trendyol/android/devtools/analyticslogger/internal/ui/EventsViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/control.html" beforeDir="false" afterPath="$PROJECT_DIR$/control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mock.html" beforeDir="false" afterPath="$PROJECT_DIR$/mock.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/router/StaticRouter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../java/com/trendyol/android/devtools/httpinspector/internal/router/StaticRouter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -53,6 +58,7 @@
       <updated>1642612637578</updated>
       <workItem from="1642612638519" duration="11512000" />
       <workItem from="1643213629306" duration="5510000" />
+      <workItem from="1644408905997" duration="6323000" />
     </task>
     <servers />
   </component>

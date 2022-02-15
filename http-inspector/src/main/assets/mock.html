@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mock Data</title>
+        <link href="./css/bootstrap.css" rel="stylesheet">
+        <style>
+            .container-custom {
+                width: 96%;
+                margin: 20px auto;
+            }
+            textarea { resize: none !important; }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Mock Server</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">Request Inspector</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/mock.html">Mock Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/add-mock.html">New Mock</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br><br>
+        <div class="container-custom">
+            <div class="row justify-content-start">
+                <table class="table table-hover mock-list">
+                    <tr>
+                        <th>Status</th>
+                        <th>URL</th>
+                        <th>Method</th>
+                        <th>Request Headers</th>
+                        <th>Request Body</th>
+                        <th>Response Headers</th>
+                        <th>Response Body</th>
+                        <th>Delete</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script src="./js/jquery.js"></script>
+        <script>
+            $(document).ready(function() {
+                getMockData();
+
+                $(".table").on("click", ".delete", function () {
+                    const uid = $(this).data().id;
+                    $.ajax({
+                        url: "/delete-mock?uid=" + uid,
+                        method: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function(res) {
+                            getMockData();
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    });
+                });
+
+                $(".table").on("click", ".status", function() {
+                    const uid = $(this).data().id;
+                    setIsActive(uid, $(this).is(':checked'))
+                })
+            });
+
+            function getMockData() {
+                $.ajax({
+                    url: "http://127.0.0.1:5001/mock-data",
+                    type: "GET",
+                    success: function (response) {
+                        const data = response;
+                        $(".data-row").remove();
+                        data.forEach((element) => {
+                            const checkbox = element.isActive === true ?
+                                "<td><input class=\"form-check-input status\" type=\"checkbox\" id=\"flexCheckDefault\" data-id=\"" + element.uid + "\" checked></td>"
+                            : "<td><input class=\"form-check-input status\" type=\"checkbox\" id=\"flexCheckDefault\" data-id=\"" + element.uid + "\"></td>";
+
+                            const row = "<tr class='data-row'>" +
+                                checkbox +
+                                "<td><textarea rows='4' cols='32' disabled>" + element.requestData.url + "</textarea></td>" +
+                                "<td>" + element.requestData.method + "</td>" +
+                                "<td><textarea rows='4' cols='32' disabled>" + element.requestData.headers + "</textarea></td>" +
+                                "<td><textarea rows='4' cols='32' disabled>" + element.requestData.body + "</textarea></td>" +
+                                "<td><textarea rows='4' cols='32' disabled>" + element.responseData.headers + "</textarea></td>" +
+                                "<td><textarea rows='4' cols='32' disabled>" + element.responseData.body + "</textarea></td>" +
+                                "<td><a href=\"#\" class=\"delete\" data-id=\"" + element.uid + "\">Delete</a></td>" +
+                                "</tr>";
+
+                            $( ".mock-list" ).append(row);
+                        })
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+
+            function setIsActive(uid, isActive) {
+                $.ajax({
+                    url: "/set-active?uid=" + uid + "&isActive=" + isActive,
+                    method: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function(res) {
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
