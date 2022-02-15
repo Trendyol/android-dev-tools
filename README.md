@@ -110,12 +110,14 @@ It provides an OkHttp interceptor and web interface to inspect, manipulate in re
   		<td><img src="/art/http_inspector_1.png" width="400" /></td>
  	</tr>
 </table>
+### How it Works
+<img src="/art/http_inspector_4.png" width="650" />
 Initially, the request manipulation is not active and requests sent from the client won't be blocked.
 By pressing the "Toggle Auto Skip" button, we can start blocking the requests sent from the client.
 Blocked requests will shown in the web interface in order and will allow manipulating the response data from the panel.
 During this period, other requests sent will be held in a queue on the client.
 The next request will be sent to the interface only after the current one is confirmed.
-Thus, all requests will be synced and it will be possible to manipulate all of them.
+Thus, all requests will be synced and it will be possible to manipulate any of them.
 
 ### Mocking Requests
 <table>
