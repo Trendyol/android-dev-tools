@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.core.binding
+package com.trendyol.android.devtools.debugmenu.internal.util
 
 // https://github.com/Zhuinden/fragmentviewbindingdelegate-kt
 

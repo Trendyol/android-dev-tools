@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.core.io
+package com.trendyol.android.devtools.autofillservice.internal.io
 
 import android.content.Context
 

@@ -2,8 +2,8 @@ package com.trendyol.android.devtools.debugmenu.internal.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.trendyol.android.devtools.core.lifecycle.SingleLiveEvent
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
+import com.trendyol.android.devtools.debugmenu.internal.lifecycle.SingleLiveEvent
 
 internal class DebugMenuUseCase constructor(
     private val clickEvent: SingleLiveEvent<DebugActionItem> = SingleLiveEvent(),

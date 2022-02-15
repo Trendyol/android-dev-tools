@@ -1,4 +1,4 @@
-package com.trendyol.android.devtools.core.coroutines
+package com.trendyol.android.devtools.autofillservice.internal.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 

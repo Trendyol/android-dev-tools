@@ -35,8 +35,4 @@ android {
     }
 }
 
-dependencies {
-    implementation project(":core")
-}
-
 apply from: 'publish.gradle'
