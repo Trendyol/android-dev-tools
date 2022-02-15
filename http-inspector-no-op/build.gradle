@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -9,8 +10,6 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -32,13 +31,5 @@ android {
 }
 
 dependencies {
-    implementation project(":core")
-    implementation 'androidx.core:core-ktx:1.7.0'
-
-    implementation 'io.ktor:ktor-server-core:1.6.7'
-    implementation "io.ktor:ktor-server-cio:1.6.7"
-    implementation 'io.ktor:ktor-websockets:1.6.7'
-
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
-    implementation "com.squareup.moshi:moshi-kotlin:1.12.0"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
 }
