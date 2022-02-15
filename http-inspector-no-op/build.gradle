@@ -31,18 +31,5 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$ktx_version"
-
-    implementation "io.ktor:ktor-server-core:$ktor_version"
-    implementation "io.ktor:ktor-server-cio:$ktor_version"
-    implementation "io.ktor:ktor-websockets:$ktor_version"
-    implementation "io.ktor:ktor-gson:$ktor_version"
-
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt("androidx.room:room-compiler:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 }
