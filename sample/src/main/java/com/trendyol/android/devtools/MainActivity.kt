@@ -53,26 +53,24 @@ class MainActivity : AppCompatActivity() {
 
         val moshiAdapter = moshi.adapter(DummyBody::class.java)
 
-        val body = "{\"username\": \"admin\", \"password\": \"123456\" }"
-        val reqBody = body.toRequestBody("application/json; charset=utf-8".toMediaType())
-        val req = Request.Builder().url("https://jsonplaceholder.typicode.com/posts")
-            .addHeader("TestHeader1", "value")
-            .addHeader("TestHeader2", "value")
+        val bodyContent = "{\"username\": \"admin\", \"password\": \"123456\" }"
+        val requestBody = bodyContent.toRequestBody("application/json; charset=utf-8".toMediaType())
+        val request = Request.Builder().url("https://jsonplaceholder.typicode.com/posts")
             .addHeader("Content-type", "application/json; charset=UTF-8")
-            .post(reqBody)
+            .post(requestBody)
             .build()
 
-        fixedRateTimer("timer", false, 3000L, 2000) {
-            client.newCall(req).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    Log.d("###", "request fail: $e")
-                }
-
+        fixedRateTimer("timer", false, 3000L, 5000) {
+            client.newCall(request).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
-                    val dummyBody = runCatching {
+                    val content = runCatching {
                         moshiAdapter.fromJson(response.body?.string().orEmpty())
                     }.getOrNull()
-                    Log.d("###", "request success: $dummyBody")
+                    Log.d("###", "Request success: $content")
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.d("###", "Request fail: $e")
                 }
             })
         }

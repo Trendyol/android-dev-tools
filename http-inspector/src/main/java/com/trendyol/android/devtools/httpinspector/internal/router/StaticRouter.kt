@@ -1,7 +1,7 @@
 package com.trendyol.android.devtools.httpinspector.internal.router
 
 import android.content.Context
-import com.trendyol.android.devtools.core.io.FileReader
+import com.trendyol.android.devtools.httpinspector.internal.io.FileReader
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
