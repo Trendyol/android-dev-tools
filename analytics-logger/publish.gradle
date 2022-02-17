@@ -5,7 +5,7 @@ afterEvaluate {
                 from components.release
                 groupId = "com.trendyol"
                 artifactId = "analytics-logger"
-                version = "0.2.4"
+                version = "0.2.5"
             }
         }
 
