@@ -73,7 +73,7 @@ dependencies {
 ```
 
 ## Analytics Logger
-It allows to log & inspect analytics events sent by client.
+Analytics Logger allows to log & inspect analytics events sent by client.
 
 ### Demo
 <table>
@@ -86,7 +86,7 @@ It allows to log & inspect analytics events sent by client.
 
 ### Usage
 ```kotlin
-AnalyticsLogger.init(this)
+AnalyticsLogger.init(applicationContext)
 
 AnalyticsLogger.report(
     key = "eventKey",
@@ -104,22 +104,23 @@ dependencies {
 ```
 
 ## Http Inspector (Alpha)
-It provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
-
-### Manipulating Responses
+Http Inspector provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
 <table>
  	<tr>
-  		<td><img src="/art/http_inspector_1.png" width="400" /></td>
+  		<td><img src="/art/http_inspector_1.png" width="650" /></td>
  	</tr>
 </table>
-It allows us to manipulate OkHttp request/response data via web interface.
 
 ### How it Works
-<img src="/art/http_inspector_4.png" width="650" />
-Any request passing through the interceptor is held in the request queue to sync all of them.
-Held requests are being sent to the web interface via Ktor webserver in order.
-After doing any changes in the response data, it waits for the acceptance, then sends manipulated response back to the request queue.
-The actual response data is replaced with the manipulated response and reflected to the application.
+<table>
+ 	<tr>
+  		<td><img src="/art/http_inspector_4.png" width="650" /></td>
+    </tr>
+</table>
+Any request passing through the interceptor is held in the request queue to sync with each other.
+Held requests are being sent to the web interface via Ktor local webserver.
+After doing any changes in the response data using web interface, it waits for the acceptance, then sends manipulated response back to the request queue.
+The actual response data is replaced with the manipulated one and reflected to the application.
 
 ### Mocking Requests
 <table>
@@ -129,7 +130,7 @@ The actual response data is replaced with the manipulated response and reflected
  	</tr>
 </table>
 With this feature, we can imitate the API by preparing mock request and response data for the REST API that has not been prepared yet.
-It provides a web interface where we can enter mock request and response data, and allows us to enable/disable the previously added mock data.
+It provides a web interface where we can create mock request and response data, and allows us to enable/disable the previously added mock data.
 The point to be considered is which requests will be answered with mock data rather than going to the real API is decided by comparing the URL, method and request body data of the request in the real request and mock data. If this data is completely matched, the mock response will be served to the client.
 
 ### Usage
@@ -148,7 +149,7 @@ dependencies {
 ```
 
 ## Environment Manager
-It provides environment selection dialog can be opened from the app notifications with predefined environment data.
+Environment Manager provides environment selection dialog can be opened from the app notifications with predefined environment data.
 
 ### Setup
 ```gradle
@@ -158,7 +159,7 @@ dependencies {
 ```
 
 ## Debug Menu
-It provides a debug page build with predefined custom action and events.
+Debug Menu provides a debug page build with predefined custom action and events.
 
 ### Setup
 ```gradle
