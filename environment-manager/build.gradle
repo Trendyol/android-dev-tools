@@ -35,6 +35,21 @@ android {
     }
 }
 
+ext {
+    PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
+    PUBLISH_VERSION = '0.1.0'
+    PUBLISH_ARTIFACT_ID = 'debug-menu'
+    PUBLISH_DESCRIPTION = "Android QA Environment Manager"
+    PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"
+    PUBLISH_LICENSE_NAME = "Android DevTools License"
+    PUBLISH_LICENSE_URL = "https://github.com/Trendyol/android-dev-tools/blob/master/LICENSE"
+    PUBLISH_SCM_CONNECTION = "scm:git:github.com/Trendyol/android-dev-tools.git"
+    PUBLISH_SCM_DEV_CONNECTION = "scm:git:ssh://github.com/Trendyol/android-dev-tools.git"
+    PUBLISH_SCM_URL = "https://github.com/Trendyol/android-dev-tools/tree/main"
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
 dependencies {
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
@@ -51,5 +66,3 @@ dependencies {
 
     implementation "com.github.Trendyol.android-ui-components:dialogs:dialogs-1.2.7"
 }
-
-apply from: 'publish.gradle'
