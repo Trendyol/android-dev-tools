@@ -59,14 +59,14 @@ afterEvaluate {
                             email = 'muratcan.bur@trendyol.com'
                         }
                         developer {
-                            id = 'bsobe'
-                            name = 'Barış Söbe'
-                            email = 'baris.sobe@trendyol.com'
-                        }
-                        developer {
                             id = 'MertNYuksel'
                             name = 'Mert Nevzat Yüksel'
                             email = 'mert.yuksel@trendyol.com'
+                        }
+                        developer {
+                            id = 'bilgehankalkan'
+                            name = 'Bilgehan Kalkan'
+                            email = 'bilgehan.kalkan@trendyol.com'
                         }
                         developer {
                             id = 'ibrahimsn98'
