@@ -47,16 +47,10 @@ class MainFragment : Fragment() {
 
         AnalyticsLogger.report(
             key = "OnMainFragmentSeenEvent",
-            value = EventModel("TestAction", "TestCategory", "TestScreen"),
+            value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
             platform = "Firebase",
         )
     }
-
-    data class EventModel(
-        val action: String,
-        val category: String,
-        val screen: String,
-    )
 
     companion object {
 

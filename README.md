@@ -90,7 +90,7 @@ AnalyticsLogger.init(applicationContext)
 
 AnalyticsLogger.report(
     key = "eventKey",
-    value = EventModel("TestAction", "TestCategory", "TestScreen"), // :Any
+    value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
     platform = "EventPlatform",
 )
 ```
@@ -98,8 +98,8 @@ AnalyticsLogger.report(
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol.android.devtools:analytics-logger:0.1.0"
-    releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:0.1.0"
+    debugImplementation "com.trendyol.android.devtools:analytics-logger:0.1.1"
+    releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:0.1.1"
 }
 ```
 

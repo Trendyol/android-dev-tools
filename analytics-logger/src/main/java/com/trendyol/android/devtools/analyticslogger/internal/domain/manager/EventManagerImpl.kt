@@ -37,19 +37,16 @@ internal class EventManagerImpl(
 
     override suspend fun insert(
         key: String?,
-        value: Any?,
+        value: String?,
         platform: String?,
     ) {
         val dateFormat = SimpleDateFormat("hh:mm:SS", Locale.getDefault())
         val date = dateFormat.format(Calendar.getInstance().time)
 
-        val adapter = moshi.adapter(Any::class.java)
-        val jsonValue = runCatching { adapter.toJson(value) }.getOrNull()
-
         return eventRepository.insert(
             EventEntity(
                 key = key,
-                value = jsonValue,
+                value = value,
                 platform = platform,
                 date = date,
             )
