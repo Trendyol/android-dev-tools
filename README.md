@@ -67,7 +67,8 @@ You should also note that the order of the defined form field resource id's and 
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol"
+    debugImplementation "com.trendyol.android.devtools:autofill-service:0.1.0"
+    releaseImplementation "com.trendyol.android.devtools:autofill-service-no-op:0.1.0"
 }
 ```
 
@@ -97,7 +98,8 @@ AnalyticsLogger.report(
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol"
+    debugImplementation "com.trendyol.android.devtools:analytics-logger:0.1.0"
+    releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:0.1.0"
 }
 ```
 
@@ -140,7 +142,8 @@ val client = OkHttpClient.Builder()
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol"
+    debugImplementation "com.trendyol.android.devtools:http-inspector:0.1.0"
+    releaseImplementation "com.trendyol.android.devtools:http-inspector-no-op:0.1.0"
 }
 ```
 
@@ -150,7 +153,7 @@ It provides environment selection dialog can be opened from the app notification
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol"
+    debugImplementation "com.trendyol.android.devtools:environment-manager:0.1.0"
 }
 ```
 
@@ -160,7 +163,7 @@ It provides a debug page build with predefined custom action and events.
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol"
+    debugImplementation "com.trendyol.android.devtools:debug-menu:0.1.0"
 }
 ```
 
