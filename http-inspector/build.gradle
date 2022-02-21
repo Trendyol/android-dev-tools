@@ -33,7 +33,7 @@ android {
 ext {
     PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
     PUBLISH_VERSION = '0.1.0'
-    PUBLISH_ARTIFACT_ID = 'debug-menu'
+    PUBLISH_ARTIFACT_ID = 'http-inspector'
     PUBLISH_DESCRIPTION = "Android HTTP Request Inspector"
     PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"
     PUBLISH_LICENSE_NAME = "Android DevTools License"
