@@ -3,6 +3,11 @@
 Android Dev Tools is a library that contains various QA/Debug tools to speed up and streamline the development progress.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu)
 
 ## Tools ##
 * [Autofill Service](#autofill-service)
@@ -38,7 +43,7 @@ AutofillService.Builder(this)
 ```
 
 ### Configuration
-Configuration Json file can be located in /assets folder. You can define autofill data by following this structure.
+Configuration Json file can be located in `/debug/assets` folder. You can define autofill data by following this structure.
 You should also note that the order of the defined form field resource id's and order of input values must match.
 ```json
 {
@@ -67,10 +72,11 @@ You should also note that the order of the defined form field resource id's and 
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol.android.devtools:autofill-service:0.1.0"
-    releaseImplementation "com.trendyol.android.devtools:autofill-service-no-op:0.1.0"
+    debugImplementation "com.trendyol.android.devtools:autofill-service:$version"
+    releaseImplementation "com.trendyol.android.devtools:autofill-service-no-op:$version"
 }
 ```
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service)
 
 ## Analytics Logger
 Analytics Logger allows to log & inspect analytics events sent by client.
@@ -98,10 +104,11 @@ AnalyticsLogger.report(
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol.android.devtools:analytics-logger:0.1.1"
-    releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:0.1.1"
+    debugImplementation "com.trendyol.android.devtools:analytics-logger:$version"
+    releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:$version"
 }
 ```
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger)
 
 ## Http Inspector (Alpha)
 Http Inspector provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
@@ -143,10 +150,11 @@ val client = OkHttpClient.Builder()
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol.android.devtools:http-inspector:0.1.0"
-    releaseImplementation "com.trendyol.android.devtools:http-inspector-no-op:0.1.0"
+    debugImplementation "com.trendyol.android.devtools:http-inspector:$version"
+    releaseImplementation "com.trendyol.android.devtools:http-inspector-no-op:$version"
 }
 ```
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector)
 
 ## Environment Manager
 Environment Manager provides environment selection dialog can be opened from the app notifications with predefined environment data.
@@ -154,9 +162,10 @@ Environment Manager provides environment selection dialog can be opened from the
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol.android.devtools:environment-manager:0.1.0"
+    debugImplementation "com.trendyol.android.devtools:environment-manager:$version"
 }
 ```
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager)
 
 ## Debug Menu
 Debug Menu provides a debug page build with predefined custom action and events.
@@ -164,9 +173,10 @@ Debug Menu provides a debug page build with predefined custom action and events.
 ### Setup
 ```gradle
 dependencies {
-    debugImplementation "com.trendyol.android.devtools:debug-menu:0.1.0"
+    debugImplementation "com.trendyol.android.devtools:debug-menu:$version"
 }
 ```
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu)
 
 License
 --------
