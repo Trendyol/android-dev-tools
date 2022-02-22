@@ -3,11 +3,11 @@
 Android Dev Tools is a library that contains various QA/Debug tools to speed up and streamline the development progress.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service)
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger)
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector)
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager)
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service?label=Autofill%20Service&color=%2373c248)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger?label=Analytics%20Logger&color=%2373c248)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector?label=Http%20Inspector&color=%2373c248)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager?label=Environment%20Manager&color=%2373c248)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu?label=Debug%20Menu&color=%2373c248)
 
 ## Tools ##
 * [Autofill Service](#autofill-service)
@@ -76,7 +76,7 @@ dependencies {
     releaseImplementation "com.trendyol.android.devtools:autofill-service-no-op:$version"
 }
 ```
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service&color=%2373c248)
 
 ## Analytics Logger
 Analytics Logger allows to log & inspect analytics events sent by client.
@@ -108,7 +108,7 @@ dependencies {
     releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:$version"
 }
 ```
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger&color=%2373c248)
 
 ## Http Inspector (Alpha)
 Http Inspector provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
@@ -154,7 +154,7 @@ dependencies {
     releaseImplementation "com.trendyol.android.devtools:http-inspector-no-op:$version"
 }
 ```
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector&color=%2373c248)
 
 ## Environment Manager
 Environment Manager provides environment selection dialog can be opened from the app notifications with predefined environment data.
@@ -165,7 +165,7 @@ dependencies {
     debugImplementation "com.trendyol.android.devtools:environment-manager:$version"
 }
 ```
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager&color=%2373c248)
 
 ## Debug Menu
 Debug Menu provides a debug page build with predefined custom action and events.
@@ -176,7 +176,7 @@ dependencies {
     debugImplementation "com.trendyol.android.devtools:debug-menu:$version"
 }
 ```
-![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu&color=%2373c248)
 
 License
 --------
