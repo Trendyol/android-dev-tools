@@ -71,8 +71,8 @@ You should also note that the order of the defined form field resource id's and 
 
 ### Setup
 ```gradle
-com.trendyol.android.devtools:autofill-service:$version
-com.trendyol.android.devtools:autofill-service-no-op:$version
+"com.trendyol.android.devtools:autofill-service:$version"
+"com.trendyol.android.devtools:autofill-service-no-op:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service?color=%2373c248)
 
@@ -101,8 +101,8 @@ AnalyticsLogger.report(
 
 ### Setup
 ```gradle
-com.trendyol.android.devtools:analytics-logger:$version
-com.trendyol.android.devtools:analytics-logger-no-op:$version
+"com.trendyol.android.devtools:analytics-logger:$version"
+"com.trendyol.android.devtools:analytics-logger-no-op:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger?color=%2373c248)
 
@@ -147,8 +147,8 @@ val client = OkHttpClient.Builder()
 
 ### Setup
 ```gradle
-com.trendyol.android.devtools:http-inspector:$version
-com.trendyol.android.devtools:http-inspector-no-op:$version
+"com.trendyol.android.devtools:http-inspector:$version"
+"com.trendyol.android.devtools:http-inspector-no-op:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector?color=%2373c248)
 
@@ -157,7 +157,7 @@ Environment Manager provides environment selection dialog can be opened from the
 
 ### Setup
 ```gradle
-com.trendyol.android.devtools:environment-manager:$version
+"com.trendyol.android.devtools:environment-manager:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager?color=%2373c248)
 
@@ -166,7 +166,7 @@ Debug Menu provides a debug page build with predefined custom action and events.
 
 ### Setup
 ```gradle
-com.trendyol.android.devtools:debug-menu:$version
+"com.trendyol.android.devtools:debug-menu:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu?color=%2373c248)
 
