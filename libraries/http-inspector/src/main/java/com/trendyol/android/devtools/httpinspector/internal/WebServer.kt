@@ -1,7 +1,6 @@
 package com.trendyol.android.devtools.httpinspector.internal
 
 import android.content.Context
-import android.util.Log
 import com.trendyol.android.devtools.httpinspector.internal.domain.controller.HttpController
 import com.trendyol.android.devtools.httpinspector.internal.domain.model.ImportFrame
 import com.trendyol.android.devtools.httpinspector.internal.router.ApiRouter
@@ -68,7 +67,6 @@ internal class WebServer(
     private fun collectOngoingData() = scope.launch {
         exportFlow.collect { json ->
             sessions.forEach { session ->
-                Log.d("###", "ws gitti: $json")
                 session.send(Frame.Text(json))
             }
         }
