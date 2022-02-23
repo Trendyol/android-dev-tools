@@ -105,7 +105,7 @@
             const requestList = $("#requestList");
             const buttonNext = $("#next");
 
-            const socket = new WebSocket("ws://127.0.0.1:5001/echo");
+            const socket = new WebSocket(`ws://${window.location.host}/echo`);
 
             socket.onopen = function (event) {
                 console.log("Connection established");
@@ -118,8 +118,6 @@
                 currentId = data["id"]
 
                 requestList.prepend(getListItem(data))
-
-                console.log(JSON.stringify(data["responseData"]["body"]));
 
                 inputRequestUrl.val(data["requestData"]["url"]);
                 inputRequestMethod.val(data["requestData"]["method"]);

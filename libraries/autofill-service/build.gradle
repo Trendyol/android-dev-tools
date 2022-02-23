@@ -69,6 +69,4 @@ dependencies {
 
     implementation "androidx.preference:preference-ktx:$preference_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-
-    implementation "com.github.Trendyol.android-ui-components:dialogs:dialogs-1.2.7"
 }

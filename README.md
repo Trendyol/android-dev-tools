@@ -96,7 +96,7 @@ AnalyticsLogger.init(applicationContext)
 
 AnalyticsLogger.report(
     key = "eventKey",
-    value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
+    value = "{\"category\": \"Cart\", \"data\": \"TestData\" }", // Should be Json string.
     platform = "EventPlatform",
 )
 ```
