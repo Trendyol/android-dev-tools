@@ -109,7 +109,7 @@ AnalyticsLogger.report(
 ## Http Inspector (Alpha)
 Http Inspector provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
 
-You can access the web client with `http://deviceip:5001`. If you are running on virtual device, you need to forward port by `adb forward tcp:5001 tcp:5001`.
+You can access the web client with `http://deviceip:5001`. If you are running on virtual a device, you need to forward port by `adb forward tcp:5001 tcp:5001`.
 <table>
  	<tr>
   		<td><img src="/art/http_inspector_1.png" width="650" /></td>
