@@ -71,10 +71,8 @@ You should also note that the order of the defined form field resource id's and 
 
 ### Setup
 ```gradle
-dependencies {
-    debugImplementation "com.trendyol.android.devtools:autofill-service:$version"
-    releaseImplementation "com.trendyol.android.devtools:autofill-service-no-op:$version"
-}
+com.trendyol.android.devtools:autofill-service:$version
+com.trendyol.android.devtools:autofill-service-no-op:$version
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service?color=%2373c248)
 
@@ -103,15 +101,15 @@ AnalyticsLogger.report(
 
 ### Setup
 ```gradle
-dependencies {
-    debugImplementation "com.trendyol.android.devtools:analytics-logger:$version"
-    releaseImplementation "com.trendyol.android.devtools:analytics-logger-no-op:$version"
-}
+com.trendyol.android.devtools:analytics-logger:$version
+com.trendyol.android.devtools:analytics-logger-no-op:$version
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/analytics-logger?color=%2373c248)
 
 ## Http Inspector (Alpha)
 Http Inspector provides an OkHttp interceptor and web interface to inspect, manipulate in realtime and mock HTTP request and responses.
+
+You can access the web client with `http://deviceip:5001`. If you are running on virtual device, you need to forward port by `adb forward tcp:5001 tcp:5001`.
 <table>
  	<tr>
   		<td><img src="/art/http_inspector_1.png" width="650" /></td>
@@ -149,10 +147,8 @@ val client = OkHttpClient.Builder()
 
 ### Setup
 ```gradle
-dependencies {
-    debugImplementation "com.trendyol.android.devtools:http-inspector:$version"
-    releaseImplementation "com.trendyol.android.devtools:http-inspector-no-op:$version"
-}
+com.trendyol.android.devtools:http-inspector:$version
+com.trendyol.android.devtools:http-inspector-no-op:$version
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector?color=%2373c248)
 
@@ -161,9 +157,7 @@ Environment Manager provides environment selection dialog can be opened from the
 
 ### Setup
 ```gradle
-dependencies {
-    debugImplementation "com.trendyol.android.devtools:environment-manager:$version"
-}
+com.trendyol.android.devtools:environment-manager:$version
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager?color=%2373c248)
 
@@ -172,9 +166,7 @@ Debug Menu provides a debug page build with predefined custom action and events.
 
 ### Setup
 ```gradle
-dependencies {
-    debugImplementation "com.trendyol.android.devtools:debug-menu:$version"
-}
+com.trendyol.android.devtools:debug-menu:$version
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu?color=%2373c248)
 
