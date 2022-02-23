@@ -47,11 +47,11 @@ android {
 }
 
 dependencies {
-    debugImplementation project(':autofill-service')
-    debugImplementation project(':environment-manager')
-    debugImplementation project(':debug-menu')
-    debugImplementation project(':analytics-logger')
-    debugImplementation project(':http-inspector')
+    debugImplementation project(':libraries:autofill-service')
+    debugImplementation project(':libraries:environment-manager')
+    debugImplementation project(':libraries:debug-menu')
+    debugImplementation project(':libraries:analytics-logger')
+    debugImplementation project(':libraries:http-inspector')
 
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
