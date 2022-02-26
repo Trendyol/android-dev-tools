@@ -17,7 +17,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="14sp"
-        android:textColor="@color/dev_tools_autofill_title_text_color"
+        android:textColor="@color/textColorPrimary"
         tools:text="test@mail.com" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:textSize="12sp"
-        android:textColor="@color/dev_tools_autofill_subtitle_text_color"
+        android:textColor="@color/textColorSecondary"
         tools:text="123456" />
 
 </LinearLayout>
