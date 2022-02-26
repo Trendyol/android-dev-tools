@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+
+    <color name="dev_tools_black">#80000000</color>
+    <color name="dev_tools_white">#FF000000</color>
+    <color name="dev_tools_amethyst">#9b59b6</color>
+</resources>
