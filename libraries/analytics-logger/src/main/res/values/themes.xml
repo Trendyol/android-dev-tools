@@ -2,9 +2,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.AnalyticsReporter" parent="Theme.AppCompat.DayNight">
-        <item name="colorPrimary">@color/analytics_logger_white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/analytics_logger_white</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">?attr/isLightTheme</item>
     </style>
 
 </resources>
