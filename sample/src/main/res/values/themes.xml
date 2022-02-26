@@ -14,8 +14,8 @@
     </style>
 
     <style name="ThemeOverlay.App.Button" parent="">
-        <item name="colorPrimary">@color/dev_tools_amethyst</item>
-        <item name="colorOnPrimary">@color/dev_tools_white</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/colorPrimary</item>
     </style>
 
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
