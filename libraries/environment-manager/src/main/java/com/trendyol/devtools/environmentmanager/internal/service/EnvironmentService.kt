@@ -38,7 +38,7 @@ internal class EnvironmentService : Service() {
         NotificationCompat.Builder(this, CHANNEL_ID)
             .setOngoing(true)
             .setAutoCancel(false)
-            .setColor(ContextCompat.getColor(this, R.color.dev_tools_black))
+            .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
             .setSmallIcon(R.drawable.dev_tools_notification_badge)
             .setCategory(Notification.CATEGORY_SERVICE)
             .setContentIntent(getContentPendingIntent())
