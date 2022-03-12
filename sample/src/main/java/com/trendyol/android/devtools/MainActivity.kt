@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             .post(requestBody)
             .build()
 
-        fixedRateTimer("timer", false, 3000L, 5000) {
+        fixedRateTimer("timer", false, 30000000L, 50000000) {
             client.newCall(request).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
                     val content = runCatching {
