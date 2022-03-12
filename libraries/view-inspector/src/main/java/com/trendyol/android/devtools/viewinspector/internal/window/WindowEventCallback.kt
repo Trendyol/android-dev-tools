@@ -13,7 +13,7 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import androidx.annotation.RequiresApi
 
-class WindowEventCallback(
+internal class WindowEventCallback(
     private val localCallback: Window.Callback,
     private val onTouchEvent: ((MotionEvent) -> Unit),
 ) : Window.Callback {

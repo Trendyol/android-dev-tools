@@ -6,11 +6,11 @@ import android.view.ViewTreeObserver
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 
-fun Activity.getSupportFragmentManager(): FragmentManager? {
+internal fun Activity.getSupportFragmentManager(): FragmentManager? {
     return if (this is FragmentActivity) return supportFragmentManager else null
 }
 
-fun Activity.getView(callback: ((View) -> Unit)) {
+internal fun Activity.getView(callback: ((View) -> Unit)) {
 
     val view: View? = findViewById(android.R.id.content)
 

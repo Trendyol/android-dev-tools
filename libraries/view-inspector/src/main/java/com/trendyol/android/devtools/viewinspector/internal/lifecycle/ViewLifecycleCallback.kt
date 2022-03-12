@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.trendyol.android.devtools.viewinspector.internal.ext.getView
 
-internal abstract class ViewLifecycleCallback : FragmentManager.FragmentLifecycleCallbacks(),
-    Application.ActivityLifecycleCallbacks {
+internal abstract class ViewLifecycleCallback :
+    FragmentManager.FragmentLifecycleCallbacks(), Application.ActivityLifecycleCallbacks {
 
     abstract fun onActivityViewCreated(activity: Activity, view: View)
 
@@ -53,4 +53,3 @@ internal abstract class ViewLifecycleCallback : FragmentManager.FragmentLifecycl
         // Can be overridden
     }
 }
-

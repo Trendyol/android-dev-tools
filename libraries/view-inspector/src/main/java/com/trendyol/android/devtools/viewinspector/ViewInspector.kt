@@ -34,19 +34,22 @@ class ViewInspector {
             win.callback = WindowEventCallback(localCallback, gestureDetector::onTouchEvent)
         }
 
-        private val gestureDetector = GestureDetectorCompat(application, object: SimpleOnGestureListener() {
-            override fun onLongPress(event: MotionEvent?) {
-                viewMap.values.flatten()
-                    .mapNotNull { it.get() }
-                    .filter { it.isVisible }
-                    .forEach { view ->
-                        val hitBoxRect = view.getHitBoxRect()
-                        if (hitBoxRect.contains(event?.rawX?.toInt().orZero(), event?.rawY?.toInt().orZero())) {
-                            showResourceIdMessage(view.getResourceId(application))
+        private val gestureDetector = GestureDetectorCompat(
+            application,
+            object : SimpleOnGestureListener() {
+                override fun onLongPress(event: MotionEvent?) {
+                    viewMap.values.flatten()
+                        .mapNotNull { it.get() }
+                        .filter { it.isVisible }
+                        .forEach { view ->
+                            val hitBoxRect = view.getHitBoxRect()
+                            if (hitBoxRect.contains(event?.rawX?.toInt().orZero(), event?.rawY?.toInt().orZero())) {
+                                showResourceIdMessage(view.getResourceId(application))
+                            }
                         }
-                    }
+                }
             }
-        })
+        )
 
         private fun showResourceIdMessage(resId: String?) {
             Toast.makeText(application, resId, Toast.LENGTH_SHORT).show()
@@ -79,9 +82,9 @@ class ViewInspector {
         }
     }
 
-    class Builder(private val application: Application) {
+    companion object {
 
-        fun build() {
+        fun init(application: Application) {
             ViewInspectorProcessor(application = application)
         }
     }

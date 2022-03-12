@@ -29,6 +29,6 @@ class App : Application() {
         AnalyticsLogger.init(this)
 
         // View Inspector
-        ViewInspector.Builder(this).build()
+        ViewInspector.init(this)
     }
 }
