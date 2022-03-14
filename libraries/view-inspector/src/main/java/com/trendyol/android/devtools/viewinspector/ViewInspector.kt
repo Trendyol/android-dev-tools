@@ -10,7 +10,6 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.trendyol.android.devtools.viewinspector.internal.ext.findViews
@@ -26,7 +25,7 @@ class ViewInspector {
 
     internal class ViewInspectorProcessor(private val application: Application) : ViewLifecycleCallback() {
 
-        private val viewMap = mutableMapOf<Fragment, List<WeakReference<View>>>()
+        private val viewMap = mutableMapOf<Fragment, WeakReference<View>>()
 
         override fun onActivityViewCreated(activity: Activity, view: View) {
             val win: Window = activity.window
@@ -38,15 +37,15 @@ class ViewInspector {
             application,
             object : SimpleOnGestureListener() {
                 override fun onLongPress(event: MotionEvent?) {
-                    viewMap.values.flatten()
-                        .mapNotNull { it.get() }
-                        .filter { it.isVisible }
-                        .forEach { view ->
-                            val hitBoxRect = view.getHitBoxRect()
-                            if (hitBoxRect.contains(event?.rawX?.toInt().orZero(), event?.rawY?.toInt().orZero())) {
-                                showResourceIdMessage(view.getResourceId(application))
-                            }
+                    val shownFragment = viewMap.keys.firstOrNull { it.isVisible }
+                    val views = viewMap[shownFragment]?.get()?.findViews().orEmpty()
+                    views.forEach { view ->
+                        val hitBoxRect = view.getHitBoxRect()
+                        if (hitBoxRect.contains(event?.rawX?.toInt().orZero(), event?.rawY?.toInt().orZero())) {
+                            showResourceIdMessage(view.getResourceId(application))
+                            return@forEach
                         }
+                    }
                 }
             }
         )
@@ -57,7 +56,7 @@ class ViewInspector {
 
         @SuppressLint("ClickableViewAccessibility")
         override fun onFragmentViewCreated(activity: Activity, fragment: Fragment, view: View) {
-            view.post { viewMap[fragment] = view.findViews().map { WeakReference(it) } }
+            view.post { viewMap[fragment] = WeakReference(view) }
         }
 
         override fun onFragmentViewDestroyed(fm: FragmentManager, fragment: Fragment) {
