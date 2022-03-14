@@ -52,6 +52,7 @@ dependencies {
     debugImplementation project(':libraries:debug-menu')
     debugImplementation project(':libraries:analytics-logger')
     debugImplementation project(':libraries:http-inspector')
+    debugImplementation project(':libraries:view-inspector')
 
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"

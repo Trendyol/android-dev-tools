@@ -5,6 +5,7 @@ import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.autofillservice.AutofillService
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
 import com.trendyol.android.devtools.debugmenu.DebugMenu
+import com.trendyol.android.devtools.viewinspector.ViewInspector
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
 
 class App : Application() {
@@ -26,5 +27,8 @@ class App : Application() {
 
         // Analytics Logger
         AnalyticsLogger.init(this)
+
+        // View Inspector
+        ViewInspector.init(this)
     }
 }
