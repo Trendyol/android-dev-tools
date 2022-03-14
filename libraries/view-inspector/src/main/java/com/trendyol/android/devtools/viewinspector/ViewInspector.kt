@@ -10,6 +10,7 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.trendyol.android.devtools.viewinspector.internal.ext.findViews
@@ -37,20 +38,24 @@ class ViewInspector {
             application,
             object : SimpleOnGestureListener() {
                 override fun onLongPress(event: MotionEvent?) {
-                    val shownFragment = viewMap.keys.firstOrNull { it.isVisible }
-                    val views = viewMap[shownFragment]?.get()?.findViews().orEmpty()
-                    views.forEach { view ->
-                        val hitBoxRect = view.getHitBoxRect()
-                        if (hitBoxRect.contains(event?.rawX?.toInt().orZero(), event?.rawY?.toInt().orZero())) {
-                            showResourceIdMessage(view.getResourceId(application))
-                            return@forEach
+                    viewMap.filterKeys { it.isVisible }.values
+                        .asSequence()
+                        .flatMap { it.get()?.findViews().orEmpty() }
+                        .filter { it.isVisible }
+                        .filter { view ->
+                            view.getHitBoxRect().contains(
+                                event?.rawX?.toInt().orZero(),
+                                event?.rawY?.toInt().orZero(),
+                            )
                         }
-                    }
+                        .lastOrNull()
+                        ?.let { view -> showResourceIdMessage(view.getResourceId(application)) }
                 }
             }
         )
 
         private fun showResourceIdMessage(resId: String?) {
+            if (resId.isNullOrEmpty()) return
             Toast.makeText(application, resId, Toast.LENGTH_SHORT).show()
         }
 
