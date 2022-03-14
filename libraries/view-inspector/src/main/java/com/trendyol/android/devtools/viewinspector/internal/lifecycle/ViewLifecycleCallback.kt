@@ -11,20 +11,6 @@ import com.trendyol.android.devtools.viewinspector.internal.ext.getView
 internal abstract class ViewLifecycleCallback :
     FragmentManager.FragmentLifecycleCallbacks(), Application.ActivityLifecycleCallbacks {
 
-    abstract fun onActivityViewCreated(activity: Activity, view: View)
-
-    abstract fun onFragmentViewCreated(activity: Activity, fragment: Fragment, view: View)
-
-    override fun onActivityPostCreated(activity: Activity, savedInstanceState: Bundle?) {
-        super.onActivityPostCreated(activity, savedInstanceState)
-        activity.getView { view -> onActivityViewCreated(activity, view) }
-    }
-
-    override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-        super.onFragmentViewCreated(fm, f, v, savedInstanceState)
-        onFragmentViewCreated(f.requireActivity(), f, v)
-    }
-
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         // Can be overridden
     }

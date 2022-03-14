@@ -1,6 +1,5 @@
 package com.trendyol.android.devtools.viewinspector
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
@@ -28,7 +27,8 @@ class ViewInspector {
 
         private val viewMap = mutableMapOf<Fragment, WeakReference<View>>()
 
-        override fun onActivityViewCreated(activity: Activity, view: View) {
+        override fun onActivityResumed(activity: Activity) {
+            super.onActivityResumed(activity)
             val win: Window = activity.window
             val localCallback: Window.Callback = win.callback
             win.callback = WindowEventCallback(localCallback, gestureDetector::onTouchEvent)
@@ -59,9 +59,14 @@ class ViewInspector {
             Toast.makeText(application, resId, Toast.LENGTH_SHORT).show()
         }
 
-        @SuppressLint("ClickableViewAccessibility")
-        override fun onFragmentViewCreated(activity: Activity, fragment: Fragment, view: View) {
-            view.post { viewMap[fragment] = WeakReference(view) }
+        override fun onFragmentViewCreated(
+            fragmentManager: FragmentManager,
+            fragment: Fragment,
+            view: View,
+            savedInstanceState: Bundle?,
+        ) {
+            super.onFragmentViewCreated(fragmentManager, fragment, view, savedInstanceState)
+            viewMap[fragment] = WeakReference(view)
         }
 
         override fun onFragmentViewDestroyed(fm: FragmentManager, fragment: Fragment) {
