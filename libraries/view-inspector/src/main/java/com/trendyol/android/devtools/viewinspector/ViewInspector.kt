@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
 import android.view.View
-import android.view.Window
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.isVisible
@@ -26,13 +25,6 @@ class ViewInspector {
     internal class ViewInspectorProcessor(private val application: Application) : ViewLifecycleCallback() {
 
         private val viewMap = mutableMapOf<Fragment, WeakReference<View>>()
-
-        override fun onActivityResumed(activity: Activity) {
-            super.onActivityResumed(activity)
-            val win: Window = activity.window
-            val localCallback: Window.Callback = win.callback
-            win.callback = WindowEventCallback(localCallback, gestureDetector::onTouchEvent)
-        }
 
         private val gestureDetector = GestureDetectorCompat(
             application,
@@ -57,6 +49,13 @@ class ViewInspector {
         private fun showResourceIdMessage(resId: String?) {
             if (resId.isNullOrEmpty()) return
             Toast.makeText(application, resId, Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onFragmentResumed(fragmentManager: FragmentManager, fragment: Fragment) {
+            super.onFragmentResumed(fragmentManager, fragment)
+            val window = fragment.activity?.window ?: return
+            val localCallback = window.callback
+            window.callback = WindowEventCallback(localCallback, gestureDetector::onTouchEvent)
         }
 
         override fun onFragmentViewCreated(
