@@ -1,6 +1,5 @@
 package com.trendyol.android.devtools.analyticslogger
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -46,12 +45,15 @@ class AnalyticsLogger private constructor(
         )
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     private fun updateNotification(key: String?, platform: String?) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
         val content = context.getString(
             R.string.analytics_logger_notification_content,
