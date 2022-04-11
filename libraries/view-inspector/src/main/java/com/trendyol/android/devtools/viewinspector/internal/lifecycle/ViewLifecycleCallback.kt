@@ -35,4 +35,5 @@ internal abstract class ViewLifecycleCallback :
     override fun onActivityDestroyed(activity: Activity) {
         // Can be overridden
     }
+
 }
