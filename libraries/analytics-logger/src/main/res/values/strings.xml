@@ -6,4 +6,8 @@
     <string name="analytics_logger_notification_title">Analytics Logger</string>
     <string name="analytics_logger_notification_content">%1$s event sent: %2$s</string>
     <string name="analytics_logger_title">Analytics Events</string>
+
+    <string name="analytics_logger_action_copy">Copy</string>
+
+    <string name="analytics_logger_toast_copied">Copied to the clipboard.</string>
 </resources>

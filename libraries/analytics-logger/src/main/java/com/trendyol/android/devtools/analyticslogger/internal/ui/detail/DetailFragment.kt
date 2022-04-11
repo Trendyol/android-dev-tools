@@ -1,14 +1,22 @@
 package com.trendyol.android.devtools.analyticslogger.internal.ui.detail
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentDetailBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
@@ -25,6 +33,11 @@ internal class DetailFragment : Fragment() {
     private var _binding: AnalyticsLoggerFragmentDetailBinding? = null
 
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = AnalyticsLoggerFragmentDetailBinding.inflate(inflater, container, false)
@@ -63,6 +76,25 @@ internal class DetailFragment : Fragment() {
         }
     }
 
+    private fun copyToClipboard() {
+        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val data = (viewModel.detailState.value as? DetailState.Selected)?.event?.json.orEmpty()
+        clipboard.setPrimaryClip(ClipData.newPlainText(CLIPBOARD_LABEL, data))
+        Toast.makeText(context, R.string.analytics_logger_toast_copied, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_copy -> copyToClipboard()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.analytics_logger_menu_event_detail, menu)
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -70,6 +102,7 @@ internal class DetailFragment : Fragment() {
 
     companion object {
         const val NAME = "detailFragment"
+        private const val CLIPBOARD_LABEL = "Event Detail"
 
         fun newInstance(): DetailFragment {
             return DetailFragment()
