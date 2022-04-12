@@ -2,6 +2,7 @@ package com.trendyol.android.devtools.viewinspector
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
@@ -19,12 +20,13 @@ import com.trendyol.android.devtools.viewinspector.internal.ext.orZero
 import com.trendyol.android.devtools.viewinspector.internal.lifecycle.ViewLifecycleCallback
 import com.trendyol.android.devtools.viewinspector.internal.window.WindowEventCallback
 import java.lang.ref.WeakReference
+import java.util.WeakHashMap
 
 class ViewInspector {
 
     internal class ViewInspectorProcessor(private val application: Application) : ViewLifecycleCallback() {
 
-        private val viewMap = mutableMapOf<Fragment, WeakReference<View>>()
+        private val viewMap = WeakHashMap<Fragment, WeakReference<View>>()
 
         private val gestureDetector = GestureDetectorCompat(
             application,
@@ -70,6 +72,16 @@ class ViewInspector {
 
         override fun onFragmentViewDestroyed(fm: FragmentManager, fragment: Fragment) {
             super.onFragmentViewDestroyed(fm, fragment)
+            viewMap.remove(fragment)
+        }
+
+        override fun onFragmentAttached(fm: FragmentManager, fragment: Fragment, context: Context) {
+            super.onFragmentAttached(fm, fragment, context)
+            if (fragment.view != null) viewMap[fragment] = WeakReference(fragment.view)
+        }
+
+        override fun onFragmentDetached(fm: FragmentManager, fragment: Fragment) {
+            super.onFragmentDetached(fm, fragment)
             viewMap.remove(fragment)
         }
 
