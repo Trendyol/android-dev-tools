@@ -5,6 +5,7 @@ import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.autofillservice.AutofillService
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
 import com.trendyol.android.devtools.debugmenu.DebugMenu
+import com.trendyol.android.devtools.debugtoast.DebugToast
 import com.trendyol.android.devtools.viewinspector.ViewInspector
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
 
@@ -30,5 +31,8 @@ class App : Application() {
 
         // View Inspector
         ViewInspector.init(this)
+
+        // Debug Toast
+        DebugToast.init(this)
     }
 }

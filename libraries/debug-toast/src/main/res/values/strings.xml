@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="debug_toast_notification_channel_id">debug_toast</string>
+    <string name="debug_toast_notification_channel_name">Debug Toast</string>
+    <string name="debug_toast_notification_title">Debug toast</string>
+    <string name="debug_toast_notification_content">Should show debug toast messages?</string>
+    <string name="debug_toast_notification_action_start">Start</string>
+    <string name="debug_toast_notification_action_stop">Stop</string>
+</resources>
