@@ -50,15 +50,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initMockServerTest() {
-        GlobalScope.launch {
-            while (true) {
-                withContext(Dispatchers.Main) {
-                    DebugToast.show(this@MainActivity, "testrsss", Toast.LENGTH_SHORT)
-                    delay(3000)
-                }
-            }
-        }
-
         val client = OkHttpClient.Builder()
             .addInterceptor(MockInterceptor(this))
             .build()
