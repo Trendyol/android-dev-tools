@@ -20,7 +20,7 @@ import com.trendyol.android.devtools.viewinspector.internal.ext.orZero
 import com.trendyol.android.devtools.viewinspector.internal.lifecycle.ViewLifecycleCallback
 import com.trendyol.android.devtools.viewinspector.internal.window.WindowEventCallback
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.WeakHashMap
 
 class ViewInspector {
 
