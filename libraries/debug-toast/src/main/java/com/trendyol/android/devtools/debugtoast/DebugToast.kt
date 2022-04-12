@@ -61,7 +61,7 @@ class DebugToast private constructor() {
         )
     }
 
-    private val broadcastReceiver = object: BroadcastReceiver() {
+    private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             isActive = !isActive
             context?.let { updateNotification(it) }

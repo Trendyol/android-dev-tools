@@ -2,21 +2,14 @@ package com.trendyol.android.devtools
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.trendyol.android.devtools.debugtoast.DebugToast
 import com.trendyol.android.devtools.httpinspector.MockInterceptor
 import com.trendyol.android.devtools.ui.main.MainFragment
 import kotlin.concurrent.fixedRateTimer
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType

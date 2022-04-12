@@ -3,10 +3,7 @@ package com.trendyol.android.devtools.viewinspector.internal.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.trendyol.android.devtools.viewinspector.internal.ext.getView
 
 internal abstract class ViewLifecycleCallback :
     FragmentManager.FragmentLifecycleCallbacks(), Application.ActivityLifecycleCallbacks {
