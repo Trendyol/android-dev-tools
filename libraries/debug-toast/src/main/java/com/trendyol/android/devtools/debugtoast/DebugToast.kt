@@ -35,12 +35,12 @@ class DebugToast private constructor() {
             context,
             context.getString(R.string.debug_toast_notification_channel_id),
         )
-            .setSmallIcon(android.R.drawable.ic_delete)
+            .setSmallIcon(R.drawable.ic_dev_tools_debug_toast_bug)
             .setContentTitle(context.getString(R.string.debug_toast_notification_title))
             .setContentText(context.getString(R.string.debug_toast_notification_content))
-            .setOngoing(true)
-            .addAction(android.R.drawable.ic_delete, actionText, actionIntent)
+            .addAction(R.drawable.ic_dev_tools_debug_toast_bug, actionText, actionIntent)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOngoing(true)
 
         with(NotificationManagerCompat.from(context)) {
             notify(NOTIFICATION_ID, builder.build())
@@ -49,11 +49,16 @@ class DebugToast private constructor() {
 
     private fun createActionIntent(context: Context): PendingIntent {
         val actionIntent = Intent(INTENT_ACTION_TOGGLE_TOAST)
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.getActivity(context, 0, actionIntent, PendingIntent.FLAG_IMMUTABLE)
-        } else {
-            PendingIntent.getActivity(context, 0, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        }
+        return PendingIntent.getBroadcast(
+            context,
+            System.currentTimeMillis().toInt(),
+            actionIntent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            },
+        )
     }
 
     private val broadcastReceiver = object: BroadcastReceiver() {
@@ -66,26 +71,23 @@ class DebugToast private constructor() {
     private fun initBroadcastReceiver(context: Context) {
         context.registerReceiver(
             broadcastReceiver,
-            IntentFilter().apply {
-                addAction(INTENT_ACTION_TOGGLE_TOAST)
-            },
+            IntentFilter(INTENT_ACTION_TOGGLE_TOAST),
         )
     }
 
     private fun initNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = context.getString(R.string.debug_toast_notification_channel_id)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        val channelId = context.getString(R.string.debug_toast_notification_channel_id)
 
-            val channel = NotificationChannel(
-                channelId,
-                context.getString(R.string.debug_toast_notification_channel_name),
-                NotificationManager.IMPORTANCE_LOW,
-            )
-            val notificationManager: NotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channel = NotificationChannel(
+            channelId,
+            context.getString(R.string.debug_toast_notification_channel_name),
+            NotificationManager.IMPORTANCE_LOW,
+        )
+        val notificationManager: NotificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            notificationManager.createNotificationChannel(channel)
-        }
+        notificationManager.createNotificationChannel(channel)
     }
 
     companion object {
