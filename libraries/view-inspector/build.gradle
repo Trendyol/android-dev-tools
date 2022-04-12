@@ -32,7 +32,7 @@ android {
 
 ext {
     PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
-    PUBLISH_VERSION = '0.2.0'
+    PUBLISH_VERSION = '0.2.1'
     PUBLISH_ARTIFACT_ID = 'view-inspector'
     PUBLISH_DESCRIPTION = "Android View Resource Id Inspector"
     PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"
