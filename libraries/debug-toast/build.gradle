@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
+}
+
+android {
+    compileSdkVersion 31
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 31
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+ext {
+    PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
+    PUBLISH_VERSION = '0.1.0'
+    PUBLISH_ARTIFACT_ID = 'debug-toast'
+    PUBLISH_DESCRIPTION = "Android Debug Toast On Demand"
+    PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"
+    PUBLISH_LICENSE_NAME = "Android DevTools License"
+    PUBLISH_LICENSE_URL = "https://github.com/Trendyol/android-dev-tools/blob/master/LICENSE"
+    PUBLISH_SCM_CONNECTION = "scm:git:github.com/Trendyol/android-dev-tools.git"
+    PUBLISH_SCM_DEV_CONNECTION = "scm:git:ssh://github.com/Trendyol/android-dev-tools.git"
+    PUBLISH_SCM_URL = "https://github.com/Trendyol/android-dev-tools/tree/main"
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
