@@ -40,7 +40,7 @@ internal class EventManagerImpl(
         value: String?,
         platform: String?,
     ) {
-        val dateFormat = SimpleDateFormat("hh:mm:SS", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         val date = dateFormat.format(Calendar.getInstance().time)
 
         return eventRepository.insert(
