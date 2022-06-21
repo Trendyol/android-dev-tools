@@ -7,6 +7,7 @@ import com.trendyol.android.devtools.debugmenu.DebugActionItem
 import com.trendyol.android.devtools.debugmenu.DebugMenu
 import com.trendyol.android.devtools.debugtoast.DebugToast
 import com.trendyol.android.devtools.viewinspector.ViewInspector
+import com.trendyol.devtools.deeplinklauncher.DeeplinkLauncher
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
 
 class App : Application() {
@@ -34,5 +35,8 @@ class App : Application() {
 
         // Debug Toast
         DebugToast.init(this)
+
+        // Deeplink Launcher
+        DeeplinkLauncher.init(this)
     }
 }

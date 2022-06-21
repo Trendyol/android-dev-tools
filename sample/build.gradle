@@ -54,6 +54,7 @@ dependencies {
     debugImplementation project(':libraries:http-inspector')
     debugImplementation project(':libraries:view-inspector')
     debugImplementation project(':libraries:debug-toast')
+    debugImplementation project(':libraries:deeplink-launcher')
 
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"

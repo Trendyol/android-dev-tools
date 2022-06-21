@@ -1,3 +1,8 @@
 <resources>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="deeplink_launcher_title">DEEPLINK LAUNCHER</string>
+    <string name="history_title">History</string>
+    <string name="apps_deep_links">App\'s Deep Links</string>
+    <string name="fire_deep_links">Fire 🚀</string>
+
+    <string name="deeplink_edittext_hint">Type your deeplink\n(e.g: dl://?Page=Search)</string>
 </resources>

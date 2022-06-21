@@ -18,6 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/buttonDeeplinkLauncher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="@string/deeplink_launcher"
+        app:layout_constraintBottom_toTopOf="@id/buttonUpdateEnvironments"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
         android:id="@+id/buttonUpdateEnvironments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
