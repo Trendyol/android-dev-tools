@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "deeplink_entities")
-internal data class DeeplinkEntity(
+internal data class DeeplinkHistoryEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
-    @ColumnInfo(name = "deeplink") val deeplink: String?
+    @ColumnInfo(name = "deeplink") val deeplink: String
 )

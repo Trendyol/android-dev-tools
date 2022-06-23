@@ -6,7 +6,9 @@ import android.content.Context
 @SuppressLint("StaticFieldLeak")
 internal object ContextContainer {
 
-    val mainContainer by lazy { MainContainer() }
+    private val deeplinkContainer by lazy { DeeplinkContainer(context) }
+
+    val mainContainer by lazy { MainContainer(deeplinkContainer) }
 
     private lateinit var context: Context
 
