@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.trendyol.devtools.deeplinklauncher.internal.domain.DeeplinkHistoryUseCase
+import com.trendyol.devtools.deeplinklauncher.internal.domain.DeepLinkHistoryUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class DeeplinkListViewModel(
-    private val deeplinkHistoryUseCase: DeeplinkHistoryUseCase,
+class DeepLinkListViewModel(
+    private val deeplinkHistoryUseCase: DeepLinkHistoryUseCase,
 ) : ViewModel() {
     private val listLiveData = MutableLiveData<List<String>>()
 

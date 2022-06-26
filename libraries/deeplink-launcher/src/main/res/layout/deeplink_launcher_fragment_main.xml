@@ -21,12 +21,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/DeeplinkTextInputLayoutBoxStyle"
+        style="@style/DeepLinkTextInputLayoutBoxStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/deeplink_edittext_hint"
-        android:theme="@style/DeeplinkTextInputLayoutAppearance"
+        android:theme="@style/DeepLinkTextInputLayoutAppearance"
         app:endIconDrawable="@drawable/ic_clear"
         app:endIconTint="@color/colorAccent"
         app:hintTextColor="@color/colorAccent"

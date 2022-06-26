@@ -1,6 +1,6 @@
 package com.trendyol.devtools.deeplinklauncher.internal.domain
 
-class DeeplinkValidator {
+class DeepLinkValidator {
     fun validate(deepLink: String) : String{
         when{
             deepLink.isEmpty() -> throw EmptyNameException()

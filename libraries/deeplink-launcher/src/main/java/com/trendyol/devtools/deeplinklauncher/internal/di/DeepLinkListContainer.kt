@@ -2,17 +2,17 @@ package com.trendyol.devtools.deeplinklauncher.internal.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.trendyol.devtools.deeplinklauncher.internal.ui.list.DeeplinkListViewModel
+import com.trendyol.devtools.deeplinklauncher.internal.ui.list.DeepLinkListViewModel
 
 internal class DeepLinkListContainer(
-    private val deeplinkContainer: DeeplinkContainer
+    private val deeplinkContainer: DeepLinkContainer
 ) {
 
-    inner class DeeplinkListViewModelFactory : ViewModelProvider.Factory {
+    inner class DeepLinkListViewModelFactory : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return DeeplinkListViewModel(deeplinkContainer.deeplinkHistoryUseCase) as T
+            return DeepLinkListViewModel(deeplinkContainer.deeplinkHistoryUseCase) as T
         }
     }
 }

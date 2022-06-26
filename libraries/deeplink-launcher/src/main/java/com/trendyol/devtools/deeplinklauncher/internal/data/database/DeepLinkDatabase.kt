@@ -5,18 +5,18 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.trendyol.devtools.deeplinklauncher.internal.data.dao.DeepLinkHistoryDao
-import com.trendyol.devtools.deeplinklauncher.internal.data.entity.DeeplinkHistoryEntity
+import com.trendyol.devtools.deeplinklauncher.internal.data.entity.DeepLinkHistoryEntity
 
-@Database(entities = [DeeplinkHistoryEntity::class], version = 1)
-internal abstract class DeeplinkDatabase : RoomDatabase() {
+@Database(entities = [DeepLinkHistoryEntity::class], version = 1)
+internal abstract class DeepLinkDatabase : RoomDatabase() {
 
     abstract fun historyDao(): DeepLinkHistoryDao
 
     companion object {
-        fun create(context: Context): DeeplinkDatabase {
+        fun create(context: Context): DeepLinkDatabase {
             return Room.databaseBuilder(
                 context,
-                DeeplinkDatabase::class.java, "devtool-deeplink-database"
+                DeepLinkDatabase::class.java, "devtool-deeplink-database"
             ).build()
         }
     }

@@ -12,7 +12,7 @@
     app:strokeWidth="0.7dp">
 
     <TextView
-        android:id="@+id/textViewDeeplink"
+        android:id="@+id/textViewDeepLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

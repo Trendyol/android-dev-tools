@@ -15,10 +15,10 @@ import com.trendyol.devtools.deeplinklauncher.internal.ext.viewBinding
 class DeepLinkListFragment : Fragment(R.layout.deeplink_launcher_fragment_deeplink_list) {
 
     private val binding: DeeplinkLauncherFragmentDeeplinkListBinding by viewBinding(DeeplinkLauncherFragmentDeeplinkListBinding::bind)
-    private val viewModel: DeeplinkListViewModel by viewModels { ContextContainer.deepLinkListContainer.DeeplinkListViewModelFactory() }
-    private val deepLinkSharedViewModel: DeeplinkListSharedViewModel by activityViewModels()
+    private val viewModel: DeepLinkListViewModel by viewModels { ContextContainer.deepLinkListContainer.DeepLinkListViewModelFactory() }
+    private val deepLinkSharedViewModel: DeepLinkListSharedViewModel by activityViewModels()
 
-    private val adapter: DeeplinkListAdapter = DeeplinkListAdapter().apply {
+    private val adapter: DeepLinkListAdapter = DeepLinkListAdapter().apply {
         onHistoryItemClicked = {
             deepLinkSharedViewModel.selectedDeepLink.value = it
         }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.devtools.deeplinklauncher.databinding.ItemDeeplikHistoryBinding
 
-internal class DeeplinkListAdapter : ListAdapter<String, DeeplinkListAdapter.DeeplinkHistoryViewHolder>(
+internal class DeepLinkListAdapter : ListAdapter<String, DeepLinkListAdapter.DeepLinkHistoryViewHolder>(
     AsyncDifferConfig
         .Builder(
             object : DiffUtil.ItemCallback<String>() {
@@ -25,17 +25,17 @@ internal class DeeplinkListAdapter : ListAdapter<String, DeeplinkListAdapter.Dee
 ) {
     var onHistoryItemClicked: ((deeplink: String) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeeplinkHistoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeepLinkHistoryViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemDeeplikHistoryBinding.inflate(inflater)
-        return DeeplinkHistoryViewHolder(binding)
+        return DeepLinkHistoryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: DeeplinkHistoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DeepLinkHistoryViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class DeeplinkHistoryViewHolder(
+    inner class DeepLinkHistoryViewHolder(
         private val binding: ItemDeeplikHistoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -49,7 +49,7 @@ internal class DeeplinkListAdapter : ListAdapter<String, DeeplinkListAdapter.Dee
 
         fun bind(deeplink: String) = with(binding) {
             boundItem = deeplink
-            textViewDeeplink.text = deeplink
+            textViewDeepLink.text = deeplink
         }
     }
 }

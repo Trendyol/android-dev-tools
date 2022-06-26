@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonDeeplinkLauncher"
+        android:id="@+id/buttonDeepLinkLauncher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"

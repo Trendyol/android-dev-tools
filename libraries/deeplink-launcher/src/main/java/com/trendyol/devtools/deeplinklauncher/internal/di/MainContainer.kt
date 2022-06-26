@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.trendyol.devtools.deeplinklauncher.internal.ui.MainViewModel
 
 internal class MainContainer(
-    private val deeplinkContainer: DeeplinkContainer
+    private val deeplinkContainer: DeepLinkContainer
     ) {
 
     inner class MainViewModelFactory : ViewModelProvider.Factory {
