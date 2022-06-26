@@ -4,8 +4,11 @@
     <string name="apps_deep_links">App\'s Deep Links</string>
     <string name="fire_deep_links">Fire 🚀</string>
 
-    <string name="deeplink_edittext_hint">Type your deeplink\n(e.g: dl://?Page=Search)</string>
+    <string name="deeplink_edittext_hint">Type your deeplink</string>
     <string name="deeplink_empty_error">Deep Link can\'t be empty</string>
     <string name="deeplink_not_valid_error">Please enter valid deeplink</string>
     <string name="no_activity_found">No Activity Found for this Deep Link</string>
+
+    <string name="deeplink_list_history">HISTORY</string>
+    <string name="deeplink_list_app">APP\'S DEEPLINKS</string>
 </resources>

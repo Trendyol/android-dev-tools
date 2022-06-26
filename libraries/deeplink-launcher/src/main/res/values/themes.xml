@@ -17,4 +17,15 @@
         <item name="colorOnPrimary">@color/colorPrimary</item>
     </style>
 
+    <style name="DeeplinkTextInputLayoutBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="DeeplinkTextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@android:color/tertiary_text_light</item>
+        <item name="colorControlActivated">@android:color/tertiary_text_light</item>
+        <item name="colorControlHighlight">@android:color/tertiary_text_light</item>
+    </style>
+
 </resources>

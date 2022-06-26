@@ -1,4 +1,4 @@
-package com.trendyol.devtools.deeplinklauncher.internal.ui
+package com.trendyol.devtools.deeplinklauncher.internal.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.devtools.deeplinklauncher.databinding.ItemDeeplikHistoryBinding
 
-internal class DeeplinkHistoryAdapter : ListAdapter<String, DeeplinkHistoryAdapter.DeeplinkHistoryViewHolder>(
+internal class DeeplinkListAdapter : ListAdapter<String, DeeplinkListAdapter.DeeplinkHistoryViewHolder>(
     AsyncDifferConfig
         .Builder(
             object : DiffUtil.ItemCallback<String>() {
@@ -49,7 +49,6 @@ internal class DeeplinkHistoryAdapter : ListAdapter<String, DeeplinkHistoryAdapt
 
         fun bind(deeplink: String) = with(binding) {
             boundItem = deeplink
-
             textViewDeeplink.text = deeplink
         }
     }

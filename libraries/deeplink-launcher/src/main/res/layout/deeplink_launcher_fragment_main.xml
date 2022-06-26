@@ -19,61 +19,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editTextDeepLink"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/DeeplinkTextInputLayoutBoxStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="4dp"
+        android:layout_margin="16dp"
         android:hint="@string/deeplink_edittext_hint"
-        app:layout_constraintEnd_toStartOf="@+id/buttonFire"
+        android:theme="@style/DeeplinkTextInputLayoutAppearance"
+        app:endIconDrawable="@drawable/ic_clear"
+        app:endIconTint="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextDeepLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonFire"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:layout_marginEnd="4dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="8dp"
         android:text="@string/fire_deep_links"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextDeepLink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextDeepLink" />
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonGetList"
-        android:layout_width="240dp"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutDeepLinkListContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:text="@string/apps_deep_links"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDeepLink" />
+        android:layout_marginTop="12dp"
+        android:background="?attr/colorSurface"
+        app:layout_constraintTop_toBottomOf="@+id/buttonFire"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabIndicatorFullWidth="true"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorAccent" />
 
-    <TextView
-        android:id="@+id/textViewHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/history_title"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGetList" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerHistory"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerDeepLinks"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHistory"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tabLayoutDeepLinkListContainer" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

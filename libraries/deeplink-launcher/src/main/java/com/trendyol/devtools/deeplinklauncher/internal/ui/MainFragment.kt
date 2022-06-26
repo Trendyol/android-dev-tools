@@ -4,59 +4,57 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import com.trendyol.devtools.deeplinklauncher.R
 import com.trendyol.devtools.deeplinklauncher.databinding.DeeplinkLauncherFragmentMainBinding
 import com.trendyol.devtools.deeplinklauncher.internal.di.ContextContainer
 import com.trendyol.devtools.deeplinklauncher.internal.ext.getView
 import com.trendyol.devtools.deeplinklauncher.internal.ext.viewBinding
+import com.trendyol.devtools.deeplinklauncher.internal.ui.list.DeeplinkListSharedViewModel
 import java.lang.Exception
 
 class MainFragment : Fragment(R.layout.deeplink_launcher_fragment_main) {
 
     private val binding: DeeplinkLauncherFragmentMainBinding by viewBinding(DeeplinkLauncherFragmentMainBinding::bind)
     private val viewModel: MainViewModel by viewModels { ContextContainer.mainContainer.MainViewModelFactory() }
-    private val adapter: DeeplinkHistoryAdapter = DeeplinkHistoryAdapter().apply {
-        onHistoryItemClicked = {
-            fillEditText(it)
-        }
-    }
+    private val deepLinkSharedViewModel: DeeplinkListSharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe()
         clickListeners()
-        setRecyclerView()
+        setPagerAdapter()
     }
 
-    private fun setRecyclerView() {
-        val recyclerHistory = binding.recyclerHistory
-        val dividerItemDecoration = DividerItemDecoration(
-            recyclerHistory.context,
-            VERTICAL
-        ).apply {
-            ContextCompat.getDrawable(recyclerHistory.context, R.drawable.drawable_item_space_decorator)?.let {
-                setDrawable(it)
-            }
-        }
-        recyclerHistory.addItemDecoration(dividerItemDecoration)
-        recyclerHistory.adapter = adapter
+    private fun setPagerAdapter() {
+        binding.viewPagerDeepLinks.adapter = DeepLinkPagerAdapter(this)
+
+        val tabTitles = listOf(
+            getString(R.string.deeplink_list_history),
+            getString(R.string.deeplink_list_app)
+        )
+
+        TabLayoutMediator(
+            binding.tabLayoutDeepLinkListContainer,
+            binding.viewPagerDeepLinks
+        ) { tab, position ->
+            tab.text = tabTitles[position]
+        }.attach()
     }
 
     private fun observe() {
-        viewModel.getHistory().observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-        }
         viewModel.getNotValidDeepLinkEvent().observe(viewLifecycleOwner) {
             showSnackBar(it)
         }
         viewModel.getLaunchDeepLinkEvent().observe(viewLifecycleOwner) {
             fireDeeplink(it)
+        }
+        deepLinkSharedViewModel.selectedDeepLink.observe(viewLifecycleOwner){
+            fillEditText(it)
         }
     }
 
