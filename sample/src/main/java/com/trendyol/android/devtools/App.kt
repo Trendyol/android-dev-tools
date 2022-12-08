@@ -38,5 +38,9 @@ class App : Application() {
 
         // DeepLink Launcher
         DeepLinkLauncher.init(this)
+        applicationContext.assets.open("deepLinks.json").bufferedReader().use {
+            val deepLinkData = it.readText()
+            DeepLinkLauncher.importAppDeepLinks(deepLinkData)
+        }
     }
 }

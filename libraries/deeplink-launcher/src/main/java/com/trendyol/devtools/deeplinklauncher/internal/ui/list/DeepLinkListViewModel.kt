@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.trendyol.devtools.deeplinklauncher.internal.domain.AppDeepLinkUseCase
 import com.trendyol.devtools.deeplinklauncher.internal.domain.DeepLinkHistoryUseCase
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class DeepLinkListViewModel(
     private val deeplinkHistoryUseCase: DeepLinkHistoryUseCase,
+    private val appDeepLinkUseCase: AppDeepLinkUseCase
 ) : ViewModel() {
     private val listLiveData = MutableLiveData<List<String>>()
 
@@ -25,7 +26,9 @@ class DeepLinkListViewModel(
                 }
             }
             else if (tabIndex == 1){
-                //todo get exported list
+                appDeepLinkUseCase.getAppDeepLinks().collect{
+                    listLiveData.value = it
+                }
             }
         }
     }
