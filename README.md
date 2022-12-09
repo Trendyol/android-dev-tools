@@ -171,15 +171,12 @@ Debug Menu provides a debug page build with predefined custom action and events.
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu?color=%2373c248)
 
-## DeepLink Launcher
+## DeepLink Launcher(Beta)
 DeepLink Launcher allows you, trigger deepLinks, and keep triggered deepLinks in history.
 
-### How it Works?
+When a deepLink launched, it will be recorded to roomDB. And recorded datas will be listed under the History Tab.
 
-It observes both activity and fragment lifecycle events via application class to detect layout inflations.
-After each inflation, it seeks for determined input views in the inflated layout.
-If it has all required inputs, then shows the autofill action.
-Autofill data that suitable with inflated form inputs are shown in the selection dialog.
+And also you can import your deepLinks data to DeepLink Launcher. They will be listed under the *APP'S DEEPLINK* tab.
 
 ### Demo
 <table>
@@ -204,13 +201,7 @@ That's an optional area.
 DeepLinkLauncher.importAppDeepLinks(jsonString)
 ```
 
-### Configuration
-
-```kotlin
-    DeepLinkLauncher.importAppDeepLinks(jsonString)
-```
-
-For giving external list to DeepLin launcher, your json format be like that sample:
+For importing external list to DeepLink Launcher, your json format be like that sample:
 ```json
 {
     "deepLinks": [
@@ -222,6 +213,7 @@ For giving external list to DeepLin launcher, your json format be like that samp
 ```
 
 ###Usage
+
 And just call this function to open DeepLink Launcher screen.
 ```kotlin
 DeepLinkLauncher.show()
