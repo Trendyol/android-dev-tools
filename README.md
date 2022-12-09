@@ -212,7 +212,7 @@ For importing external list to DeepLink Launcher, your json format be like that 
 }
 ```
 
-###Usage
+### Usage
 
 And just call this function to open DeepLink Launcher screen.
 ```kotlin
