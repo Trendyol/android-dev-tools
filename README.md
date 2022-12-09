@@ -15,6 +15,7 @@ Android Dev Tools is a library that contains various QA/Debug tools to speed up 
 * [Http Inspector (Alpha)](#http-inspector-alpha)
 * [Environment Manager](#environment-manager)
 * [Debug Menu](#debug-menu)
+* [DeepLink Launcher](#deeplink-launcher)
 
 ## Autofill Service
 Autofill Service allows developers and QA to fill form inputs automatically with predefined form data.
@@ -169,6 +170,68 @@ Debug Menu provides a debug page build with predefined custom action and events.
 "com.trendyol.android.devtools:debug-menu:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu?color=%2373c248)
+
+## DeepLink Launcher
+DeepLink Launcher allows you, trigger deepLinks, and keep triggered deepLinks in history.
+
+### How it Works?
+
+It observes both activity and fragment lifecycle events via application class to detect layout inflations.
+After each inflation, it seeks for determined input views in the inflated layout.
+If it has all required inputs, then shows the autofill action.
+Autofill data that suitable with inflated form inputs are shown in the selection dialog.
+
+### Demo
+<table>
+ 	<tr>
+  		<td><img src="/art/deeplink_launcher_1.png" width="200" /></td>
+  		<td><img src="/art/deeplink_launcher_2.png" width="200" /></td>
+  		<td><img src="/art/deeplink_launcher_3.png" width="200" /></td>
+  		<td><img src="/art/deeplink_launcher_4.png" width="200" /></td>
+ 	</tr>
+</table>
+
+### Initialize
+
+You need to initialize it first
+```kotlin
+DeepLinkLauncher.init(this)
+```
+
+If you have a deepLink json file which is includes your app deepLinks, you can init them like that.
+That's an optional area.
+```kotlin
+DeepLinkLauncher.importAppDeepLinks(jsonString)
+```
+
+### Configuration
+
+```kotlin
+    DeepLinkLauncher.importAppDeepLinks(jsonString)
+```
+
+For giving external list to DeepLin launcher, your json format be like that sample:
+```json
+{
+    "deepLinks": [
+        "dl://?Page=Home&Tab=Man",
+        "dl://?Page=AppLink&Data=1",
+        "dl://?Page=AppLink&Data=2"
+    ]
+}
+```
+
+###Usage
+And just call this function to open DeepLink Launcher screen.
+```kotlin
+DeepLinkLauncher.show()
+```
+
+### Setup
+```gradle
+"com.trendyol.android.devtools:deeplink-launcher:$version"
+```
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/deeplink-launcher?color=%2373c248)
 
 License
 --------
