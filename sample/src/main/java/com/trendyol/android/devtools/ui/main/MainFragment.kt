@@ -10,6 +10,7 @@ import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.databinding.MainFragmentBinding
 import com.trendyol.android.devtools.debugmenu.DebugMenu
 import com.trendyol.android.devtools.ui.login.LoginFragment
+import com.trendyol.devtools.deeplinklauncher.DeepLinkLauncher
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
 import kotlin.random.Random
 
@@ -37,6 +38,10 @@ class MainFragment : Fragment() {
                 LoginFragment.newInstance(),
                 LoginFragment.FRAGMENT_TAG
             )
+        }
+
+        binding.buttonDeepLinkLauncher.setOnClickListener {
+            DeepLinkLauncher.show()
         }
 
         binding.message.text = "current environment: ${EnvironmentManager.getCurrentEnvironment()}"

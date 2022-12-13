@@ -4,4 +4,5 @@
     <string name="debug_menu">Debug Menu</string>
     <string name="update_environments">Update Environments</string>
     <string name="autofill_service">Autofill Service</string>
+    <string name="deeplink_launcher">DeepLink Launcher</string>
 </resources>

@@ -31,15 +31,15 @@ class ViewInspector {
         private val gestureDetector = GestureDetectorCompat(
             application,
             object : SimpleOnGestureListener() {
-                override fun onLongPress(event: MotionEvent?) {
+                override fun onLongPress(event: MotionEvent) {
                     viewMap.filterKeys { it.isVisible }.values
                         .asSequence()
                         .flatMap { it.get()?.findViews().orEmpty() }
                         .filter { it.isVisible }
                         .filter { view ->
                             view.getHitBoxRect().contains(
-                                event?.rawX?.toInt().orZero(),
-                                event?.rawY?.toInt().orZero(),
+                                event.rawX.toInt().orZero(),
+                                event.rawY.toInt().orZero(),
                             )
                         }
                         .lastOrNull()
