@@ -16,17 +16,16 @@ class DeepLinkListViewModel(
 
     fun getDeepLinkList(): LiveData<List<String>> = listLiveData
 
-    private var tabIndex : Int? = null
+    private var tabIndex: Int? = null
 
     fun getDeepLinks() {
         viewModelScope.launch {
-            if (tabIndex == 0){
+            if (tabIndex == 0) {
                 deeplinkHistoryUseCase.getHistory().collect {
                     listLiveData.value = it
                 }
-            }
-            else if (tabIndex == 1){
-                appDeepLinkUseCase.getAppDeepLinks().collect{
+            } else if (tabIndex == 1) {
+                appDeepLinkUseCase.getAppDeepLinks().collect {
                     listLiveData.value = it
                 }
             }

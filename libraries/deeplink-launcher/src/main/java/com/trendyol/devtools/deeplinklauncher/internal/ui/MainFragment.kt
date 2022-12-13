@@ -53,7 +53,7 @@ class MainFragment : Fragment(R.layout.deeplink_launcher_fragment_main) {
         viewModel.getLaunchDeepLinkEvent().observe(viewLifecycleOwner) {
             fireDeepLink(it)
         }
-        deepLinkSharedViewModel.selectedDeepLink.observe(viewLifecycleOwner){
+        deepLinkSharedViewModel.selectedDeepLink.observe(viewLifecycleOwner) {
             fillEditText(it)
         }
     }

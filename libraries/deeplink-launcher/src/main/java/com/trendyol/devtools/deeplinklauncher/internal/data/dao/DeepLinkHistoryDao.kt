@@ -25,8 +25,8 @@ internal interface DeepLinkHistoryDao {
     suspend fun deleteOldRecords()
 
     suspend fun insertOrUpdate(deeplinkEntity: DeepLinkHistoryEntity) {
-        val historyItem : DeepLinkHistoryEntity? = getEntityByDeepLink(deeplinkEntity.deeplink)
-        if (historyItem != null){
+        val historyItem: DeepLinkHistoryEntity? = getEntityByDeepLink(deeplinkEntity.deeplink)
+        if (historyItem != null) {
             delete(historyItem)
         }
         insert(deeplinkEntity)

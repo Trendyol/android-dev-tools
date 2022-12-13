@@ -50,4 +50,3 @@ internal class MainViewModel(
         }
     }
 }
-

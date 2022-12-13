@@ -12,10 +12,7 @@ import com.trendyol.devtools.deeplinklauncher.internal.data.entity.AppDeepLinkEn
 import com.trendyol.devtools.deeplinklauncher.internal.data.entity.DeepLinkHistoryEntity
 
 @Database(
-    entities = [
-        DeepLinkHistoryEntity::class,
-        AppDeepLinkEntity::class
-    ], version = 1
+    entities = [DeepLinkHistoryEntity::class, AppDeepLinkEntity::class], version = 1
 )
 @TypeConverters(
     AppDeepLinkListConverter::class
@@ -29,8 +26,7 @@ internal abstract class DeepLinkDatabase : RoomDatabase() {
     companion object {
         fun create(context: Context): DeepLinkDatabase {
             return Room.databaseBuilder(
-                context,
-                DeepLinkDatabase::class.java, "devtool-deeplink-database"
+                context, DeepLinkDatabase::class.java, "devtool-deeplink-database"
             ).build()
         }
     }

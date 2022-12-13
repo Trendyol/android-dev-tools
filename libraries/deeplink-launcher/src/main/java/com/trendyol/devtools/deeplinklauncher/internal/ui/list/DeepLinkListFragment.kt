@@ -14,7 +14,9 @@ import com.trendyol.devtools.deeplinklauncher.internal.ext.viewBinding
 
 class DeepLinkListFragment : Fragment(R.layout.deeplink_launcher_fragment_deeplink_list) {
 
-    private val binding: DeeplinkLauncherFragmentDeeplinkListBinding by viewBinding(DeeplinkLauncherFragmentDeeplinkListBinding::bind)
+    private val binding: DeeplinkLauncherFragmentDeeplinkListBinding by viewBinding(
+        DeeplinkLauncherFragmentDeeplinkListBinding::bind
+    )
     private val viewModel: DeepLinkListViewModel by viewModels { ContextContainer.deepLinkListContainer.DeepLinkListViewModelFactory() }
     private val deepLinkSharedViewModel: DeepLinkListSharedViewModel by activityViewModels()
 
@@ -65,6 +67,6 @@ class DeepLinkListFragment : Fragment(R.layout.deeplink_launcher_fragment_deepli
                 }
             }
 
-        private const val TAB_INDEX_KEY : String = "DEEPLINK_LIST_TAB_INDEX"
+        private const val TAB_INDEX_KEY: String = "DEEPLINK_LIST_TAB_INDEX"
     }
 }
