@@ -7,7 +7,7 @@ import okhttp3.Headers
 
 internal fun Map<String, List<String>>?.toHeaders(): Headers {
     return Headers.Builder().apply {
-        this@toHeaders?.forEach { pair ->
+        this@toHeaders?.iterator()?.forEach { pair ->
             pair.value.forEach { value ->
                 add(pair.key, value)
             }

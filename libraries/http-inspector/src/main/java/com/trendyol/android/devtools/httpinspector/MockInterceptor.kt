@@ -156,7 +156,7 @@ class MockInterceptor(context: Context) : Interceptor {
             .body(responseData.body.toResponseBody())
             .addHeader(HEADER_CONTENT_TYPE, Constants.CONTENT_TYPE_JSON)
             .apply {
-                responseData.headers.toHeaderMap(moshi).forEach { pair ->
+                responseData.headers.toHeaderMap(moshi).iterator().forEach { pair ->
                     pair.value.forEach { value -> addHeader(pair.key, value) }
                 }
             }
