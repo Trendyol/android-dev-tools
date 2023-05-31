@@ -56,7 +56,7 @@ internal class EnvironmentService : Service() {
             this,
             System.currentTimeMillis().toInt(),
             Intent(this, MainActivity::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT,
+            PendingIntent.FLAG_MUTABLE,
         )
 
     @RequiresApi(Build.VERSION_CODES.O)

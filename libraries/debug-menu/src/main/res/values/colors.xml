@@ -2,5 +2,28 @@
 <resources>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#9b59b6</color>
+    <color name="colorAccent">#1B72C0</color>
+
+    <color name="debug_menu_color_background_page">#F3F4F9</color>
+    <color name="debug_menu_color_title">#333333</color>
+    <color name="debug_menu_color_description">#666666</color>
+    <color name="debug_menu_color_background_switch">#1B72C0</color>
+
+    <color name="debug_menu_color_item_0">#5BA6FF</color>
+    <color name="debug_menu_color_item_1">#A2DC23</color>
+    <color name="debug_menu_color_item_2">#53D2D1</color>
+    <color name="debug_menu_color_item_3">#9A91FE</color>
+    <color name="debug_menu_color_item_4">#FC9181</color>
+    <color name="debug_menu_color_item_5">#5C79E1</color>
+    <color name="debug_menu_color_item_6">#CA84E4</color>
+
+    <array name="debug_menu_array_item_color">
+        <item>@color/debug_menu_color_item_0</item>
+        <item>@color/debug_menu_color_item_1</item>
+        <item>@color/debug_menu_color_item_2</item>
+        <item>@color/debug_menu_color_item_3</item>
+        <item>@color/debug_menu_color_item_4</item>
+        <item>@color/debug_menu_color_item_5</item>
+        <item>@color/debug_menu_color_item_6</item>
+    </array>
 </resources>
