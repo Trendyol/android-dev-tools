@@ -16,7 +16,8 @@ internal abstract class EventDatabase : RoomDatabase() {
         fun create(context: Context): EventDatabase {
             return Room.databaseBuilder(
                 context,
-                EventDatabase::class.java, "analytics-logger-database-1"
+                EventDatabase::class.java,
+                "analytics-logger-database-1",
             ).build()
         }
     }

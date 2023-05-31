@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 
 fun Activity.getView(callback: ((View) -> Unit)) {
-
     val view: View? = findViewById(android.R.id.content)
 
     if (view != null && view.width != 0) {
