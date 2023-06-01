@@ -3,15 +3,15 @@ package com.trendyol.android.devtools.debugmenu.internal.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.trendyol.android.devtools.debugmenu.R
-import com.trendyol.android.devtools.debugmenu.databinding.DevToolsActivityMainBinding
+import com.trendyol.android.devtools.debugmenu.databinding.DebugMenuActivityBinding
 
 internal class DebugMenuActivity : AppCompatActivity() {
 
-    private lateinit var binding: DevToolsActivityMainBinding
+    private lateinit var binding: DebugMenuActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DevToolsActivityMainBinding.inflate(layoutInflater)
+        binding = DebugMenuActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
             startMainFragment()

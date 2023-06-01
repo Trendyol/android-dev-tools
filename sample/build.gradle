@@ -28,33 +28,37 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
-    lintOptions {
-        checkDependencies true
-        xmlReport false
-        htmlReport true
-        htmlOutput file("${project.rootDir}/build/reports/android-lint.html")
-    }
 
     buildFeatures.viewBinding = true
+    namespace 'com.trendyol.android.devtools'
+    lint {
+        checkDependencies true
+        htmlOutput file("$rootDir/build/reports/android-lint.html")
+        htmlReport true
+        xmlReport false
+    }
 }
 
 dependencies {
     debugImplementation project(':libraries:autofill-service')
-    debugImplementation project(':libraries:environment-manager')
-    debugImplementation project(':libraries:debug-menu')
+    releaseImplementation project(':libraries:autofill-service-no-op')
+    implementation project(':libraries:environment-manager')
+    implementation project(':libraries:debug-menu')
     debugImplementation project(':libraries:analytics-logger')
+    releaseImplementation project(':libraries:analytics-logger-no-op')
     debugImplementation project(':libraries:http-inspector')
-    debugImplementation project(':libraries:view-inspector')
-    debugImplementation project(':libraries:debug-toast')
-    debugImplementation project(':libraries:deeplink-launcher')
+    releaseImplementation project(':libraries:http-inspector-no-op')
+    implementation project(':libraries:view-inspector')
+    implementation project(':libraries:debug-toast')
+    implementation project(':libraries:deeplink-launcher')
 
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
@@ -65,5 +69,5 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
-    implementation "androidx.constraintlayout:constraintlayout:constraint_layout_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 }

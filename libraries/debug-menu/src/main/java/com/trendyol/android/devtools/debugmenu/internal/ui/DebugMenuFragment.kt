@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
 import com.trendyol.android.devtools.debugmenu.R
-import com.trendyol.android.devtools.debugmenu.databinding.DevToolsFragmentDebugMenuBinding
+import com.trendyol.android.devtools.debugmenu.databinding.DebugMenuFragmentBinding
 import com.trendyol.android.devtools.debugmenu.internal.di.ContextContainer
 import com.trendyol.android.devtools.debugmenu.internal.ext.viewBinding
 
-internal class DebugMenuFragment : Fragment(R.layout.dev_tools_fragment_debug_menu) {
+internal class DebugMenuFragment : Fragment(R.layout.debug_menu_fragment) {
 
-    private val binding: DevToolsFragmentDebugMenuBinding by viewBinding(DevToolsFragmentDebugMenuBinding::bind)
+    private val binding: DebugMenuFragmentBinding by viewBinding(DebugMenuFragmentBinding::bind)
     private val viewModel by viewModels<DebugMenuViewModel> {
         ContextContainer.debugMenuContainer.DebugMenuViewModelFactory()
     }
@@ -30,7 +30,8 @@ internal class DebugMenuFragment : Fragment(R.layout.dev_tools_fragment_debug_me
 
     private fun initializeRecyclerView() {
         binding.recyclerViewDebugMenu.adapter = adapter
-        adapter.debugActionItemClickListener = { viewModel.onDebugActionItemClick(it) }
+        adapter.debugActionItemClickListener = viewModel::onDebugActionItemClick
+        adapter.debugActionItemSwitchChangedListener = viewModel::onDebugActionItemChecked
     }
 
     private fun renderDebugActions(debugActions: List<DebugActionItem>) {

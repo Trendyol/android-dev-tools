@@ -1,12 +1,15 @@
 package com.trendyol.android.devtools.analyticslogger
 
+import android.Manifest
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsContainer
@@ -22,11 +25,8 @@ class AnalyticsLogger private constructor(
 ) {
 
     private val context get() = application.applicationContext
-
     private val superVisorJob = SupervisorJob()
-
     private val scope = CoroutineScope(superVisorJob + Dispatchers.IO)
-
     private val analyticsContainer: AnalyticsContainer by lazy { ContextContainer.analyticsContainer }
 
     private fun reportEvent(
@@ -54,13 +54,11 @@ class AnalyticsLogger private constructor(
         } else {
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
-
         val content = context.getString(
             R.string.analytics_logger_notification_content,
             platform,
-            key
+            key,
         )
-
         val builder = NotificationCompat.Builder(
             context,
             context.getString(R.string.analytics_logger_notification_channel_id),
@@ -72,7 +70,13 @@ class AnalyticsLogger private constructor(
             .setContentIntent(pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
-            notify(1, builder.build())
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                notify(1, builder.build())
+            }
         }
     }
 

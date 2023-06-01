@@ -131,17 +131,19 @@ class AutofillService private constructor() {
             inputs.values.firstOrNull()?.doOnDetach {
                 val fields = inputs.keys.toList()
                 val values = inputs.values.map { it.text.toString() }.toList()
-                if (values.all { it.isNotBlank() }) launchIO {
-                    historyRepository.save(
-                        fields,
-                        ListItem.Autofill(
-                            name = values.firstOrNull().orEmpty(),
-                            description = application.applicationContext.getString(
-                                R.string.dev_tools_autofill_history_list_item_description
-                            ),
-                            data = values,
+                if (values.all { it.isNotBlank() }) {
+                    launchIO {
+                        historyRepository.save(
+                            fields,
+                            ListItem.Autofill(
+                                name = values.firstOrNull().orEmpty(),
+                                description = application.applicationContext.getString(
+                                    R.string.dev_tools_autofill_history_list_item_description
+                                ),
+                                data = values,
+                            )
                         )
-                    )
+                    }
                 }
             }
         }

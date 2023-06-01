@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface DeepLinkHistoryDao {
+
     @Query("SELECT * FROM deeplink_entities ORDER BY uid DESC")
     fun get(): Flow<List<DeepLinkHistoryEntity>>
 
@@ -21,7 +22,10 @@ internal interface DeepLinkHistoryDao {
     @Delete
     suspend fun delete(vararg deeplinkEntity: DeepLinkHistoryEntity)
 
-    @Query("DELETE FROM deeplink_entities where uid NOT IN (SELECT uid from deeplink_entities ORDER BY uid DESC LIMIT 40)")
+    @Query(
+        "DELETE FROM deeplink_entities " +
+            "WHERE uid NOT IN (SELECT uid from deeplink_entities ORDER BY uid DESC LIMIT 40)",
+    )
     suspend fun deleteOldRecords()
 
     suspend fun insertOrUpdate(deeplinkEntity: DeepLinkHistoryEntity) {
