@@ -33,8 +33,6 @@ afterEvaluate {
                     from components.java
                 }
 
-                artifact androidSourcesJar
-
                 pom {
                     name = PUBLISH_ARTIFACT_ID
                     description = PUBLISH_DESCRIPTION

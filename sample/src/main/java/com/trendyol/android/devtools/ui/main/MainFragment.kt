@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.trendyol.android.devtools.MainActivity
+import com.trendyol.android.devtools.R
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.databinding.MainFragmentBinding
 import com.trendyol.android.devtools.debugmenu.DebugMenu
@@ -44,10 +45,22 @@ class MainFragment : Fragment() {
             DeepLinkLauncher.show()
         }
 
-        binding.message.text = "current environment: ${EnvironmentManager.getCurrentEnvironment()}"
+        binding.buttonAnalyticsLogger.setOnClickListener {
+            AnalyticsLogger.show()
+        }
+
+        binding.switchAnalyticsLogger.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AnalyticsLogger.showNotification()
+            } else {
+                AnalyticsLogger.hideNotification()
+            }
+        }
+
+        binding.message.text = getString(R.string.current_environment, EnvironmentManager.getCurrentEnvironment())
 
         EnvironmentManager.getEnvironmentChangedLiveData().observe(viewLifecycleOwner) {
-            binding.message.text = "current environment: $it"
+            binding.message.text = getString(R.string.current_environment, it)
         }
 
         AnalyticsLogger.report(

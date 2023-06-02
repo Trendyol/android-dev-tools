@@ -2,22 +2,26 @@ package com.trendyol.android.devtools.analyticslogger
 
 import android.app.Application
 
-class AnalyticsLogger private constructor(
-    private val application: Application,
-) {
+@Suppress("unused", "UNUSED_PARAMETER")
+object AnalyticsLogger {
 
-    companion object {
+    fun init(application: Application, showNotification: Boolean = true) {
+        // no-op
+    }
 
-        fun init(application: Application) {
-            // no-op
-        }
+    fun show() {
+        // no-op
+    }
 
-        fun report(
-            key: String?,
-            value: Any?,
-            platform: String?,
-        ) {
-            // no-op
-        }
+    fun showNotification() {
+        // no-op
+    }
+
+    fun hideNotification() {
+        // no-op
+    }
+
+    fun report(key: String?, value: String?, platform: String?) {
+        // no-op
     }
 }

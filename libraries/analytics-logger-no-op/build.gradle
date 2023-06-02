@@ -33,7 +33,7 @@ android {
 
 ext {
     PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
-    PUBLISH_VERSION = '0.1.3'
+    PUBLISH_VERSION = '0.2.0'
     PUBLISH_ARTIFACT_ID = 'analytics-logger-no-op'
     PUBLISH_DESCRIPTION = "Android Analytics Event Logger"
     PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"
