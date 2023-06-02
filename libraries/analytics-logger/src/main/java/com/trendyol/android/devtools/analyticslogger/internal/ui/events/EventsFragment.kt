@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentEventsBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
@@ -75,6 +76,7 @@ internal class EventsFragment : Fragment() {
     private fun deleteAll() {
         viewModel.deleteAll()
         eventAdapter?.refresh()
+        AnalyticsLogger.instance?.cancelNotification()
     }
 
     private fun navigateToEventDetail(event: Event) {
@@ -103,6 +105,7 @@ internal class EventsFragment : Fragment() {
         })
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_clear -> deleteAll()
@@ -110,6 +113,7 @@ internal class EventsFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.analytics_logger_menu_events, menu)
         initSearchView(menu)

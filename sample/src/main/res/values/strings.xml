@@ -5,4 +5,6 @@
     <string name="update_environments">Update Environments</string>
     <string name="autofill_service">Autofill Service</string>
     <string name="deeplink_launcher">DeepLink Launcher</string>
+    <string name="analytics_logger">Analytics Logger</string>
+    <string name="current_environment">Current Environment %1$s</string>
 </resources>

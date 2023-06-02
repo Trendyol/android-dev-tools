@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="32dp"
+    android:padding="32dp"
     tools:context=".ui.main.MainFragment">
 
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +23,8 @@
         android:layout_marginBottom="12dp"
         android:text="@string/deeplink_launcher"
         app:layout_constraintBottom_toTopOf="@id/buttonUpdateEnvironments"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonUpdateEnvironments"
@@ -34,8 +33,8 @@
         android:layout_marginBottom="12dp"
         android:text="@string/update_environments"
         app:layout_constraintBottom_toTopOf="@id/buttonEnvironmentManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonEnvironmentManager"
@@ -61,10 +60,28 @@
         android:id="@+id/buttonAutofillService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/autofill_service"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonAnalyticsLogger"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/buttonAnalyticsLogger"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/analytics_logger"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/switchAnalyticsLogger"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchAnalyticsLogger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@id/buttonAnalyticsLogger"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonAnalyticsLogger"
+        app:layout_constraintTop_toTopOf="@id/buttonAnalyticsLogger" />
 </androidx.constraintlayout.widget.ConstraintLayout>
