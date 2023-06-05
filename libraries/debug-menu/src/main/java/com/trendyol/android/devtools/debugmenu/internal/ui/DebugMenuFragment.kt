@@ -25,7 +25,8 @@ internal class DebugMenuFragment : Fragment(R.layout.debug_menu_fragment) {
     }
 
     private fun observeViewModel() {
-        viewModel.getDebugActions().observe(viewLifecycleOwner) { renderDebugActions(it) }
+        viewModel.getDebugActions().observe(viewLifecycleOwner, ::renderDebugActions)
+        viewModel.getUpdatedItemIndex().observe(viewLifecycleOwner, ::renderUpdate)
     }
 
     private fun initializeRecyclerView() {
@@ -38,7 +39,14 @@ internal class DebugMenuFragment : Fragment(R.layout.debug_menu_fragment) {
         adapter.submitList(debugActions)
     }
 
+    private fun renderUpdate(index: Int) {
+        binding.recyclerViewDebugMenu.post {
+            adapter.notifyItemChanged(index)
+        }
+    }
+
     companion object {
+
         fun newInstance(): DebugMenuFragment {
             return DebugMenuFragment()
         }

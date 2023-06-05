@@ -1,6 +1,6 @@
 package com.trendyol.android.devtools.debugmenu
 
-import android.app.Application
+import android.content.Context
 import android.content.Intent
 import com.trendyol.android.devtools.debugmenu.internal.di.ContextContainer
 import com.trendyol.android.devtools.debugmenu.internal.domain.DebugMenuUseCase
@@ -10,8 +10,8 @@ object DebugMenu {
 
     private lateinit var debugMenuUseCase: DebugMenuUseCase
 
-    fun init(application: Application) {
-        ContextContainer.setContext(application)
+    fun init(context: Context) {
+        ContextContainer.setContext(context)
         debugMenuUseCase = ContextContainer.debugMenuContainer.debugMenuUseCase
     }
 
