@@ -1,29 +1,51 @@
 package com.trendyol.android.devtools.debugmenu
 
 import androidx.annotation.DrawableRes
+import com.trendyol.android.devtools.debugmenu.internal.di.ContextContainer
 
 sealed class DebugActionItem(
-    internal open val text: String,
-    @get:DrawableRes internal open val iconDrawable: Int,
-    internal open val description: String?,
+    internal open var text: String,
+    @get:DrawableRes internal open var iconDrawableRes: Int,
+    internal open var description: String?,
 ) {
 
     abstract class Clickable(
-        override val text: String,
-        @get:DrawableRes override val iconDrawable: Int,
-        override val description: String?,
-    ) : DebugActionItem(text, iconDrawable, description) {
+        override var text: String,
+        @get:DrawableRes override var iconDrawableRes: Int,
+        override var description: String?,
+    ) : DebugActionItem(text, iconDrawableRes, description) {
 
         abstract fun onClickItem()
     }
 
     abstract class Switchable(
-        override val text: String,
-        @get:DrawableRes override val iconDrawable: Int,
-        override val description: String?,
-        internal val initialState: Boolean = false,
-    ) : DebugActionItem(text, iconDrawable, description) {
+        override var text: String,
+        @get:DrawableRes override var iconDrawableRes: Int,
+        override var description: String?,
+        initialState: Boolean = false,
+    ) : Clickable(text, iconDrawableRes, description) {
 
-        abstract fun onCheckboxStatusChanged(isChecked: Boolean): Boolean
+        internal var lastState = initialState
+
+        override fun onClickItem() {
+            // do nothing
+        }
+
+        abstract fun onCheckboxStatusChanged(isChecked: Boolean)
+    }
+
+    fun updateDescription(newDescription: String) {
+        description = newDescription
+        ContextContainer.debugMenuContainer.debugMenuUseCase.onDebugActionItemUpdated(this)
+    }
+
+    fun updateText(newText: String) {
+        text = newText
+        ContextContainer.debugMenuContainer.debugMenuUseCase.onDebugActionItemUpdated(this)
+    }
+
+    fun updateIconDrawableRes(@DrawableRes newIconDrawableRes: Int) {
+        iconDrawableRes = newIconDrawableRes
+        ContextContainer.debugMenuContainer.debugMenuUseCase.onDebugActionItemUpdated(this)
     }
 }

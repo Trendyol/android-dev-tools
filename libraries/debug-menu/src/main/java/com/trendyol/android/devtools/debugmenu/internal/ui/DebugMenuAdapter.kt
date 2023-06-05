@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncDifferConfig
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
@@ -12,23 +11,11 @@ import com.trendyol.android.devtools.debugmenu.R
 import com.trendyol.android.devtools.debugmenu.databinding.DebugMenuItemBinding
 
 internal class DebugMenuAdapter : ListAdapter<DebugActionItem, DebugMenuAdapter.DebugMenuItemViewHolder>(
-    AsyncDifferConfig
-        .Builder(
-            object : DiffUtil.ItemCallback<DebugActionItem>() {
-                override fun areItemsTheSame(oldItem: DebugActionItem, newItem: DebugActionItem): Boolean {
-                    return oldItem.text == newItem.text && oldItem.description == newItem.description
-                }
-
-                override fun areContentsTheSame(oldItem: DebugActionItem, newItem: DebugActionItem): Boolean {
-                    return oldItem == newItem
-                }
-            }
-        )
-        .build()
+    AsyncDifferConfig.Builder(DebugMenuItemDiffCallback()).build(),
 ) {
 
     lateinit var debugActionItemClickListener: ((Int) -> Unit)
-    lateinit var debugActionItemSwitchChangedListener: ((Int, Boolean) -> Boolean)
+    lateinit var debugActionItemSwitchChangedListener: ((Int, Boolean) -> Unit)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebugMenuItemViewHolder {
         val binding = DebugMenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -43,9 +30,13 @@ internal class DebugMenuAdapter : ListAdapter<DebugActionItem, DebugMenuAdapter.
         private val binding: DebugMenuItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private lateinit var debugActionItem: DebugActionItem
+
         init {
-            binding.debugMenuSwitch.setOnCheckedChangeListener { switch, isChecked ->
-                switch.isChecked = debugActionItemSwitchChangedListener(absoluteAdapterPosition, isChecked)
+            binding.debugMenuSwitch.setOnCheckedChangeListener { _, isChecked ->
+                if ((debugActionItem as? DebugActionItem.Switchable)?.lastState == isChecked.not()) {
+                    debugActionItemSwitchChangedListener(absoluteAdapterPosition, isChecked)
+                }
             }
             binding.root.setOnClickListener {
                 debugActionItemClickListener(absoluteAdapterPosition)
@@ -53,13 +44,16 @@ internal class DebugMenuAdapter : ListAdapter<DebugActionItem, DebugMenuAdapter.
         }
 
         fun bind(debugActionItem: DebugActionItem) {
+            this.debugActionItem = debugActionItem
             with(binding) {
                 debugMenuTextTitle.text = debugActionItem.text
                 debugMenuTextDescription.text = debugActionItem.description
-                debugMenuImageIcon.setImageResource(debugActionItem.iconDrawable)
+                debugMenuImageIcon.setImageResource(debugActionItem.iconDrawableRes)
                 debugMenuSwitch.isVisible = debugActionItem is DebugActionItem.Switchable
-                if (debugActionItem is DebugActionItem.Switchable) {
-                    debugMenuSwitch.isChecked = debugActionItem.initialState
+                if (debugActionItem is DebugActionItem.Switchable &&
+                    debugMenuSwitch.isChecked xor debugActionItem.lastState
+                ) {
+                    debugMenuSwitch.isChecked = debugActionItem.lastState
                 }
 
                 with(binding.debugMenuCardIcon) {
