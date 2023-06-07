@@ -20,6 +20,7 @@
             android:layout_height="36dp"
             app:cardCornerRadius="12dp"
             app:contentPadding="6dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/debugMenuTextTitle"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
