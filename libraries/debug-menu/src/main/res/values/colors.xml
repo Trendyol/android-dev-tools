@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#1B72C0</color>
 
     <color name="debug_menu_color_background_page">#F3F4F9</color>
     <color name="debug_menu_color_title">#333333</color>
-    <color name="debug_menu_color_description">#666666</color>
+    <color name="debug_menu_color_description">#999999</color>
     <color name="debug_menu_color_background_switch">#1B72C0</color>
+    <color name="debug_menu_color_background_card">#ffffff</color>
+    <color name="debug_menu_color_icon_tint">#ffffff</color>
+    <color name="debug_menu_color_switch_thumb_tint">#ffffff</color>
 
     <color name="debug_menu_color_item_0">#5BA6FF</color>
     <color name="debug_menu_color_item_1">#A2DC23</color>

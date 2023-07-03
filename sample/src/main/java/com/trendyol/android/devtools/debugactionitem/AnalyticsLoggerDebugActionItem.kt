@@ -8,6 +8,7 @@ class AnalyticsLoggerDebugActionItem : DebugActionItem.Switchable(
     text = "Analytics Logger",
     iconDrawableRes = R.drawable.ic_analytics,
     description = "Switch to hide notifications.",
+    initialState = true,
 ) {
 
     override fun onClickItem() {

@@ -38,7 +38,7 @@ android {
 
 ext {
     PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
-    PUBLISH_VERSION = '0.3.1'
+    PUBLISH_VERSION = '0.4.0'
     PUBLISH_ARTIFACT_ID = 'debug-menu'
     PUBLISH_DESCRIPTION = "Android QA Debug Menu"
     PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"

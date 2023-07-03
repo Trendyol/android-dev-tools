@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#1B72C0</color>
+
+    <color name="debug_menu_color_background_page">#010101</color>
+    <color name="debug_menu_color_title">#ffffff</color>
+    <color name="debug_menu_color_description">#999999</color>
+    <color name="debug_menu_color_background_switch">#1B72C0</color>
+    <color name="debug_menu_color_background_card">#171717</color>
+    <color name="debug_menu_color_icon_tint">#ffffff</color>
+    <color name="debug_menu_color_switch_thumb_tint">#ffffff</color>
+
+    <color name="debug_menu_color_item_0">#5BA6FF</color>
+    <color name="debug_menu_color_item_1">#A2DC23</color>
+    <color name="debug_menu_color_item_2">#53D2D1</color>
+    <color name="debug_menu_color_item_3">#9A91FE</color>
+    <color name="debug_menu_color_item_4">#FC9181</color>
+    <color name="debug_menu_color_item_5">#5C79E1</color>
+    <color name="debug_menu_color_item_6">#CA84E4</color>
+
+    <array name="debug_menu_array_item_color">
+        <item>@color/debug_menu_color_item_0</item>
+        <item>@color/debug_menu_color_item_1</item>
+        <item>@color/debug_menu_color_item_2</item>
+        <item>@color/debug_menu_color_item_3</item>
+        <item>@color/debug_menu_color_item_4</item>
+        <item>@color/debug_menu_color_item_5</item>
+        <item>@color/debug_menu_color_item_6</item>
+    </array>
 </resources>
