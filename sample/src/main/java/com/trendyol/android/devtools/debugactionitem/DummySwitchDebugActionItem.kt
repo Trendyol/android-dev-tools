@@ -2,10 +2,11 @@ package com.trendyol.android.devtools.debugactionitem
 
 import com.trendyol.android.devtools.debugmenu.DebugActionItem
 
-class DummySwitchDebugActionItem : DebugActionItem.Switchable(
-    text = "Not yet clicked",
+class DummySwitchDebugActionItem(initialState: Boolean = false) : DebugActionItem.Switchable(
+    text = "Switchable",
     iconDrawableRes = android.R.drawable.ic_lock_lock,
     description = "Not yet switched!",
+    initialState = initialState
 ) {
 
     private var clickCounter = 1

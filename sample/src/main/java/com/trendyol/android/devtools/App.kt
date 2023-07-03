@@ -22,9 +22,13 @@ class App : Application() {
 
         // Debug Menu
         DebugMenu.init(this)
-        val debugMenuItems = listOf(DummyClickDebugActionItem(baseContext), DummySwitchDebugActionItem())
+        val debugMenuItems = listOf(
+            AnalyticsLoggerDebugActionItem(),
+            DummyClickDebugActionItem(baseContext),
+            DummySwitchDebugActionItem(true),
+        )
         DebugMenu.addDebugActionItems(debugMenuItems)
-        DebugMenu.addDebugAction(AnalyticsLoggerDebugActionItem())
+        DebugMenu.addDebugAction(DummySwitchDebugActionItem())
 
         // Autofill Service
         AutofillService.Builder(this)
