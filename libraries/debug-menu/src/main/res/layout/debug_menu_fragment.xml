@@ -12,12 +12,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:elevation="0dp"
+        android:backgroundTint="@color/debug_menu_color_background_page"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarDebugMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleTextColor="@color/debug_menu_color_title"
             app:title="Debug Menu" />
     </com.google.android.material.appbar.AppBarLayout>
 

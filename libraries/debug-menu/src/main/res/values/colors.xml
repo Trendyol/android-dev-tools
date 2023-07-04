@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#F3F4F9</color>
+    <color name="colorPrimaryDark">#F3F4F9</color>
     <color name="colorAccent">#1B72C0</color>
 
     <color name="debug_menu_color_background_page">#F3F4F9</color>
