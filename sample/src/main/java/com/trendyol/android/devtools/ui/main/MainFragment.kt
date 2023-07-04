@@ -32,7 +32,7 @@ class MainFragment : Fragment() {
             EnvironmentManager.updateEnvironments(environments)
         }
         binding.buttonDebugMenu.setOnClickListener {
-            DebugMenu.show()
+            DebugMenu.show("Sample Application Debug Menu")
         }
         binding.buttonAutofillService.setOnClickListener {
             (activity as? MainActivity)?.navigateToFragment(

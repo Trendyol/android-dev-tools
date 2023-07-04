@@ -7,14 +7,14 @@ import android.content.Context
 internal object ContextContainer {
 
     val debugMenuContainer by lazy { DebugMenuContainer() }
-
     private lateinit var context: Context
 
     fun getContext(): Context = if (ContextContainer::context.isInitialized) {
         context
     } else {
         throw NullPointerException(
-            "Library is not initialized, please call init(Application) on Application.onCreate()"
+            "Library is not initialized, please call init(Context) earlier than " +
+                "[com.trendyol.android.devtools.debugmenu.DebugMenu.show]",
         )
     }
 

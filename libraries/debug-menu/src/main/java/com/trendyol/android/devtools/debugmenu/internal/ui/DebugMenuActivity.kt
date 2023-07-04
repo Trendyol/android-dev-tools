@@ -1,5 +1,7 @@
 package com.trendyol.android.devtools.debugmenu.internal.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.trendyol.android.devtools.debugmenu.R
@@ -21,7 +23,20 @@ internal class DebugMenuActivity : AppCompatActivity() {
     private fun startMainFragment() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragmentContainerViewMain, DebugMenuFragment.newInstance())
+            .replace(
+                R.id.fragmentContainerViewMain,
+                DebugMenuFragment.newInstance(requireNotNull(intent.getStringExtra(KEY_TITLE))),
+            )
             .commit()
+    }
+
+    companion object {
+
+        internal const val KEY_TITLE: String = "key_title"
+
+        internal fun newIntent(context: Context, title: String): Intent =
+            Intent(context, DebugMenuActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(KEY_TITLE, title)
     }
 }
