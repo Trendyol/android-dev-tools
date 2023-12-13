@@ -8,6 +8,8 @@
         <activity
             android:name=".internal.ui.DebugMenuActivity"
             android:launchMode="singleInstance"
+            android:label="@string/label"
+            android:taskAffinity="com.trendyol.android.devtools.debugmenu.task"
             android:theme="@style/Theme.Devtools" />
     </application>
 </manifest>

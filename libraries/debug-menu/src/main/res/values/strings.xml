@@ -1,4 +1,5 @@
 <resources>
+    <string name="label">Debug Menu</string>
     <string name="dev_tools_notification_title">Dev Tools</string>
     <string name="dev_tools_notification_description">Tap to open Dev Tools</string>
     <string name="dev_tools_notification_name">Android Dev Tools</string>
