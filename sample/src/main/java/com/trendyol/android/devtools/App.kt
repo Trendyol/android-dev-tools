@@ -8,6 +8,7 @@ import com.trendyol.android.devtools.debugactionitem.DummySwitchDebugActionItem
 import com.trendyol.android.devtools.debugactionitem.AnalyticsLoggerDebugActionItem
 import com.trendyol.android.devtools.debugmenu.DebugMenu
 import com.trendyol.android.devtools.debugtoast.DebugToast
+import com.trendyol.android.devtools.sharedprefmanager.SharedPrefManager
 import com.trendyol.android.devtools.viewinspector.ViewInspector
 import com.trendyol.devtools.deeplinklauncher.DeepLinkLauncher
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
@@ -50,5 +51,8 @@ class App : Application() {
             val deepLinkData = it.readText()
             DeepLinkLauncher.importAppDeepLinks(deepLinkData)
         }
+
+        //SharedPref Manager
+        SharedPrefManager.init(this)
     }
 }
