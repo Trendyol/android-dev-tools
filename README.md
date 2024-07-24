@@ -16,6 +16,7 @@ Android Dev Tools is a library that contains various QA/Debug tools to speed up 
 * [Environment Manager](#environment-manager)
 * [Debug Menu](#debug-menu)
 * [DeepLink Launcher](#deeplink-launcher)
+* [SharedPref Manager](#sharedpref-manager)
 
 ## Autofill Service
 Autofill Service allows developers and QA to fill form inputs automatically with predefined form data.
@@ -224,6 +225,41 @@ DeepLinkLauncher.show()
 "com.trendyol.android.devtools:deeplink-launcher:$version"
 ```
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/deeplink-launcher?color=%2373c248)
+
+## SharedPref Manager
+SharedPref Manager allows you manage shared preferences
+
+### Demo
+<table>
+ 	<tr>
+  		<td><img src="/art/sharedpref_manager_1.png" width="200" /></td>
+  		<td><img src="/art/sharedpref_manager_2.png" width="200" /></td>
+  		<td><img src="/art/sharedpref_manager_3.png" width="200" /></td>
+  		<td><img src="/art/sharedpref_manager_4.png" width="200" /></td>
+ 	</tr>
+</table>
+
+### Initialize
+
+You need to initialize it first
+```kotlin
+SharedPrefManager.init(this)
+```
+
+### Usage
+
+And just call this function to open SharedPref Manager screen.
+```kotlin
+SharedPrefManager.show("shared_pref_name")
+```
+
+### Setup
+
+```gradle
+"com.trendyol.android.devtools:sharedpref-manager:$version"
+```
+
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/sharedpref-manager?color=%2373c248)
 
 License
 --------
