@@ -10,41 +10,25 @@ class SharedPrefUpdateTypeValidator {
             SharedPrefValueType.INT -> {
                 kotlin.runCatching {
                     newValue.toInt()
-                }.onSuccess {
-
-                }.onFailure {
-                    throw IllegalArgumentException("Old value type is: ${sharedPrefModel.valueType} so new value type must be ${sharedPrefModel.valueType}")
-                }
+                }.onFailure { throwExceptionFor(sharedPrefModel.valueType) }
             }
 
             SharedPrefValueType.STRING -> {
                 kotlin.runCatching {
                     newValue.toString()
-                }.onSuccess {
-
-                }.onFailure {
-                    throw IllegalArgumentException("Old value type is: ${sharedPrefModel.valueType} so new value type must be ${sharedPrefModel.valueType}")
-                }
+                }.onFailure { throwExceptionFor(sharedPrefModel.valueType) }
             }
 
             SharedPrefValueType.BOOLEAN -> {
                 kotlin.runCatching {
                     newValue.toBoolean()
-                }.onSuccess {
-
-                }.onFailure {
-                    throw IllegalArgumentException("Old value type is: ${sharedPrefModel.valueType} so new value type must be ${sharedPrefModel.valueType}")
-                }
+                }.onFailure { throwExceptionFor(sharedPrefModel.valueType) }
             }
 
             SharedPrefValueType.FLOAT -> {
                 kotlin.runCatching {
                     newValue.toFloat()
-                }.onSuccess {
-
-                }.onFailure {
-                    throw IllegalArgumentException("Old value type is: ${sharedPrefModel.valueType} so new value type must be ${sharedPrefModel.valueType}")
-                }
+                }.onFailure { throwExceptionFor(sharedPrefModel.valueType) }
             }
 
             SharedPrefValueType.LONG -> {
@@ -52,14 +36,16 @@ class SharedPrefUpdateTypeValidator {
                     newValue.toLong()
                 }.onSuccess {
 
-                }.onFailure {
-                    throw IllegalArgumentException("Old value type is: ${sharedPrefModel.valueType} so new value type must be ${sharedPrefModel.valueType}")
-                }
+                }.onFailure { throwExceptionFor(sharedPrefModel.valueType) }
             }
 
             SharedPrefValueType.UNKNOWN -> {
                 throw IllegalArgumentException("Unknown value type")
             }
         }
+    }
+
+    private fun throwExceptionFor(valueType: SharedPrefValueType) {
+        throw IllegalArgumentException("Old value type is: $valueType so new value type must be $valueType.")
     }
 }

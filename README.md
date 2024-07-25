@@ -241,7 +241,7 @@ SharedPref Manager allows you manage shared preferences
 
 ### Initialize
 
-You need to initialize it first
+You need to initialize the library with with your `android.app.Application` instance.
 ```kotlin
 SharedPrefManager.init(this)
 ```

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.trendyol.android.devtools.sharedprefmanager.di.ContextContainer
 import com.trendyol.android.devtools.sharedprefmanager.navigation.NavigationComponent
-import com.trendyol.android.devtools.sharedprefmanager.ui.ui.theme.DevtoolsTheme
+import com.trendyol.android.devtools.sharedprefmanager.ui.ui.theme.DevToolsTheme
 
 internal class SharedPrefManagerActivity : ComponentActivity() {
 
@@ -28,7 +28,7 @@ internal class SharedPrefManagerActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            DevtoolsTheme {
+            DevToolsTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
