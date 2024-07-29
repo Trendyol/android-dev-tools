@@ -17,7 +17,6 @@ import com.trendyol.devtools.deeplinklauncher.DeepLinkLauncher
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
 import kotlin.random.Random
 
-
 class MainFragment : Fragment() {
 
     private lateinit var binding: MainFragmentBinding
@@ -84,7 +83,13 @@ class MainFragment : Fragment() {
         val edit = sharedPref.edit()
         edit.clear().commit()
         edit.putString("key_shared_pref_short_string", "Lorem ipsum dolor sit amet")
-        edit.putString("key_shared_pref_long_string", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.")
+        edit.putString(
+            "key_shared_pref_long_string",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
+            " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
+            "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        )
         edit.putInt("key_shared_pref_int", 100)
         edit.putBoolean("key_shared_pref_boolean", true)
         edit.apply()

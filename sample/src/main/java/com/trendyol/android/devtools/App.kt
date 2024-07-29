@@ -52,7 +52,7 @@ class App : Application() {
             DeepLinkLauncher.importAppDeepLinks(deepLinkData)
         }
 
-        //SharedPref Manager
+        // SharedPref Manager
         SharedPrefManager.init(this)
     }
 }
