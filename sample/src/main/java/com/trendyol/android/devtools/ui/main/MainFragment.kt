@@ -1,5 +1,6 @@
 package com.trendyol.android.devtools.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.trendyol.android.devtools.R
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.databinding.MainFragmentBinding
 import com.trendyol.android.devtools.debugmenu.DebugMenu
+import com.trendyol.android.devtools.sharedprefmanager.SharedPrefManager
 import com.trendyol.android.devtools.ui.login.LoginFragment
 import com.trendyol.devtools.deeplinklauncher.DeepLinkLauncher
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
@@ -37,7 +39,7 @@ class MainFragment : Fragment() {
         binding.buttonAutofillService.setOnClickListener {
             (activity as? MainActivity)?.navigateToFragment(
                 LoginFragment.newInstance(),
-                LoginFragment.FRAGMENT_TAG
+                LoginFragment.FRAGMENT_TAG,
             )
         }
 
@@ -47,6 +49,12 @@ class MainFragment : Fragment() {
 
         binding.buttonAnalyticsLogger.setOnClickListener {
             AnalyticsLogger.show()
+        }
+
+        binding.buttonSharedPrefManager.setOnClickListener {
+            val sharedPrefName = "sharedPrefName"
+            loadDummySharedPrefValues(sharedPrefName)
+            SharedPrefManager.show(sharedPrefName)
         }
 
         binding.switchAnalyticsLogger.setOnCheckedChangeListener { _, isChecked ->
@@ -68,6 +76,23 @@ class MainFragment : Fragment() {
             value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
             platform = "Firebase",
         )
+    }
+
+    private fun loadDummySharedPrefValues(sharedPrefName: String) {
+        val sharedPref = requireContext().getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+        val edit = sharedPref.edit()
+        edit.clear().commit()
+        edit.putString("key_shared_pref_short_string", "Lorem ipsum dolor sit amet")
+        edit.putString(
+            "key_shared_pref_long_string",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
+            " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
+            "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        )
+        edit.putInt("key_shared_pref_int", 100)
+        edit.putBoolean("key_shared_pref_boolean", true)
+        edit.apply()
     }
 
     companion object {

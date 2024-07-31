@@ -1,0 +1,21 @@
+<resources>
+    <string name="title_activity_shared_pref_manager">SharedPref Manager</string>
+    <string name="content_description_search">Search Icon</string>
+    <string name="content_description_delete">Delete Icon</string>
+    <string name="content_description_warning">Warning Icon</string>
+    <string name="content_description_back">Back Icon</string>
+    <string name="content_description_close">Close Icon</string>
+    <string name="content_description_done">Done Icon</string>
+    <string name="hint_search_shared_ref_key">Search Shared Pref Key...</string>
+    <string name="title_delete_all_dialog">Delete</string>
+    <string name="description_delete_all_dialog">Are you sure delete all shared pref items?</string>
+    <string name="text_success_dialog">Success</string>
+    <string name="button_text_common_dialog">OK</string>
+    <string name="button_text_confirmation_dialog_confirm">Confirm</string>
+    <string name="button_text_confirmation_dialog_dismiss">Dismiss</string>
+    <string name="title_edit_screen">Edit</string>
+    <string name="title_delete_item_dialog">Delete Item</string>
+    <string name="description_delete_item_dialog">Are you sure delete shared pref item: \"%s\" ?</string>
+    <string name="button_text_edit_screen_update">Update</string>
+    <string name="button_text_edit_screen_delete">Delete</string>
+</resources>
