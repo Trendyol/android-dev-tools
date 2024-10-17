@@ -8,12 +8,14 @@ import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 internal class EventPagingSource(
     private val eventManager: EventManager,
     private val query: String?,
+    private val platform: String,
 ) : PagingSource<Int, Event>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Event> {
         val nextPage = params.key ?: 1
         val response = eventManager.find(
             query = query,
+            platform = platform,
             page = nextPage,
             pageSize = params.loadSize,
         )

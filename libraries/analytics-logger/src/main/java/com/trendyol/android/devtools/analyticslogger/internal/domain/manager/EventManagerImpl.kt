@@ -14,25 +14,14 @@ internal class EventManagerImpl(
     private val moshi: Moshi,
 ) : EventManager {
 
-    override suspend fun find(query: String?, page: Int, pageSize: Int): List<Event> {
-        val limit = 20
-        val offset = (page - 1) * limit
-
+    override suspend fun find(query: String?, platform: String, page: Int, pageSize: Int): List<Event> {
         val events = eventRepository.find(
             query = "%${query.orEmpty()}%",
-            limit = limit,
-            offset = offset,
+            platform = "%${platform}%",
+            limit = PAGE_LIMIT,
+            offset = calculateOffset(page),
         )
-        return events.map { eventEntity ->
-            Event(
-                uid = eventEntity.uid,
-                key = eventEntity.key,
-                value = eventEntity.value,
-                json = eventEntity.value.beautify(moshi),
-                platform = eventEntity.platform,
-                date = eventEntity.date,
-            )
-        }
+        return mapEventData(events)
     }
 
     override suspend fun insert(
@@ -55,5 +44,36 @@ internal class EventManagerImpl(
 
     override suspend fun deleteAll() {
         return eventRepository.deleteAll()
+    }
+
+    override suspend fun getPlatforms(): List<String> {
+        return eventRepository.getPlatforms()
+    }
+
+    override suspend fun filterByPlatform(platform: String, page: Int, pageSize: Int): List<Event> {
+        val events = eventRepository.filterByPlatform(
+            platform = platform,
+            limit = PAGE_LIMIT,
+            offset = calculateOffset(page)
+        )
+        return mapEventData(events)
+    }
+
+    private fun calculateOffset(page: Int) = (page - 1) * PAGE_LIMIT
+
+    private fun mapEventData(eventEntities: List<EventEntity>): List<Event> =
+        eventEntities.map { eventEntity ->
+            Event(
+                uid = eventEntity.uid,
+                key = eventEntity.key,
+                value = eventEntity.value,
+                json = eventEntity.value.beautify(moshi),
+                platform = eventEntity.platform,
+                date = eventEntity.date,
+            )
+        }
+
+    companion object {
+        private const val PAGE_LIMIT = 20
     }
 }
