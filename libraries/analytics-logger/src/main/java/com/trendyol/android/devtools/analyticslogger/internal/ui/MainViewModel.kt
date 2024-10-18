@@ -19,15 +19,26 @@ internal class MainViewModel(
     private val eventManager: EventManager,
 ) : ViewModel() {
 
+    init {
+        viewModelScope.launch {
+            _platformsState.value = eventManager.getPlatforms()
+        }
+    }
+
     private val queryState = MutableStateFlow<String?>("")
+    private val platformState = MutableStateFlow("")
 
     private val _detailState = MutableStateFlow<DetailState>(DetailState.Initial)
     val detailState: StateFlow<DetailState> = _detailState
+
+    private val _platformsState = MutableStateFlow<List<String>>(emptyList())
+    val platformsState: StateFlow<List<String>> = _platformsState
 
     val eventsFlow: Flow<PagingData<Event>> = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
         EventPagingSource(
             eventManager = eventManager,
             query = queryState.value,
+            platform = platformState.value
         )
     }
         .flow
@@ -35,6 +46,10 @@ internal class MainViewModel(
 
     fun setQuery(query: String?) {
         queryState.value = query.orEmpty()
+    }
+
+    fun setFilterState(platform: String) {
+        platformState.value = if (platform == "All") "" else platform
     }
 
     fun deleteAll() = viewModelScope.launch {

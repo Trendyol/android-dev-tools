@@ -38,6 +38,8 @@ internal class EventsFragment : Fragment() {
 
     private var eventAdapter: EventAdapter? = null
 
+    private lateinit var eventPlatformAdapter: EventPlatformAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = AnalyticsLoggerFragmentEventsBinding.inflate(inflater, container, false)
         return binding.root
@@ -51,6 +53,9 @@ internal class EventsFragment : Fragment() {
     }
 
     private fun initView() {
+        eventPlatformAdapter = EventPlatformAdapter()
+        binding.platformsRecyclerView.adapter = eventPlatformAdapter
+
         eventAdapter = EventAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = eventAdapter
@@ -58,13 +63,28 @@ internal class EventsFragment : Fragment() {
         eventAdapter?.onItemSelected = { event ->
             navigateToEventDetail(event)
         }
+
+        eventPlatformAdapter.onItemSelected = {
+            viewModel.setFilterState(it)
+            eventAdapter?.refresh()
+        }
     }
 
     private fun observeData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.eventsFlow.collectLatest {
-                eventAdapter?.submitData(it)
+        with(viewLifecycleOwner.lifecycleScope) {
+
+            launch {
+                viewModel.eventsFlow.collectLatest {
+                    eventAdapter?.submitData(it)
+                }
             }
+
+            launch {
+                viewModel.platformsState.collectLatest {
+                    eventPlatformAdapter.submitData(it)
+                }
+            }
+
         }
     }
 

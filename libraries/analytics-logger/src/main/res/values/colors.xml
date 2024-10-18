@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="textColorPrimary">#000000</color>
     <color name="textColorSecondary">#000000</color>
+    <color name="colorAccent">#9b59b6</color>
 
     <color name="analyticGridBackgroundColor">#e3e3e3</color>
 </resources>

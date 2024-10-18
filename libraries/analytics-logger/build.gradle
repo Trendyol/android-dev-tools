@@ -37,7 +37,7 @@ android {
 
 ext {
     PUBLISH_GROUP_ID = 'com.trendyol.android.devtools'
-    PUBLISH_VERSION = '0.2.0'
+    PUBLISH_VERSION = '0.3.0'
     PUBLISH_ARTIFACT_ID = 'analytics-logger'
     PUBLISH_DESCRIPTION = "Android Analytics Event Logger"
     PUBLISH_URL = "https://github.com/Trendyol/android-dev-tools"
@@ -55,6 +55,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "com.google.android.material:material:$material_version"
 
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
