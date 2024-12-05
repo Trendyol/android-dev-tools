@@ -7,4 +7,5 @@ internal data class Event(
     val json: String?,
     val platform: String?,
     val date: String?,
+    val isSuccess: Boolean?,
 )

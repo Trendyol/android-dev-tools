@@ -7,4 +7,6 @@
     <color name="colorAccent">#9b59b6</color>
 
     <color name="analyticGridBackgroundColor">#e3e3e3</color>
+    <color name="analyticEventSuccessColor">#C4F0D8</color>
+    <color name="analyticEventFailureColor">#f6dde1</color>
 </resources>

@@ -28,6 +28,7 @@ internal class EventManagerImpl(
         key: String?,
         value: String?,
         platform: String?,
+        isSuccess: Boolean?,
     ) {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         val date = dateFormat.format(Calendar.getInstance().time)
@@ -38,6 +39,7 @@ internal class EventManagerImpl(
                 value = value,
                 platform = platform,
                 date = date,
+                isSuccess = isSuccess,
             )
         )
     }
@@ -70,6 +72,7 @@ internal class EventManagerImpl(
                 json = eventEntity.value.beautify(moshi),
                 platform = eventEntity.platform,
                 date = eventEntity.date,
+                isSuccess = eventEntity.isSuccess,
             )
         }
 

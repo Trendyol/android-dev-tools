@@ -99,6 +99,13 @@ AnalyticsLogger.report(
     value = "{\"category\": \"Cart\", \"data\": \"TestData\" }", // Should be Json string.
     platform = "EventPlatform",
 )
+// or
+AnalyticsLogger.report(
+    key = "eventKey",
+    value = "{\"category\": \"Cart\", \"data\": \"TestData\" }", // Should be Json string.
+    platform = "EventPlatform",
+    isSuccess = true, // send your event result
+)
 ```
 
 ### Setup

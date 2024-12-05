@@ -6,7 +6,7 @@ internal interface EventManager {
 
     suspend fun find(query: String?, platform: String, page: Int, pageSize: Int): List<Event>
 
-    suspend fun insert(key: String?, value: String?, platform: String?)
+    suspend fun insert(key: String?, value: String?, platform: String?, isSuccess: Boolean? = null)
 
     suspend fun deleteAll()
 
