@@ -19,5 +19,4 @@ interface SharedPrefManagerRepository {
     suspend fun deleteSharedPrefItem(sharedPrefModel: SharedPrefModel)
 
     suspend fun deleteAllSharedPref()
-
 }

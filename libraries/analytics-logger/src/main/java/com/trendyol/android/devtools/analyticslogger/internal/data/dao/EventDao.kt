@@ -8,7 +8,11 @@ import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEn
 @Dao
 internal interface EventDao {
 
-    @Query("SELECT * FROM event_entities WHERE (`key` LIKE :query OR value LIKE :query) AND platform LIKE :platform ORDER BY uid DESC LIMIT :limit OFFSET :offset")
+    @Query(
+        "SELECT * FROM event_entities " +
+            "WHERE (`key` LIKE :query OR value LIKE :query) " +
+            "AND platform LIKE :platform ORDER BY uid DESC LIMIT :limit OFFSET :offset",
+    )
     suspend fun find(query: String, platform: String, limit: Int, offset: Int): List<EventEntity>
 
     @Insert

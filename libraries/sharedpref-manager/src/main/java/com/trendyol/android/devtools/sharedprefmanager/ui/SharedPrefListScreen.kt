@@ -43,7 +43,7 @@ fun SharedPrefListScreen(
             viewModel.getAllSharedPrefs()
         }
 
-        if(showDeleteConfirmationDialog) {
+        if (showDeleteConfirmationDialog) {
             ConfirmationDialog(
                 onDismissRequest = { viewModel.updateShowDeleteConfirmationDialog(false) },
                 onConfirmation = {

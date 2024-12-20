@@ -51,7 +51,6 @@ fun SharedPrefKeyItem(
     item: SharedPrefModel,
     onItemClicked: (String) -> Unit,
 ) {
-
     var showSharedPrefValue by remember { mutableStateOf(false) }
 
     Card(
@@ -70,8 +69,7 @@ fun SharedPrefKeyItem(
             Row(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-
-                val itemRotation = animateFloatAsState(targetValue = if(showSharedPrefValue) 180f else 0f)
+                val itemRotation = animateFloatAsState(targetValue = if (showSharedPrefValue) 180f else 0f)
 
                 Text(
                     text = item.key,
@@ -98,6 +96,5 @@ fun SharedPrefKeyItem(
                 )
             }
         }
-
     }
 }

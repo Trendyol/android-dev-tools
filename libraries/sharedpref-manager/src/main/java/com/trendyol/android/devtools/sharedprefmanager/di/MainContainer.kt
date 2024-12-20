@@ -10,7 +10,7 @@ internal class MainContainer(
     private val sharedPrefUpdateTypeValidator: SharedPrefUpdateTypeValidator
 ) {
 
-    inner class SharedPrefManagerViewModelFactory: ViewModelProvider.Factory {
+    inner class SharedPrefManagerViewModelFactory : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

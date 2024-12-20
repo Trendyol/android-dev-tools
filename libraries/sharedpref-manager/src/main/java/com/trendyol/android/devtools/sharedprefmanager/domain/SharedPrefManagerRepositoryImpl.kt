@@ -5,30 +5,30 @@ import com.trendyol.android.devtools.sharedprefmanager.data.SharedPrefModel
 
 class SharedPrefManagerRepositoryImpl(
     private val sharedPreferences: SharedPreferences
-): SharedPrefManagerRepository {
+) : SharedPrefManagerRepository {
 
     override suspend fun getAllSharedPref(): MutableMap<String, *> {
         return sharedPreferences.all
     }
 
     override suspend fun updateStringValue(key: String, newValue: String) {
-        sharedPreferences.edit().putString(key,newValue).apply()
+        sharedPreferences.edit().putString(key, newValue).apply()
     }
 
     override suspend fun updateIntValue(key: String, newValue: Int) {
-        sharedPreferences.edit().putInt(key,newValue).apply()
+        sharedPreferences.edit().putInt(key, newValue).apply()
     }
 
     override suspend fun updateBooleanValue(key: String, newValue: Boolean) {
-        sharedPreferences.edit().putBoolean(key,newValue).apply()
+        sharedPreferences.edit().putBoolean(key, newValue).apply()
     }
 
     override suspend fun updateLongValue(key: String, newValue: Long) {
-        sharedPreferences.edit().putLong(key,newValue).apply()
+        sharedPreferences.edit().putLong(key, newValue).apply()
     }
 
     override suspend fun updateFloatValue(key: String, newValue: Float) {
-        sharedPreferences.edit().putFloat(key,newValue).apply()
+        sharedPreferences.edit().putFloat(key, newValue).apply()
     }
 
     override suspend fun deleteSharedPrefItem(sharedPrefModel: SharedPrefModel) {
