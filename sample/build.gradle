@@ -49,7 +49,6 @@ android {
 
 dependencies {
     debugImplementation project(':libraries:autofill-service')
-    releaseImplementation project(':libraries:autofill-service-no-op')
     implementation project(':libraries:environment-manager')
     implementation project(':libraries:debug-menu')
     debugImplementation project(':libraries:analytics-logger')

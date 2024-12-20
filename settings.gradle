@@ -1,7 +1,6 @@
 rootProject.name = "dev-tools"
 include ':sample'
 include ':libraries:autofill-service'
-include ':libraries:autofill-service-no-op'
 include ':libraries:environment-manager'
 include ':libraries:debug-menu'
 include ':libraries:analytics-logger'
