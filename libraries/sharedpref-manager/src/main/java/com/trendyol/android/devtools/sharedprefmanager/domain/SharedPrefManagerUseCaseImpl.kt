@@ -8,11 +8,9 @@ class SharedPrefManagerUseCaseImpl(
 ) : SharedPrefManagerUseCase {
 
     override suspend fun getAllSharedPref(): List<SharedPrefModel> {
-
         return sharedPrefManagerRepository.getAllSharedPref().mapNotNull {
             it.value?.let { it1 -> SharedPrefModel(it.key, it1) }
         }.sortedBy { it.key }
-
     }
 
     override suspend fun updateSharedPrefItem(sharedPrefModel: SharedPrefModel, newValue: String) {

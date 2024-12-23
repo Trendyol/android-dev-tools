@@ -72,7 +72,6 @@ internal class EventsFragment : Fragment() {
 
     private fun observeData() {
         with(viewLifecycleOwner.lifecycleScope) {
-
             launch {
                 viewModel.eventsFlow.collectLatest {
                     eventAdapter?.submitData(it)
@@ -84,7 +83,6 @@ internal class EventsFragment : Fragment() {
                     eventPlatformAdapter.submitData(it)
                 }
             }
-
         }
     }
 

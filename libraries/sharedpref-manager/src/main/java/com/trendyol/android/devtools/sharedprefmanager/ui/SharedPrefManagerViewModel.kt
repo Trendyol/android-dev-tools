@@ -23,10 +23,10 @@ class SharedPrefManagerViewModel(
     private val _selectedSharedPrefKey = MutableStateFlow("")
 
     private val _isUpdateCompleted = MutableStateFlow(false)
-    val  isUpdateCompleted: StateFlow<Boolean> = _isUpdateCompleted
+    val isUpdateCompleted: StateFlow<Boolean> = _isUpdateCompleted
 
     private val _showDeleteConfirmationDialog = MutableStateFlow(false)
-    val  showDeleteConfirmationDialog: StateFlow<Boolean> = _showDeleteConfirmationDialog
+    val showDeleteConfirmationDialog: StateFlow<Boolean> = _showDeleteConfirmationDialog
 
     fun getAllSharedPrefs() {
         viewModelScope.launch {
@@ -74,7 +74,7 @@ class SharedPrefManagerViewModel(
     }
 
     fun searchSharedPrefItemByKey(key: String) {
-        if(key.isEmpty()) {
+        if (key.isEmpty()) {
             getAllSharedPrefs()
         } else {
             val items = sharedPrefList.filter {

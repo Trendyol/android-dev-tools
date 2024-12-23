@@ -38,32 +38,49 @@ Autofill data that suitable with inflated form inputs are shown in the selection
 </table>
 
 ### Usage
-```kotlin
-AutofillService.Builder(this)
-    .withFilePath("autofill.json")
-    .build()
+Autofill will automatically started if added as dependency. It checks `autofill.json` file on assets directory of the
+project. If you want to disable Autofill to be initialized, you can modify `AndroidManifest.xml` like below on `main` or
+ desired flavor/variant.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+
+            <meta-data
+                android:name="com.trendyol.android.devtools.autofillservice.AutofillInitializer"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
+</manifest>
 ```
 
 ### Configuration
-Configuration Json file can be located in `/debug/assets` folder. You can define autofill data by following this structure.
-You should also note that the order of the defined form field resource id's and order of input values must match.
+Configuration Json file can be located in `/[variant/flavor or main]/assets` folder. You can define autofill data by
+following this structure. You should also note that the order of the defined form field resource id's and order of
+input values must match.
+
 ```json
 {
   "forms": [
     {
-      "fields": ["inputEmail", "inputPassword"], // Form input resource id's
+      "fields": ["inputEmail", "inputPassword"],
+      "matchAnyField": true,
       "categories": {
         "Temporary Users": [
-          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
+          { "description": "Temporary test user.", "values": ["test@mail.com", "123456"] },
+          { "description": "Temporary tool user.", "values": ["tools@mail.com", "123456"] }
         ],
         "Test Users": [
-          { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["meal@mail.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["dev@mail.com", "123456"] },
-          { "description": "Has more then one order history.", "values": ["tools@mail.com", "123456"] }
+          { "description": "Test regular user.", "values": ["test@mail.com", "123456"] },
+          { "description": "Test tool user.", "values": ["tools@mail.com", "123456"] }
         ]
       }
     }
@@ -71,11 +88,22 @@ You should also note that the order of the defined form field resource id's and 
 }
 ```
 
+- `forms` object declares the forms that will be cheched on activity/fragment screen.
+- `fields` are input view ids.
+- `matchAnyField` is optional flag to enable the feature whether if all `fields` should be exist or not. Default is `false`.
+- `categories` declares inputs, you can provide multiple category and multiple input values.
+
 ### Setup
-```gradle
-"com.trendyol.android.devtools:autofill-service:$version"
-"com.trendyol.android.devtools:autofill-service-no-op:$version"
+Since Autofill not requires any initialization code, all you need to add the dependency on desired variant/flavor like
+below.
+
+```kotlin
+dependencies {
+
+    debugImplementation("com.trendyol.android.devtools:autofill-service:$version")
+}
 ```
+
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/autofill-service?color=%2373c248)
 
 ## Analytics Logger

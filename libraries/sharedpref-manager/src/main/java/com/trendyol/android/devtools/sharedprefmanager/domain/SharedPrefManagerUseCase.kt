@@ -11,5 +11,4 @@ interface SharedPrefManagerUseCase {
     suspend fun deleteSharedPrefItem(sharedPrefModel: SharedPrefModel)
 
     suspend fun deleteAllSharedPref()
-
 }

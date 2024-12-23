@@ -30,7 +30,6 @@ fun BooleanSpinner(
     onSelectionChanged: (selected: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     var selected by remember { mutableStateOf(preselected) }
     var expanded by remember { mutableStateOf(false) }
     val list: List<Boolean> = listOf(true, false)
@@ -45,12 +44,10 @@ fun BooleanSpinner(
         ),
         shape = MaterialTheme.shapes.medium,
     ) {
-
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top,
         ) {
-
             Text(
                 text = selected.toString(),
                 modifier = Modifier
@@ -65,8 +62,7 @@ fun BooleanSpinner(
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                list.forEach { listEntry ->
-
+                for (listEntry in list) {
                     DropdownMenuItem(
                         onClick = {
                             selected = listEntry

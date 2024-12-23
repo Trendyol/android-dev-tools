@@ -34,7 +34,7 @@ jobs:
       - name: Android Lint
         run: ./gradlew lintDebug
       - name: Upload Android Lint Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: android-lint-report
           path: build/reports/android-lint.html
@@ -42,7 +42,7 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest
       - name: Upload Unit Test Reports
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: unit-test-report
@@ -70,7 +70,7 @@ jobs:
       # step 2
       - name: Upload results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: instrumentation-test-results
           path: build/androidTest-results
