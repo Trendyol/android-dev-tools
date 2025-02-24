@@ -16,7 +16,7 @@ fun NavigationComponent(
     navController: NavHostController,
     modifier: Modifier,
     viewModel: SharedPrefManagerViewModel
-    ) {
+) {
     NavHost(
         modifier = modifier,
         navController = navController,

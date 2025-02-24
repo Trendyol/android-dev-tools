@@ -23,7 +23,6 @@ fun SharedPrefEditInput(
     sharedPrefValue: TextFieldValue,
     onValueChanged: (TextFieldValue) -> Unit,
 ) {
-
     if (sharedPrefItem.valueType == SharedPrefValueType.BOOLEAN) {
         BooleanSpinner(
             modifier = Modifier

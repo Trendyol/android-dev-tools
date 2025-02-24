@@ -2,6 +2,7 @@
   "forms": [
     {
       "fields": ["inputEmail", "inputPassword"],
+      "matchAnyField": true,
       "categories": {
         "\uD83D\uDC51 Temporary Users": [
           { "description": "Has more then one order history.", "values": ["test@mail.com", "123456"] },

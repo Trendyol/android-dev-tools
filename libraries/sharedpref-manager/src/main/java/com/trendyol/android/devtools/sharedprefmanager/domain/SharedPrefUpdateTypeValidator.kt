@@ -35,7 +35,6 @@ class SharedPrefUpdateTypeValidator {
                 kotlin.runCatching {
                     newValue.toLong()
                 }.onSuccess {
-
                 }.onFailure { throwExceptionFor(sharedPrefModel.valueType) }
             }
 

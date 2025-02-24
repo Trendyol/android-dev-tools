@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerItemEventPlatformBinding
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 
-class EventPlatformAdapter(
-): RecyclerView.Adapter<EventPlatformAdapter.EventPlatformViewHolder>() {
+class EventPlatformAdapter() : RecyclerView.Adapter<EventPlatformAdapter.EventPlatformViewHolder>() {
 
     private val platforms: MutableList<String> = mutableListOf()
     var onItemSelected: ((platform: String) -> Unit)? = null

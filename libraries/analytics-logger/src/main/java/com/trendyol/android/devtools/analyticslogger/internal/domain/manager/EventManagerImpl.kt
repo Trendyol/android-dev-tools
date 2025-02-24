@@ -17,7 +17,7 @@ internal class EventManagerImpl(
     override suspend fun find(query: String?, platform: String, page: Int, pageSize: Int): List<Event> {
         val events = eventRepository.find(
             query = "%${query.orEmpty()}%",
-            platform = "%${platform}%",
+            platform = "%$platform%",
             limit = PAGE_LIMIT,
             offset = calculateOffset(page),
         )

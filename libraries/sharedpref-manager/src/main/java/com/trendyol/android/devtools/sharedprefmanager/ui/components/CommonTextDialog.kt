@@ -42,7 +42,6 @@ fun CommonTextDialog(
                     .padding(16.dp)
                     .wrapContentHeight(),
             ) {
-
                 Icon(
                     imageVector = icon,
                     contentDescription = stringResource(id = R.string.content_description_done),

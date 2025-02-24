@@ -92,9 +92,9 @@ class MainFragment : Fragment() {
         edit.putString(
             "key_shared_pref_long_string",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
-            " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
-            "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+                " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
+                "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
+                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
         )
         edit.putInt("key_shared_pref_int", 100)
         edit.putBoolean("key_shared_pref_boolean", true)

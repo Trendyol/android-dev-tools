@@ -69,7 +69,7 @@ fun SharedPrefEditScreen(
             }
         },
 
-        ) { innerPadding ->
+    ) { innerPadding ->
 
         val item = viewModel.getSelectedSharedPrefItem()
         var sharedPrefValue by remember { mutableStateOf(TextFieldValue(item.value.toString())) }

@@ -2,7 +2,6 @@ package com.trendyol.android.devtools
 
 import android.app.Application
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
-import com.trendyol.android.devtools.autofillservice.AutofillService
 import com.trendyol.android.devtools.debugactionitem.DummyClickDebugActionItem
 import com.trendyol.android.devtools.debugactionitem.DummySwitchDebugActionItem
 import com.trendyol.android.devtools.debugactionitem.AnalyticsLoggerDebugActionItem
@@ -30,11 +29,6 @@ class App : Application() {
         )
         DebugMenu.addDebugActionItems(debugMenuItems)
         DebugMenu.addDebugAction(DummySwitchDebugActionItem())
-
-        // Autofill Service
-        AutofillService.Builder(this)
-            .withFilePath("autofill.json")
-            .build()
 
         // Analytics Logger
         AnalyticsLogger.init(this)

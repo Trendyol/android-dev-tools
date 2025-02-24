@@ -186,7 +186,6 @@ fun ClosedTopAppBar(
                 contentDescription = stringResource(id = R.string.content_description_search),
                 tint = Color.Black,
             )
-
         }
 
         IconButton(onClick = { onDeleteClicked.invoke() }) {
@@ -196,6 +195,5 @@ fun ClosedTopAppBar(
                 tint = Color.Black,
             )
         }
-
     }
 }
