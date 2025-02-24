@@ -65,7 +65,8 @@ internal class DetailFragment : Fragment() {
             textViewPlatform.text = state.event.platform
             textViewPlatform.background = createPlatformBackground(state.event.platform)
             horizontalScrollView.background = ContextCompat.getDrawable(
-                root.context, getStatusBackgroundRes(state.event.isSuccess)
+                /* context = */ root.context,
+                /* id = */ getStatusBackgroundRes(state.event.isSuccess)
             )
         }
     }
