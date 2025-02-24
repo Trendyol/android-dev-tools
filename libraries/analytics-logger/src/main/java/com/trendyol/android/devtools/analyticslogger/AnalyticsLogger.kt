@@ -31,4 +31,21 @@ object AnalyticsLogger {
     fun report(key: String?, value: String?, platform: String?) {
         instance?.reportEvent(key, value, platform) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
     }
+
+    /**
+     * Reports an event with the specified key, value, platform, and success status.
+     *
+     * @param key The key identifying the event. Can be null.
+     * @param value The value associated with the event. Can be null.
+     * @param platform The platform related to the event. Can be null.
+     * @param isSuccess Indicates whether the operation was successful. Can be null.
+     */
+    fun report(
+        key: String?,
+        value: String?,
+        platform: String?,
+        isSuccess: Boolean?,
+    ) {
+        instance?.reportEvent(key, value, platform, isSuccess) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+    }
 }

@@ -24,4 +24,13 @@ object AnalyticsLogger {
     fun report(key: String?, value: String?, platform: String?) {
         // no-op
     }
+
+    fun report(
+        key: String?,
+        value: String?,
+        platform: String?,
+        isSuccess: Boolean?,
+    ) {
+        // no-op
+    }
 }

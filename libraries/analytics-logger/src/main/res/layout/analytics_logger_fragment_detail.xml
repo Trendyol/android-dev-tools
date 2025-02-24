@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,13 +48,14 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/analytics_logger_json_background"
             app:layout_constraintTop_toBottomOf="@id/textViewDate"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0">
+            app:layout_constraintVertical_bias="0"
+            tools:background="@drawable/analytics_logger_json_background">
 
             <TextView
                 android:id="@+id/textViewValue"

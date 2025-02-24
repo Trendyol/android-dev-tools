@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +22,6 @@ import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLogger
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 internal class DetailFragment : Fragment() {
@@ -64,6 +64,10 @@ internal class DetailFragment : Fragment() {
             textViewDate.text = state.event.date
             textViewPlatform.text = state.event.platform
             textViewPlatform.background = createPlatformBackground(state.event.platform)
+            horizontalScrollView.background = ContextCompat.getDrawable(
+                /* context = */ root.context,
+                /* id = */ getStatusBackgroundRes(state.event.isSuccess)
+            )
         }
     }
 
@@ -73,6 +77,14 @@ internal class DetailFragment : Fragment() {
             color = ColorStateList.valueOf(
                 ColorFactory.getColor(platform.orEmpty())
             )
+        }
+    }
+
+    private fun getStatusBackgroundRes(isSuccess: Boolean?): Int {
+        return when (isSuccess) {
+            true -> R.drawable.analytics_logger_success_background
+            false -> R.drawable.analytics_logger_failure_background
+            null -> R.drawable.analytics_logger_json_background
         }
     }
 

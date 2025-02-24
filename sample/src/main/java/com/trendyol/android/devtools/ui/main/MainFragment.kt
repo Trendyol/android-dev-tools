@@ -75,6 +75,12 @@ class MainFragment : Fragment() {
             key = "OnMainFragmentSeenEvent",
             value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
             platform = "Firebase",
+            isSuccess = true,
+        )
+        AnalyticsLogger.report(
+            key = "OnMainFragmentSeenFailEvent",
+            value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
+            platform = "Firebase",
         )
     }
 

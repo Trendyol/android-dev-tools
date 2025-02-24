@@ -1,12 +1,16 @@
 package com.trendyol.android.devtools.analyticslogger.internal.ui
 
+import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerItemEventBinding
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
@@ -59,6 +63,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
             textViewPlatform.text = event.platform
             textViewDate.text = event.date
             textViewPlatform.background = createPlatformBackground(event.platform)
+            root.background = createStatusBackground(root.context, event.isSuccess)
         }
 
         private fun createPlatformBackground(platform: String?): GradientDrawable {
@@ -68,6 +73,18 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
                     ColorFactory.getColor(platform.orEmpty())
                 )
             }
+        }
+
+        private fun createStatusBackground(context: Context, isSuccess: Boolean?): Drawable? {
+            if (isSuccess == null) return null
+
+            val background = if (isSuccess) {
+                R.drawable.analytics_logger_success_background
+            } else {
+                R.drawable.analytics_logger_failure_background
+            }
+
+            return ContextCompat.getDrawable(context, background)
         }
     }
 }

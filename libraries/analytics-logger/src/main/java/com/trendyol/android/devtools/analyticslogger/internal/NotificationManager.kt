@@ -60,11 +60,13 @@ internal class NotificationManager constructor(private var showNotification: Boo
         key: String?,
         value: String?,
         platform: String?,
+        isSuccess: Boolean? = null,
     ) = scope.launch {
         analyticsContainer.eventManager.insert(
             key = key,
             value = value,
             platform = platform,
+            isSuccess = isSuccess,
         )
         lastEvent = key to platform
         updateNotification(
