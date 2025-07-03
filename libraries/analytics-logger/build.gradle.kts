@@ -7,6 +7,8 @@ plugins {
     `maven-publish`
 }
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toString().toInt())
+
 android {
     namespace = "com.trendyol.android.devtools.analyticslogger"
     compileSdk = 34
@@ -28,13 +30,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
     buildFeatures {
         viewBinding = true
     }

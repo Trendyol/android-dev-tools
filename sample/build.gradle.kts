@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.ktlint.gradle)
 }
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toString().toInt())
+
 android {
     compileSdk = 34
     namespace = "com.trendyol.android.devtools"
@@ -32,16 +34,6 @@ android {
             isMinifyEnabled = false
         }
     }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
 
     buildFeatures {
         viewBinding = true

@@ -8,6 +8,8 @@ plugins {
     `maven-publish`
 }
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toString().toInt())
+
 android {
     namespace = "com.trendyol.android.devtools.sharedprefmanager"
     compileSdk = 34
@@ -24,13 +26,6 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         compose = true

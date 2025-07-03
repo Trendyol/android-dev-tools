@@ -7,6 +7,8 @@ plugins {
     `maven-publish`
 }
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toString().toInt())
+
 android {
     compileSdk = 34
     namespace = "com.trendyol.android.devtools.autofillservice"
@@ -34,13 +36,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
     buildFeatures {
         buildConfig = false
         viewBinding = true
