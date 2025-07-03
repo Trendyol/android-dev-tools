@@ -57,7 +57,6 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-
 }
 
 apply(from = "${rootProject.rootDir}/scripts/publish-module.gradle")
