@@ -33,6 +33,14 @@ class App : Application() {
         // Analytics Logger
         AnalyticsLogger.init(this)
 
+        // Configure JavaScript transformation function
+        AnalyticsLogger.setEventTransformFunction(
+            """
+            function transform(data) {
+                return data;
+            }""".trimIndent(),
+        )
+
         // View Inspector
         ViewInspector.init(this)
 

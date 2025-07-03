@@ -26,9 +26,8 @@ internal class NotificationManager constructor(private var showNotification: Boo
     private val scope = CoroutineScope(superVisorJob + Dispatchers.IO)
     private val analyticsContainer: AnalyticsContainer by lazy { ContextContainer.analyticsContainer }
     private val intent by lazy {
-        Intent(ContextContainer.getContext(), MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        Intent(ContextContainer.getContext(), MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
     private var lastEvent: Pair<String?, String?>? = null
 
