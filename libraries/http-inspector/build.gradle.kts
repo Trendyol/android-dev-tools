@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.squareup.okhttp)
     implementation(libs.google.gson)
     implementation(libs.squareup.moshi.kotlin)
-
 }
 
 apply(from = "${rootProject.rootDir}/scripts/publish-module.gradle")
