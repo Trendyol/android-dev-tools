@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -54,38 +53,21 @@ extra.apply {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.google.android.material)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.bundles.lifecycle)
-    implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.startup.runtime)
 
     // Room
-    implementation(libs.bundles.room)
+    implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
-    // Ktor
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.gson)
 
-    // HTTP
     implementation(libs.squareup.okhttp)
     implementation(libs.google.gson)
     implementation(libs.squareup.moshi.kotlin)
 
-    // RxJava
-    implementation(libs.rxjava)
-    implementation(libs.rxandroid)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 apply(from = "${rootProject.rootDir}/scripts/publish-module.gradle")

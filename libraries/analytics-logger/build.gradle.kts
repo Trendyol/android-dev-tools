@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -23,7 +22,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -55,25 +57,14 @@ extra.apply {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.android.material)
     implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.bundles.lifecycle)
     implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.rxjava)
-    implementation(libs.rxandroid)
     implementation(libs.moshi)
-    // Room
-    implementation(libs.bundles.room)
+    implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 apply(from = "${rootProject.rootDir}/scripts/publish-module.gradle")

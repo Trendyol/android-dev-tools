@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -72,15 +71,9 @@ dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.android.material)
-
     implementation(libs.jetbrains.kotlin.coroutines.core)
-
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.common.java8)
-
-    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
-
     implementation(libs.androidx.preference.ktx)
     implementation(libs.squareup.moshi.kotlin)
 }

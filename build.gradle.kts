@@ -11,4 +11,3 @@ plugins {
 }
 
 apply(from = "${rootDir}/scripts/publish-root.gradle")
-

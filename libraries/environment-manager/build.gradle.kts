@@ -66,7 +66,6 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.google.android.material)
-    implementation(libs.squareup.moshi.kotlin)
     implementation(libs.trendyol.uiComponents.dialogs)
     implementation(libs.rxjava)
     implementation(libs.rxandroid)

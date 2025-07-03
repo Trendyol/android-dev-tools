@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -58,5 +57,4 @@ extra.apply {
 apply(from = "${rootProject.rootDir}/scripts/publish-module.gradle")
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
 }
