@@ -38,7 +38,8 @@ class App : Application() {
             """
             function transform(data) {
                 return data;
-            }""".trimIndent(),
+            }
+            """.trimIndent(),
         )
 
         // View Inspector

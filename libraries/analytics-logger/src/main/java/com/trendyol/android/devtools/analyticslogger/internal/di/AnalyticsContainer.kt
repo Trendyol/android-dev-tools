@@ -25,5 +25,4 @@ internal class AnalyticsContainer(private val context: Context) {
     val sharedPreferencesManager: SharedPreferences by lazy {
         context.getSharedPreferences("analytics_logger", Context.MODE_PRIVATE)
     }
-
 }
