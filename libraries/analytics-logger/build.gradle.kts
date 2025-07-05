@@ -41,7 +41,7 @@ android {
 
 extra.apply {
     set("PUBLISH_GROUP_ID", "com.trendyol.android.devtools")
-    set("PUBLISH_VERSION", "0.2.0")
+    set("PUBLISH_VERSION", "0.5.0")
     set("PUBLISH_ARTIFACT_ID", "analytics-logger")
     set("PUBLISH_DESCRIPTION", "Android Analytics Logger")
     set("PUBLISH_URL", "https://github.com/Trendyol/android-dev-tools")
