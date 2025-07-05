@@ -1,14 +1,31 @@
-rootProject.name = "dev-tools"
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+
+rootProject.name = "android-dev-tools"
 include ':sample'
-include ':libraries:autofill-service'
-include ':libraries:environment-manager'
-include ':libraries:debug-menu'
 include ':libraries:analytics-logger'
 include ':libraries:analytics-logger-no-op'
-include ':libraries:http-inspector'
-include ':libraries:http-inspector-no-op'
-include ':libraries:view-inspector'
+include ':libraries:autofill-service'
+include ':libraries:debug-menu'
 include ':libraries:debug-toast'
 include ':libraries:debug-toast-no-op'
 include ':libraries:deeplink-launcher'
+include ':libraries:environment-manager'
+include ':libraries:http-inspector'
+include ':libraries:http-inspector-no-op'
 include ':libraries:sharedpref-manager'
+include ':libraries:view-inspector'
