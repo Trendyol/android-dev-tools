@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.ktlint.gradle) apply false
     alias(libs.plugins.kotlin.compose) apply false
-    alias(libs.plugins.gradle.nexus.publish.plugin)
+    alias(libs.plugins.maven.publish) apply false
 }
 
-apply(from = "${rootDir}/scripts/publish-root.gradle")
