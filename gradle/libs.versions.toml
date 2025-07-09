@@ -43,6 +43,7 @@ rx-java = "3.1.6"
 sqlite-ktx = "2.5.1"
 startup = "1.1.1"
 dialogs = "dialogs-1.4.0"
+maven-publish = "0.33.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -96,10 +97,12 @@ squareup-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi-ver
 squareup-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 squareup-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 trendyol-uiComponents-dialogs = { group = "com.github.Trendyol.android-ui-components", name = "dialogs", version.ref = "dialogs" }
+gradle-maven-publish-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "maven-publish" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish"}
 gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "gradle-nexus-publish-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -108,6 +111,7 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 ktlint-gradle = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+convention-publish = { id = "com.trendyol.android.devtools.plugins.publish" }
 
 [bundles]
 room = ["androidx-room-runtime", "androidx-room-ktx"]

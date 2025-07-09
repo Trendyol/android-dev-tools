@@ -29,3 +29,4 @@ include ':libraries:http-inspector'
 include ':libraries:http-inspector-no-op'
 include ':libraries:sharedpref-manager'
 include ':libraries:view-inspector'
+includeBuild("convention-plugins")

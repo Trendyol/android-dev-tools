@@ -1,0 +1,48 @@
+name: Publish Library
+
+on:
+  workflow_dispatch:
+    inputs:
+      library:
+        description: 'Library to publish'
+        required: true
+        type: choice
+        options:
+          - 'analytics-logger'
+          - 'analytics-logger-no-op'
+          - 'autofill-service'
+          - 'debug-menu'
+          - 'debug-toast'
+          - 'debug-toast-no-op'
+          - 'deeplink-launcher'
+          - 'environment-manager'
+          - 'http-inspector'
+          - 'http-inspector-no-op'
+          - 'sharedpref-manager'
+          - 'view-inspector'
+
+jobs:
+  publish:
+    name: Release build and publish ${{ inputs.library }}
+    runs-on: macOS-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        
+      - name: Publish ${{ inputs.library }} to MavenCentral
+        run: ./gradlew :libraries:${{ inputs.library }}:publishAndReleaseToMavenCentral --no-configuration-cache
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONARTYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONARTYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }} 
