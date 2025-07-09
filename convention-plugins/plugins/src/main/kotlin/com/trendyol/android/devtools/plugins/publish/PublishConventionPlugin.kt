@@ -47,6 +47,7 @@ class PublishConventionPlugin : Plugin<Project> {
                     }
                 }
             }
+            signAllPublications()
         }
     }
 }
