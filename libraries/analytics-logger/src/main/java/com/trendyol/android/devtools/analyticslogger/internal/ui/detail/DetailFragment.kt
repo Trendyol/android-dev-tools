@@ -14,14 +14,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentDetailBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
+import com.trendyol.android.devtools.analyticslogger.internal.util.executeJS
 import kotlinx.coroutines.launch
 
 internal class DetailFragment : Fragment() {
@@ -46,7 +49,19 @@ internal class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeViews()
         observeData()
+    }
+
+    private fun initializeViews() = with(binding) {
+        webViewJsExecutor.settings.javaScriptEnabled = true
+        editTextjsTransformFunction.setText(AnalyticsLogger.getEventTransformFunction())
+        editTextjsTransformFunction.doAfterTextChanged {
+            AnalyticsLogger.setEventTransformFunction(it.toString())
+        }
+        checkboxShowJSTransformFunction.setOnCheckedChangeListener { _, isChecked ->
+            editTextjsTransformFunction.visibility = if (isChecked) View.VISIBLE else View.GONE
+        }
     }
 
     private fun observeData() {
@@ -95,9 +110,35 @@ internal class DetailFragment : Fragment() {
         Toast.makeText(context, R.string.analytics_logger_toast_copied, Toast.LENGTH_SHORT).show()
     }
 
+    private fun copyTransformedToClipboard() {
+        val originalData = (viewModel.detailState.value as? DetailState.Selected)?.event?.json.orEmpty()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val transformedData = transformEventData(originalData)
+                val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                clipboard.setPrimaryClip(ClipData.newPlainText(CLIPBOARD_TRANSFORMED_LABEL, transformedData))
+                Toast.makeText(context, R.string.analytics_logger_toast_copied, Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(context, "Transform failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private suspend fun transformEventData(eventData: String): String {
+        val jsFunction = AnalyticsLogger.getEventTransformFunction()
+        val jsScript = with(StringBuilder()) {
+            append(jsFunction)
+            appendLine()
+            append("transform($eventData)")
+        }
+        return binding.webViewJsExecutor.executeJS(jsScript.toString())
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_copy -> copyToClipboard()
+            R.id.action_test_assert -> copyTransformedToClipboard()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -115,6 +156,7 @@ internal class DetailFragment : Fragment() {
     companion object {
         const val NAME = "detailFragment"
         private const val CLIPBOARD_LABEL = "Event Detail"
+        private const val CLIPBOARD_TRANSFORMED_LABEL = "Transformed Event Detail"
 
         fun newInstance(): DetailFragment {
             return DetailFragment()

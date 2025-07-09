@@ -1,6 +1,7 @@
 package com.trendyol.android.devtools.analyticslogger.internal.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.analyticslogger.internal.data.database.EventDatabase
@@ -20,4 +21,8 @@ internal class AnalyticsContainer(private val context: Context) {
     private val eventRepository: EventRepository by lazy { EventRepositoryImpl(eventDatabase) }
 
     val eventManager: EventManager by lazy { EventManagerImpl(eventRepository, moshi) }
+
+    val sharedPreferencesManager: SharedPreferences by lazy {
+        context.getSharedPreferences("analytics_logger", Context.MODE_PRIVATE)
+    }
 }

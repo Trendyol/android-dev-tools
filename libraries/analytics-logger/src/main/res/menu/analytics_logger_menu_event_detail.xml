@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_test_assert"
+        android:title="@string/analytics_logger_action_copy"
+        android:icon="@drawable/analytics_logger_check_list"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_copy"
         android:title="@string/analytics_logger_action_copy"
         android:icon="@drawable/analytics_logger_copy_all"

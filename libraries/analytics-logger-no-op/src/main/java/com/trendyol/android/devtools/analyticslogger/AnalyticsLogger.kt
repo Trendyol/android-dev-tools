@@ -33,4 +33,12 @@ object AnalyticsLogger {
     ) {
         // no-op
     }
+
+    fun setEventTransformFunction(jsFunction: String) {
+        // no-op
+    }
+
+    fun getEventTransformFunction(): String {
+        return ""
+    }
 }

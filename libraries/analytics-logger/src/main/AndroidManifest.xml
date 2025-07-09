@@ -8,6 +8,7 @@
         <activity
             android:name=".internal.ui.MainActivity"
             android:launchMode="singleInstance"
+            android:taskAffinity="com.trendyol.android.devtools.analyticslogger.task"
             android:theme="@style/Theme.AnalyticsReporter" />
 
     </application>
