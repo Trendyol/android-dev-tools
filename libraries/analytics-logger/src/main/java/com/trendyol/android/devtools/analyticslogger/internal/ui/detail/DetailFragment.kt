@@ -75,6 +75,7 @@ internal class DetailFragment : Fragment() {
     private fun renderState(state: DetailState) = with(binding) {
         if (state is DetailState.Selected) {
             textViewKey.text = state.event.key
+            textViewSource.text = state.event.source
             textViewValue.text = state.event.json
             textViewDate.text = state.event.date
             textViewPlatform.text = state.event.platform

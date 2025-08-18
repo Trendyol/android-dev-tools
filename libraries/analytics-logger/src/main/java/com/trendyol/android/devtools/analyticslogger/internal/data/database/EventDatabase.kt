@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.trendyol.android.devtools.analyticslogger.internal.data.dao.EventDao
 import com.trendyol.android.devtools.analyticslogger.internal.data.model.EventEntity
 
-@Database(entities = [EventEntity::class], version = 2)
+@Database(entities = [EventEntity::class], version = 3)
 internal abstract class EventDatabase : RoomDatabase() {
 
     abstract fun eventDao(): EventDao
@@ -29,6 +29,11 @@ internal abstract class EventDatabase : RoomDatabase() {
             object : Migration(1, 2) {
                 override fun migrate(db: SupportSQLiteDatabase) {
                     db.execSQL("ALTER TABLE event_entities ADD COLUMN isSuccess INTEGER")
+                }
+            },
+            object : Migration(2, 3) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE event_entities ADD COLUMN source TEXT")
                 }
             },
         )

@@ -59,7 +59,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
             boundItem = event
 
             textViewKey.text = event.key
-            textViewValue.text = event.value
+            textViewSource.text = event.source
             textViewPlatform.text = event.platform
             textViewDate.text = event.date
             textViewPlatform.background = createPlatformBackground(event.platform)
