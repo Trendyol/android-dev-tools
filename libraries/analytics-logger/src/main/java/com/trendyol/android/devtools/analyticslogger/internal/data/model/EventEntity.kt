@@ -11,5 +11,6 @@ internal data class EventEntity(
     @ColumnInfo(name = "value") val value: String?,
     @ColumnInfo(name = "platform") val platform: String?,
     @ColumnInfo(name = "date") val date: String?,
+    @ColumnInfo(name = "source") val source: String?,
     @ColumnInfo(name = "isSuccess") val isSuccess: Boolean?,
 )

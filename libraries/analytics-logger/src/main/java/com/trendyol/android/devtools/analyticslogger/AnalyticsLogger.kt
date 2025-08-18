@@ -60,24 +60,26 @@ object AnalyticsLogger {
         instance?.hideNotification() ?: Log.w(TAG, INIT_ERROR_MESSAGE)
     }
 
-    fun report(key: String?, value: String?, platform: String?) {
-        instance?.reportEvent(key, value, platform) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+    fun report(key: String?, value: String?, platform: String?, source: String?) {
+        instance?.reportEvent(key, value, platform, source) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
     }
 
     /**
-     * Reports an event with the specified key, value, platform, and success status.
+     * Reports an analytics event with comprehensive tracking information.
      *
      * @param key The key identifying the event. Can be null.
-     * @param value The value associated with the event. Can be null.
-     * @param platform The platform related to the event. Can be null.
+     * @param value The value associated with the event (usually JSON data). Can be null.
+     * @param platform The analytics platform (e.g., "Firebase", "Amplitude"). Can be null.
      * @param isSuccess Indicates whether the operation was successful. Can be null.
+     * @param source The source of the event (e.g., "com.trendyol.product.ProductClickEvent"). Can be null.
      */
     fun report(
         key: String?,
         value: String?,
         platform: String?,
-        isSuccess: Boolean?,
+        source: String?,
+        isSuccess: Boolean? = null,
     ) {
-        instance?.reportEvent(key, value, platform, isSuccess) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+        instance?.reportEvent(key, value, platform, source, isSuccess) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
     }
 }

@@ -75,6 +75,7 @@ internal class DetailFragment : Fragment() {
     private fun renderState(state: DetailState) = with(binding) {
         if (state is DetailState.Selected) {
             textViewKey.text = state.event.key
+            textViewSource.text = state.event.source
             textViewValue.text = state.event.json
             textViewDate.text = state.event.date
             textViewPlatform.text = state.event.platform
@@ -135,10 +136,18 @@ internal class DetailFragment : Fragment() {
         return binding.webViewJsExecutor.executeJS(jsScript.toString())
     }
 
+    private fun copySourceToClipboard() {
+        val source = (viewModel.detailState.value as? DetailState.Selected)?.event?.source.orEmpty()
+        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText(CLIPBOARD_SOURCE_LABEL, source))
+        Toast.makeText(context, R.string.analytics_logger_toast_copied, Toast.LENGTH_SHORT).show()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_copy -> copyToClipboard()
             R.id.action_test_assert -> copyTransformedToClipboard()
+            R.id.action_copy_source -> copySourceToClipboard()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -157,6 +166,7 @@ internal class DetailFragment : Fragment() {
         const val NAME = "detailFragment"
         private const val CLIPBOARD_LABEL = "Event Detail"
         private const val CLIPBOARD_TRANSFORMED_LABEL = "Transformed Event Detail"
+        private const val CLIPBOARD_SOURCE_LABEL = "Event Source"
 
         fun newInstance(): DetailFragment {
             return DetailFragment()

@@ -8,6 +8,7 @@
     <string name="analytics_logger_title">Analytics Events</string>
 
     <string name="analytics_logger_action_copy">Copy</string>
+    <string name="analytics_logger_action_copy_source">Source</string>
 
     <string name="analytics_logger_toast_copied">Copied to the clipboard.</string>
 </resources>
