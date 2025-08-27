@@ -2,9 +2,9 @@ package com.trendyol.android.devtools
 
 import android.app.Application
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
+import com.trendyol.android.devtools.debugactionitem.AnalyticsLoggerDebugActionItem
 import com.trendyol.android.devtools.debugactionitem.DummyClickDebugActionItem
 import com.trendyol.android.devtools.debugactionitem.DummySwitchDebugActionItem
-import com.trendyol.android.devtools.debugactionitem.AnalyticsLoggerDebugActionItem
 import com.trendyol.android.devtools.debugmenu.DebugMenu
 import com.trendyol.android.devtools.debugtoast.DebugToast
 import com.trendyol.android.devtools.sharedprefmanager.SharedPrefManager
@@ -19,7 +19,6 @@ class App : Application() {
 
         // Environment Manager
         EnvironmentManager.init(this)
-
         // Debug Menu
         DebugMenu.init(this)
         val debugMenuItems = listOf(
