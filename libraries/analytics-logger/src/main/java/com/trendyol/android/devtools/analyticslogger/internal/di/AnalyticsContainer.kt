@@ -7,8 +7,10 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.trendyol.android.devtools.analyticslogger.internal.data.database.EventDatabase
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepository
 import com.trendyol.android.devtools.analyticslogger.internal.data.repository.EventRepositoryImpl
+import com.trendyol.android.devtools.analyticslogger.internal.data.repository.ExcludeKeysRepository
 import com.trendyol.android.devtools.analyticslogger.internal.domain.manager.EventManager
 import com.trendyol.android.devtools.analyticslogger.internal.domain.manager.EventManagerImpl
+import com.trendyol.android.devtools.analyticslogger.internal.domain.usecase.ExcludeKeysUseCase
 
 internal class AnalyticsContainer(private val context: Context) {
 
@@ -24,5 +26,13 @@ internal class AnalyticsContainer(private val context: Context) {
 
     val sharedPreferencesManager: SharedPreferences by lazy {
         context.getSharedPreferences("analytics_logger", Context.MODE_PRIVATE)
+    }
+
+    private val excludeKeysRepository: ExcludeKeysRepository by lazy {
+        ExcludeKeysRepository(sharedPreferencesManager)
+    }
+
+    val excludeKeysUseCase: ExcludeKeysUseCase by lazy {
+        ExcludeKeysUseCase(excludeKeysRepository)
     }
 }

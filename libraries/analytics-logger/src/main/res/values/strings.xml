@@ -11,4 +11,7 @@
     <string name="analytics_logger_action_copy_source">Source</string>
 
     <string name="analytics_logger_toast_copied">Copied to the clipboard.</string>
+
+    <string name="analytics_logger_event_key_exclusion_hint">Event keys to exclude (space separated)</string>
+    <string name="analytics_logger_event_highlight_hint">Highlight event text</string>
 </resources>

@@ -47,7 +47,20 @@ class PublishConventionPlugin : Plugin<Project> {
                     }
                 }
             }
-            signAllPublications()
+
+            if (hasSigningKeys()) {
+                signAllPublications()
+            }
         }
+    }
+
+    private fun hasSigningKeys(): Boolean {
+        val signingKeyId = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyId")
+        val signingKeyPassword = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyPassword")
+        val signingKey = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKey")
+
+        return !signingKeyId.isNullOrBlank() &&
+            !signingKeyPassword.isNullOrBlank() &&
+            !signingKey.isNullOrBlank()
     }
 }

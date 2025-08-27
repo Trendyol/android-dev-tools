@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toStartOf="@id/textViewPlatform"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewKey"
-            tools:text="12.00PM"/>
+            tools:text="12.00PM" />
 
         <TextView
             android:id="@+id/textViewSource"
@@ -43,15 +43,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="12dp"
-            android:textColor="@color/textColorPrimary"
             android:ellipsize="end"
             android:lines="2"
+            android:textColor="@color/textColorPrimary"
             android:textSize="12sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toStartOf="@id/textViewPlatform"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewDate"
             tools:text="com.trendyol.product.ProductClickEvent" />
+
         <TextView
             android:id="@+id/textViewPlatform"
             android:layout_width="wrap_content"
@@ -63,13 +64,60 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutExcludedEventKeys"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/analytics_logger_event_key_exclusion_hint"
+            app:boxStrokeColor="?android:attr/textColorPrimary"
+            app:hintTextColor="?android:attr/textColorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/textViewSource">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextExcludeEventKeys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="3"
+                android:scrollHorizontally="false"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHint="?android:attr/textColorSecondary"
+                android:textCursorDrawable="@null"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutHighlightEventText"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/analytics_logger_event_highlight_hint"
+            app:boxStrokeColor="?android:attr/textColorPrimary"
+            app:hintTextColor="?android:attr/textColorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutExcludedEventKeys">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextHighlightEventText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:scrollHorizontally="false"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHint="?android:attr/textColorSecondary"
+                android:textCursorDrawable="@null"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewSource"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutHighlightEventText"
             app:layout_constraintVertical_bias="0"
             tools:background="@drawable/analytics_logger_json_background">
 
@@ -102,9 +150,9 @@
             android:id="@+id/editTextjsTransformFunction"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/checkboxShowJSTransformFunction" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
