@@ -60,8 +60,6 @@ class MainFragment : Fragment() {
             loadDummySharedPrefValues(sharedPrefName)
             SharedPrefManager.show(sharedPrefName)
         }
-        binding.buttonEncryptedSharedPrefManager.isSelected = true
-        binding.buttonSharedPrefManager.isSelected = true
         binding.buttonEncryptedSharedPrefManager.setOnClickListener {
             SharedPrefManager.show(getEncryptedSharedPreferences())
         }
