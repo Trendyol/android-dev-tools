@@ -1,10 +1,12 @@
 package com.trendyol.android.devtools.ui.main
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.trendyol.android.devtools.MainActivity
 import com.trendyol.android.devtools.R
@@ -15,6 +17,8 @@ import com.trendyol.android.devtools.sharedprefmanager.SharedPrefManager
 import com.trendyol.android.devtools.ui.login.LoginFragment
 import com.trendyol.devtools.deeplinklauncher.DeepLinkLauncher
 import com.trendyol.devtools.environmentmanager.EnvironmentManager
+import dev.spght.encryptedprefs.EncryptedSharedPreferences
+import dev.spght.encryptedprefs.MasterKey
 import kotlin.random.Random
 
 class MainFragment : Fragment() {
@@ -56,7 +60,9 @@ class MainFragment : Fragment() {
             loadDummySharedPrefValues(sharedPrefName)
             SharedPrefManager.show(sharedPrefName)
         }
-
+        binding.buttonEncryptedSharedPrefManager.setOnClickListener {
+            SharedPrefManager.show(getEncryptedSharedPreferences())
+        }
         binding.switchAnalyticsLogger.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AnalyticsLogger.showNotification()
@@ -84,6 +90,24 @@ class MainFragment : Fragment() {
             source = "com.trendyol.MainFragmentSeenFailEvent",
             platform = "Firebase",
         )
+    }
+
+    private fun getEncryptedSharedPreferences(): SharedPreferences {
+        return EncryptedSharedPreferences(
+            requireContext(),
+            "encrypted_shared_pref",
+            MasterKey(requireContext())
+        ).apply {
+            // Clear previous values
+            this.edit(commit = true) { clear() }
+
+            // Add new values
+            this.edit {
+                putString("key_shared_pref_short_string", "Super secret string")
+                putInt("key_shared_pref_int", 123456)
+                putBoolean("key_shared_pref_boolean", true)
+            }
+        }
     }
 
     private fun loadDummySharedPrefValues(sharedPrefName: String) {

@@ -8,4 +8,6 @@
     <string name="analytics_logger">Analytics Logger</string>
     <string name="current_environment">Current Environment %1$s</string>
     <string name="sharedpref_manager">SharedPref Manager - Beta</string>
+    <string name="encrypted_sharedpref_manager">Encrypted SharedPref</string>
+
 </resources>

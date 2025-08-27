@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.trendyol.android.devtools"
-        minSdk = 21
+        minSdk = 23
         versionCode = 1
         versionName = "1.0"
 
@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":libraries:debug-toast"))
     implementation(project(":libraries:deeplink-launcher"))
     implementation(project(":libraries:sharedpref-manager"))
+    implementation(libs.encryptedprefs.ktx)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
