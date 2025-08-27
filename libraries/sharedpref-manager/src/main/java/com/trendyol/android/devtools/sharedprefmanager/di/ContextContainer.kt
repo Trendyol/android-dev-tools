@@ -40,16 +40,15 @@ internal object ContextContainer {
 
 sealed class SharedPreferencesProvider {
     abstract fun provide(context: Context): SharedPreferences
-    class ByName(val name: String): SharedPreferencesProvider() {
+    class ByName(val name: String) : SharedPreferencesProvider() {
         override fun provide(context: Context): SharedPreferences {
             return context.getSharedPreferences(name, Context.MODE_PRIVATE)
         }
     }
 
-    class ProvidedSharedPreferences(val sharedPreferences: SharedPreferences): SharedPreferencesProvider() {
+    class ProvidedSharedPreferences(val sharedPreferences: SharedPreferences) : SharedPreferencesProvider() {
         override fun provide(context: Context): SharedPreferences {
             return sharedPreferences
         }
     }
-
 }
