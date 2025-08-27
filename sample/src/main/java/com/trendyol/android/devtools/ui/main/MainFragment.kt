@@ -75,11 +75,13 @@ class MainFragment : Fragment() {
             key = "OnMainFragmentSeenEvent",
             value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
             platform = "Firebase",
+            source = "com.trendyol.MainFragmentSeenEvent",
             isSuccess = true,
         )
         AnalyticsLogger.report(
             key = "OnMainFragmentSeenFailEvent",
             value = "{\"category\": \"Cart\", \"data\": \"TestData\" }",
+            source = "com.trendyol.MainFragmentSeenFailEvent",
             platform = "Firebase",
         )
     }

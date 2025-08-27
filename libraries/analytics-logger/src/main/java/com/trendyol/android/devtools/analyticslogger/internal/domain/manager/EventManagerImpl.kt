@@ -28,6 +28,7 @@ internal class EventManagerImpl(
         key: String?,
         value: String?,
         platform: String?,
+        source: String?,
         isSuccess: Boolean?,
     ) {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
@@ -39,6 +40,7 @@ internal class EventManagerImpl(
                 value = value,
                 platform = platform,
                 date = date,
+                source = source,
                 isSuccess = isSuccess,
             )
         )
@@ -73,6 +75,7 @@ internal class EventManagerImpl(
                 platform = eventEntity.platform,
                 date = eventEntity.date,
                 isSuccess = eventEntity.isSuccess,
+                source = eventEntity.source,
             )
         }
 
