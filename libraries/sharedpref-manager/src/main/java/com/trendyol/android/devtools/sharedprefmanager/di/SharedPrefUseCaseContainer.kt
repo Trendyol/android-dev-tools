@@ -9,11 +9,11 @@ import com.trendyol.android.devtools.sharedprefmanager.domain.SharedPrefManagerU
 
 internal class SharedPrefUseCaseContainer(
     private val context: Context,
-    private val sharedPrefName: String
+    private val provider: SharedPreferencesProvider,
 ) {
 
     private val sharedPref: SharedPreferences by lazy {
-        context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+        provider.provide(context)
     }
 
     private val sharedPrefManagerRepository: SharedPrefManagerRepository by lazy {

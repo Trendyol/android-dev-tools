@@ -2,6 +2,7 @@ package com.trendyol.android.devtools.sharedprefmanager.di
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.trendyol.android.devtools.sharedprefmanager.domain.SharedPrefUpdateTypeValidator
 
 internal object ContextContainer {
@@ -14,14 +15,13 @@ internal object ContextContainer {
     }
 
     private val sharedPrefUseCaseContainer by lazy {
-        SharedPrefUseCaseContainer(application.applicationContext, sharedPrefName)
+        SharedPrefUseCaseContainer(application.applicationContext, sharedPreferencesProvider)
     }
     private val sharedPrefUpdateTypeValidator by lazy {
         SharedPrefUpdateTypeValidator()
     }
     private lateinit var application: Application
-    private lateinit var sharedPrefName: String
-
+    private lateinit var sharedPreferencesProvider: SharedPreferencesProvider
     fun getContext(): Context =
         if (::application.isInitialized) {
             application.applicationContext
@@ -33,7 +33,22 @@ internal object ContextContainer {
         this.application = application
     }
 
-    fun setSharedPrefName(sharedPrefName: String) {
-        this.sharedPrefName = sharedPrefName
+    fun setSharedPreferencesProvider(provider: SharedPreferencesProvider) {
+        this.sharedPreferencesProvider = provider
+    }
+}
+
+sealed class SharedPreferencesProvider {
+    abstract fun provide(context: Context): SharedPreferences
+    class ByName(val name: String) : SharedPreferencesProvider() {
+        override fun provide(context: Context): SharedPreferences {
+            return context.getSharedPreferences(name, Context.MODE_PRIVATE)
+        }
+    }
+
+    class ProvidedSharedPreferences(val sharedPreferences: SharedPreferences) : SharedPreferencesProvider() {
+        override fun provide(context: Context): SharedPreferences {
+            return sharedPreferences
+        }
     }
 }
