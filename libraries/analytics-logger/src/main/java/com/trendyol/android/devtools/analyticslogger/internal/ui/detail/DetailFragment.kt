@@ -4,8 +4,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -33,7 +36,12 @@ internal class DetailFragment : Fragment() {
         ContextContainer.mainContainer.MainViewModelFactory()
     }
 
+    private val excludeKeysUseCase by lazy {
+        ContextContainer.analyticsContainer.excludeKeysUseCase
+    }
+
     private var _binding: AnalyticsLoggerFragmentDetailBinding? = null
+    private var originalJsonText: String = ""
 
     private val binding get() = _binding!!
 
@@ -62,6 +70,15 @@ internal class DetailFragment : Fragment() {
         checkboxShowJSTransformFunction.setOnCheckedChangeListener { _, isChecked ->
             editTextjsTransformFunction.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
+
+        editTextExcludeEventKeys.setText(excludeKeysUseCase.getExcludedKeys())
+        editTextExcludeEventKeys.doAfterTextChanged { editable ->
+            excludeKeysUseCase.saveExcludedKeys(editable.toString())
+        }
+
+        editTextHighlightEventText.doAfterTextChanged { editable ->
+            highlightTextInJsonView(editable.toString())
+        }
     }
 
     private fun observeData() {
@@ -76,7 +93,8 @@ internal class DetailFragment : Fragment() {
         if (state is DetailState.Selected) {
             textViewKey.text = state.event.key
             textViewSource.text = state.event.source
-            textViewValue.text = state.event.json
+            originalJsonText = state.event.json.orEmpty()
+            highlightTextInJsonView(editTextHighlightEventText.text.toString())
             textViewDate.text = state.event.date
             textViewPlatform.text = state.event.platform
             textViewPlatform.background = createPlatformBackground(state.event.platform)
@@ -104,10 +122,44 @@ internal class DetailFragment : Fragment() {
         }
     }
 
+    private fun highlightTextInJsonView(searchText: String) {
+        if (originalJsonText.isEmpty()) {
+            return
+        }
+
+        if (searchText.isEmpty()) {
+            binding.textViewValue.text = originalJsonText
+            return
+        }
+
+        val spannableString = SpannableString(originalJsonText)
+        val searchTextLower = searchText.lowercase()
+        val originalTextLower = originalJsonText.lowercase()
+        val highlightColor = Color.YELLOW
+
+        var startIndex = 0
+        while (true) {
+            val index = originalTextLower.indexOf(searchTextLower, startIndex)
+            if (index == -1) break
+
+            spannableString.setSpan(
+                BackgroundColorSpan(highlightColor),
+                index,
+                index + searchText.length,
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            startIndex = index + 1
+        }
+
+        binding.textViewValue.text = spannableString
+    }
+
     private fun copyToClipboard() {
         val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val data = (viewModel.detailState.value as? DetailState.Selected)?.event?.json.orEmpty()
-        clipboard.setPrimaryClip(ClipData.newPlainText(CLIPBOARD_LABEL, data))
+        val originalData = (viewModel.detailState.value as? DetailState.Selected)?.event?.json.orEmpty()
+        val excludedKeys = excludeKeysUseCase.getExcludedKeysList()
+        val filteredData = excludeKeysUseCase.filterJsonByExcludedKeys(originalData, excludedKeys)
+        clipboard.setPrimaryClip(ClipData.newPlainText(CLIPBOARD_LABEL, filteredData))
         Toast.makeText(context, R.string.analytics_logger_toast_copied, Toast.LENGTH_SHORT).show()
     }
 
