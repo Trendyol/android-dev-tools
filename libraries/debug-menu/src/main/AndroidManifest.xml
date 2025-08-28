@@ -10,6 +10,6 @@
             android:launchMode="singleInstance"
             android:label="@string/label"
             android:taskAffinity="com.trendyol.android.devtools.debugmenu.task"
-            android:theme="@style/Theme.Devtools" />
+            android:theme="@style/Theme.TYDebugMenuDevtools" />
     </application>
 </manifest>

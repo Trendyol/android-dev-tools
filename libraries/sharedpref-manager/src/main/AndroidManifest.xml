@@ -6,7 +6,7 @@
             android:name=".ui.SharedPrefManagerActivity"
             android:exported="false"
             android:label="@string/title_activity_shared_pref_manager"
-            android:theme="@style/Theme.Devtools" />
+            android:theme="@style/Theme.TYSharedPrefManagerDevtools" />
     </application>
 
 </manifest>
