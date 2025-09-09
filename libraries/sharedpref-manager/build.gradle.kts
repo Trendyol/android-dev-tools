@@ -38,7 +38,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.3.1"
+version = "0.4.0"
 
 publishConfig {
     defaultConfiguration(
@@ -53,4 +53,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.activity.ktx)
+    implementation(libs.embeddedKoinCore)
+    implementation(libs.embeddedKoinAndroid)
 }
