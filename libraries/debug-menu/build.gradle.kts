@@ -37,7 +37,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.5.1"
+version = "0.6.0"
 
 publishConfig {
     defaultConfiguration(
@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.google.android.material)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.embeddedKoinCore)
+    implementation(libs.embeddedKoinAndroid)
 }
