@@ -37,7 +37,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.2.0"
+version = "0.3.0"
 
 publishConfig {
     defaultConfiguration(
@@ -55,4 +55,6 @@ dependencies {
     implementation(libs.trendyol.uiComponents.dialogs)
     implementation(libs.rxjava)
     implementation(libs.rxandroid)
+    implementation(libs.embeddedKoinCore)
+    implementation(libs.embeddedKoinAndroid)
 }
