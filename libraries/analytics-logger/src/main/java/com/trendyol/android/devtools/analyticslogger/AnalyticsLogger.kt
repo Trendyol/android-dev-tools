@@ -1,20 +1,37 @@
 package com.trendyol.android.devtools.analyticslogger
 
 import android.app.Application
-import android.util.Log
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.trendyol.android.devtools.analyticslogger.internal.NotificationManager
-import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
+import com.trendyol.android.devtools.analyticslogger.internal.di.analyticsLoggerModule
+import embedded.koin.android.ext.koin.androidContext
+import embedded.koin.android.ext.koin.androidLogger
+import embedded.koin.core.Koin
+import embedded.koin.core.context.GlobalContext.startKoin
+import embedded.koin.core.logger.Level
+import embedded.koin.dsl.koinApplication
+import kotlin.getValue
 
 object AnalyticsLogger {
 
-    internal var instance: NotificationManager? = null
-    private const val TAG = "AnalyticsLogger"
-    private const val INIT_ERROR_MESSAGE = "Should call AnalyticsLogger.init(Application, Boolean) first."
+    internal lateinit var koin: Koin
+
+    private val instance: NotificationManager by lazy { koin.get() }
+    private val sharedPreferences: SharedPreferences by lazy { koin.get() }
 
     fun init(application: Application, showNotification: Boolean = true) {
-        ContextContainer.initialize(application)
-        instance = NotificationManager(showNotification)
+        koin = koinApplication {
+            androidContext(application.applicationContext)
+            androidLogger(Level.DEBUG)
+
+            modules(
+                analyticsLoggerModule(
+                    application = application,
+                    showNotification = showNotification,
+                )
+            )
+        }.koin
     }
 
     /**
@@ -32,36 +49,32 @@ object AnalyticsLogger {
      * ```
      */
     fun setEventTransformFunction(jsFunction: String) {
-        ContextContainer
-            .analyticsContainer
-            .sharedPreferencesManager
+        sharedPreferences
             .edit {
                 putString("jsTransformFunction", jsFunction)
             }
     }
 
     fun getEventTransformFunction(): String {
-        return ContextContainer
-            .analyticsContainer
-            .sharedPreferencesManager
+        return sharedPreferences
             .getString("jsTransformFunction", "")
             .orEmpty()
     }
 
     fun show() {
-        instance?.show() ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+        instance.show()
     }
 
     fun showNotification() {
-        instance?.showNotification() ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+        instance.showNotification()
     }
 
     fun hideNotification() {
-        instance?.hideNotification() ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+        instance.hideNotification()
     }
 
     fun report(key: String?, value: String?, platform: String?, source: String?) {
-        instance?.reportEvent(key, value, platform, source) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+        instance.reportEvent(key, value, platform, source)
     }
 
     /**
@@ -80,6 +93,6 @@ object AnalyticsLogger {
         source: String?,
         isSuccess: Boolean? = null,
     ) {
-        instance?.reportEvent(key, value, platform, source, isSuccess) ?: Log.w(TAG, INIT_ERROR_MESSAGE)
+        instance.reportEvent(key, value, platform, source, isSuccess)
     }
 }

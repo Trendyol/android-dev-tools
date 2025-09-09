@@ -11,26 +11,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentEventsBinding
-import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
+import com.trendyol.android.devtools.analyticslogger.internal.NotificationManager
+import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsLoggerKoinComponent
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.ui.EventAdapter
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainActivity
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
 import com.trendyol.android.devtools.analyticslogger.internal.ui.detail.DetailFragment
+import embedded.koin.android.ext.android.inject
+import embedded.koin.androidx.viewmodel.ext.android.activityViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-internal class EventsFragment : Fragment() {
+internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
 
-    private val viewModel: MainViewModel by activityViewModels {
-        ContextContainer.mainContainer.MainViewModelFactory()
-    }
+    private val viewModel: MainViewModel by activityViewModel()
+    private val notificationManager: NotificationManager by inject()
 
     private var _binding: AnalyticsLoggerFragmentEventsBinding? = null
 
@@ -94,7 +94,7 @@ internal class EventsFragment : Fragment() {
     private fun deleteAll() {
         viewModel.deleteAll()
         eventAdapter?.refresh()
-        AnalyticsLogger.instance?.cancelNotification()
+        notificationManager.cancelNotification()
     }
 
     private fun navigateToEventDetail(event: Event) {
