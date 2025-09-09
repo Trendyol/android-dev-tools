@@ -8,7 +8,6 @@ import com.trendyol.android.devtools.analyticslogger.internal.di.analyticsLogger
 import embedded.koin.android.ext.koin.androidContext
 import embedded.koin.android.ext.koin.androidLogger
 import embedded.koin.core.Koin
-import embedded.koin.core.context.GlobalContext.startKoin
 import embedded.koin.core.logger.Level
 import embedded.koin.dsl.koinApplication
 import kotlin.getValue
