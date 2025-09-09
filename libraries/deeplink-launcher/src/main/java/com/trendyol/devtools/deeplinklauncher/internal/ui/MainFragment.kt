@@ -6,21 +6,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.trendyol.devtools.deeplinklauncher.R
 import com.trendyol.devtools.deeplinklauncher.databinding.DeeplinkLauncherFragmentMainBinding
-import com.trendyol.devtools.deeplinklauncher.internal.di.ContextContainer
+import com.trendyol.devtools.deeplinklauncher.internal.di.DeepLinkLauncherKoinComponent
 import com.trendyol.devtools.deeplinklauncher.internal.ext.getView
 import com.trendyol.devtools.deeplinklauncher.internal.ext.viewBinding
 import com.trendyol.devtools.deeplinklauncher.internal.ui.list.DeepLinkListSharedViewModel
-import java.lang.Exception
+import embedded.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment(R.layout.deeplink_launcher_fragment_main) {
+class MainFragment :
+    Fragment(R.layout.deeplink_launcher_fragment_main),
+    DeepLinkLauncherKoinComponent {
 
     private val binding: DeeplinkLauncherFragmentMainBinding by viewBinding(DeeplinkLauncherFragmentMainBinding::bind)
-    private val viewModel: MainViewModel by viewModels { ContextContainer.mainContainer.MainViewModelFactory() }
+    private val viewModel: MainViewModel by viewModel()
     private val deepLinkSharedViewModel: DeepLinkListSharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
