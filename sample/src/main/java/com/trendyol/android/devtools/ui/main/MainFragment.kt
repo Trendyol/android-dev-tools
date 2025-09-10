@@ -103,9 +103,9 @@ class MainFragment : Fragment() {
 
             // Add new values
             this.edit {
-                putString("key_shared_pref_short_string", "Super secret string")
-                putInt("key_shared_pref_int", 123456)
-                putBoolean("key_shared_pref_boolean", true)
+                putString("encrypted_key_shared_pref_short_string", "Super secret string")
+                putInt("encrypted_key_shared_pref_int", 123456)
+                putBoolean("encrypted_key_shared_pref_boolean", true)
             }
         }
     }

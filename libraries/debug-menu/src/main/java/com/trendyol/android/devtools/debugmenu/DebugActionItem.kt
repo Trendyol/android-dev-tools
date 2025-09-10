@@ -1,7 +1,7 @@
 package com.trendyol.android.devtools.debugmenu
 
 import androidx.annotation.DrawableRes
-import com.trendyol.android.devtools.debugmenu.internal.di.ContextContainer
+import com.trendyol.android.devtools.debugmenu.internal.domain.DebugMenuUseCase
 
 sealed class DebugActionItem(
     internal open var text: String,
@@ -34,18 +34,20 @@ sealed class DebugActionItem(
         abstract fun onCheckboxStatusChanged(isChecked: Boolean)
     }
 
+    private val debugMenuUseCase: DebugMenuUseCase by lazy { DebugMenu.koin.get() }
+
     fun updateDescription(newDescription: String) {
         description = newDescription
-        ContextContainer.debugMenuContainer.debugMenuUseCase.onDebugActionItemUpdated(this)
+        debugMenuUseCase.onDebugActionItemUpdated(this)
     }
 
     fun updateText(newText: String) {
         text = newText
-        ContextContainer.debugMenuContainer.debugMenuUseCase.onDebugActionItemUpdated(this)
+        debugMenuUseCase.onDebugActionItemUpdated(this)
     }
 
     fun updateIconDrawableRes(@DrawableRes newIconDrawableRes: Int) {
         iconDrawableRes = newIconDrawableRes
-        ContextContainer.debugMenuContainer.debugMenuUseCase.onDebugActionItemUpdated(this)
+        debugMenuUseCase.onDebugActionItemUpdated(this)
     }
 }

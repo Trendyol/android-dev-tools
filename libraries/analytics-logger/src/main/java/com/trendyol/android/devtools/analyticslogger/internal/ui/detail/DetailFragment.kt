@@ -19,26 +19,23 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.trendyol.android.devtools.analyticslogger.AnalyticsLogger
 import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentDetailBinding
-import com.trendyol.android.devtools.analyticslogger.internal.di.ContextContainer
+import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsLoggerKoinComponent
+import com.trendyol.android.devtools.analyticslogger.internal.domain.usecase.ExcludeKeysUseCase
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
 import com.trendyol.android.devtools.analyticslogger.internal.util.executeJS
+import embedded.koin.android.ext.android.inject
+import embedded.koin.androidx.viewmodel.ext.android.activityViewModel
 import kotlinx.coroutines.launch
 
-internal class DetailFragment : Fragment() {
+internal class DetailFragment : Fragment(), AnalyticsLoggerKoinComponent {
 
-    private val viewModel: MainViewModel by activityViewModels {
-        ContextContainer.mainContainer.MainViewModelFactory()
-    }
-
-    private val excludeKeysUseCase by lazy {
-        ContextContainer.analyticsContainer.excludeKeysUseCase
-    }
+    private val viewModel: MainViewModel by activityViewModel()
+    private val excludeKeysUseCase: ExcludeKeysUseCase by inject()
 
     private var _binding: AnalyticsLoggerFragmentDetailBinding? = null
     private var originalJsonText: String = ""

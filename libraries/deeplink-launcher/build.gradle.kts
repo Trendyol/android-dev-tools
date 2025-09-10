@@ -35,7 +35,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.2.0"
+version = "0.3.0"
 
 publishConfig {
     defaultConfiguration(
@@ -53,4 +53,6 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.embeddedKoinCore)
+    implementation(libs.embeddedKoinAndroid)
 }

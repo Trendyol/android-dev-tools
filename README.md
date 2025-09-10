@@ -8,6 +8,8 @@ Android Dev Tools is a library that contains various QA/Debug tools to speed up 
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/http-inspector?label=Http%20Inspector&color=%2373c248)
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/environment-manager?label=Environment%20Manager&color=%2373c248)
 ![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/debug-menu?label=Debug%20Menu&color=%2373c248)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/deeplink-launcher?label=Deeplink%20Launcher&color=%2373c248)
+![Maven Central](https://img.shields.io/maven-central/v/com.trendyol.android.devtools/sharedpref-manager?label=SharedPref%20Manager&color=%2373c248)
 
 ## Tools ##
 * [Autofill Service](#autofill-service)

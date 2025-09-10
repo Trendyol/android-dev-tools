@@ -2,13 +2,20 @@ package com.trendyol.android.devtools.debugmenu
 
 import android.content.Context
 import android.content.Intent
-import com.trendyol.android.devtools.debugmenu.internal.di.ContextContainer
+import com.trendyol.android.devtools.debugmenu.internal.di.debugMenuModule
 import com.trendyol.android.devtools.debugmenu.internal.domain.DebugMenuUseCase
 import com.trendyol.android.devtools.debugmenu.internal.ui.DebugMenuActivity
+import embedded.koin.android.ext.koin.androidContext
+import embedded.koin.android.ext.koin.androidLogger
+import embedded.koin.core.Koin
+import embedded.koin.dsl.koinApplication
 
 object DebugMenu {
 
-    private lateinit var debugMenuUseCase: DebugMenuUseCase
+    internal lateinit var koin: Koin
+
+    private val context: Context by lazy { koin.get() }
+    private val debugMenuUseCase: DebugMenuUseCase by lazy { koin.get() }
 
     /**
      * Initializes library, should be called earlier than [show].
@@ -16,8 +23,16 @@ object DebugMenu {
      * @param context application context.
      */
     fun init(context: Context) {
-        ContextContainer.setContext(context)
-        debugMenuUseCase = ContextContainer.debugMenuContainer.debugMenuUseCase
+        koin = koinApplication {
+            androidContext(context)
+            androidLogger()
+
+            modules(
+                debugMenuModule(
+                    context = context,
+                )
+            )
+        }.koin
     }
 
     /**
@@ -26,7 +41,7 @@ object DebugMenu {
      * @param title to show above menu. Default is "Debug Menu".
      */
     fun show(title: String = "Debug Menu") {
-        ContextContainer.getContext().startActivity(newIntent(title))
+        context.startActivity(newIntent(title))
     }
 
     /**
@@ -37,7 +52,7 @@ object DebugMenu {
      * @return intent for Debug Menu's activity.
      */
     fun newIntent(title: String = "Debug Menu"): Intent =
-        DebugMenuActivity.newIntent(ContextContainer.getContext(), title)
+        DebugMenuActivity.newIntent(context, title)
 
     fun addDebugAction(debugAction: DebugActionItem) {
         addDebugActionItems(listOf(debugAction))
