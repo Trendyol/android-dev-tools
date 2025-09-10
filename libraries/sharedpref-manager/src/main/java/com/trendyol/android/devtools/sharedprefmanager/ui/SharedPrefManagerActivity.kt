@@ -2,7 +2,6 @@ package com.trendyol.android.devtools.sharedprefmanager.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,17 +12,12 @@ import androidx.navigation.compose.rememberNavController
 import com.trendyol.android.devtools.sharedprefmanager.di.SharedPrefManagerKoinComponent
 import com.trendyol.android.devtools.sharedprefmanager.navigation.NavigationComponent
 import com.trendyol.android.devtools.sharedprefmanager.ui.ui.theme.DevToolsTheme
-import embedded.koin.android.scope.AndroidScopeComponent
-import embedded.koin.androidx.scope.activityRetainedScope
+import embedded.koin.androidx.scope.RetainedScopeActivity
 import embedded.koin.androidx.viewmodel.ext.android.viewModel
-import embedded.koin.core.scope.Scope
 
 internal class SharedPrefManagerActivity :
-    ComponentActivity(),
-    SharedPrefManagerKoinComponent,
-    AndroidScopeComponent {
-
-    override val scope: Scope by activityRetainedScope()
+    RetainedScopeActivity(),
+    SharedPrefManagerKoinComponent {
 
     private val sharedPrefManagerViewModel: SharedPrefManagerViewModel by viewModel()
 
