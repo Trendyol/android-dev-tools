@@ -9,36 +9,31 @@ object AnalyticsLogger {
         // no-op
     }
 
+    fun setEventTransformFunction(jsFunction: String) {
+    }
+
+    fun getEventTransformFunction(): String {
+        return ""
+    }
+
     fun show() {
-        // no-op
     }
 
     fun showNotification() {
-        // no-op
     }
 
     fun hideNotification() {
-        // no-op
     }
 
-    fun report(key: String?, value: String?, platform: String?) {
-        // no-op
+    fun report(key: String?, value: String?, platform: String?, source: String?) {
     }
 
     fun report(
         key: String?,
         value: String?,
         platform: String?,
-        isSuccess: Boolean?,
+        source: String?,
+        isSuccess: Boolean? = null,
     ) {
-        // no-op
-    }
-
-    fun setEventTransformFunction(jsFunction: String) {
-        // no-op
-    }
-
-    fun getEventTransformFunction(): String {
-        return ""
     }
 }
