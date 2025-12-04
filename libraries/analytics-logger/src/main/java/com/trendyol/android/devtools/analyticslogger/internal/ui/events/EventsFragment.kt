@@ -20,6 +20,8 @@ import com.trendyol.android.devtools.analyticslogger.internal.ui.EventAdapter
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainActivity
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
 import com.trendyol.android.devtools.analyticslogger.internal.ui.detail.DetailFragment
+import com.trendyol.android.devtools.analyticslogger.internal.ext.setupHideKeyboardOnScroll
+import com.trendyol.android.devtools.analyticslogger.internal.ext.setupHideKeyboardOnTouch
 import embedded.koin.android.ext.android.inject
 import embedded.koin.androidx.viewmodel.ext.android.activityViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -57,7 +59,7 @@ internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
         searchView?.setOnQueryTextListener(null)
         searchView?.setOnCloseListener(null)
     }
-    
+
     override fun onDestroyView() {
         _binding = null
         eventAdapter = null
@@ -66,6 +68,9 @@ internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
     }
 
     private fun initView() {
+        binding.root.setupHideKeyboardOnTouch()
+        binding.recyclerView.setupHideKeyboardOnScroll()
+
         eventPlatformAdapter = EventPlatformAdapter()
         binding.platformsRecyclerView.adapter = eventPlatformAdapter
 
@@ -142,7 +147,7 @@ internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
 
         // Attach listeners
         initSearchViewListeners(searchItem)
-        
+
         // Restore query from ViewModel
         val currentQuery = viewModel.getQuery()
         if (currentQuery.isNotEmpty()) {
@@ -169,14 +174,14 @@ internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
     @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        
+
         // Get SearchView reference and re-attach listeners
         val searchItem = menu.findItem(R.id.action_search)
         if (searchView == null && searchItem != null) {
             searchView = searchItem.actionView as? SearchView
             initSearchViewListeners(searchItem)
         }
-        
+
         // Restore query from ViewModel
         val currentQuery = viewModel.getQuery()
         if (currentQuery.isNotEmpty() && searchView?.query?.toString() != currentQuery) {
@@ -184,7 +189,7 @@ internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
             searchView?.setQuery(currentQuery, false)
         }
     }
-    
+
     private fun initSearchViewListeners(searchItem: MenuItem) {
         // Prevent query loss when SearchView collapses
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -195,7 +200,7 @@ internal class EventsFragment : Fragment(), AnalyticsLoggerKoinComponent {
                 return true
             }
         })
-        
+
         // Prevent close button from clearing query
         searchView?.setOnCloseListener {
             searchView?.query?.toString()?.let { viewModel.setQuery(it) }

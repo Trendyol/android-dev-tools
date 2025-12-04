@@ -26,6 +26,8 @@ import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentDetailBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsLoggerKoinComponent
 import com.trendyol.android.devtools.analyticslogger.internal.domain.usecase.ExcludeKeysUseCase
+import com.trendyol.android.devtools.analyticslogger.internal.ext.setupHideKeyboardOnScroll
+import com.trendyol.android.devtools.analyticslogger.internal.ext.setupHideKeyboardOnTouch
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
 import com.trendyol.android.devtools.analyticslogger.internal.util.executeJS
@@ -60,6 +62,9 @@ internal class DetailFragment : Fragment(), AnalyticsLoggerKoinComponent {
     }
 
     private fun initializeViews() = with(binding) {
+        root.setupHideKeyboardOnTouch()
+        root.setupHideKeyboardOnScroll()
+        
         webViewJsExecutor.settings.javaScriptEnabled = true
         editTextjsTransformFunction.setText(AnalyticsLogger.getEventTransformFunction())
         editTextjsTransformFunction.doAfterTextChanged {
