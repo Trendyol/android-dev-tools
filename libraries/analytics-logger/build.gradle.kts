@@ -39,7 +39,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.9.0-LOCAL"
+version = "0.9.0"
 
 publishConfig {
     defaultConfiguration(
