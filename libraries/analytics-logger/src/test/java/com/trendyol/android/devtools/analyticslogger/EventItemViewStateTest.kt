@@ -183,7 +183,7 @@ class EventItemViewStateTest {
         // Then
         assertEquals("", keyText.toString())
     }
-    
+
     @Test
     fun `when query has only 1 character, should not require minimum length for matching`() {
         // Given

@@ -63,7 +63,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
 
             // Create ViewState - all presentation logic is inside
             val viewState = EventItemViewState(event, searchQuery.orEmpty())
-            
+
             // ViewState handles all the logic!
             textViewKey.text = viewState.getKeyText()
             textViewSource.text = event.source
@@ -71,7 +71,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
             textViewDate.text = event.date
             textViewPlatform.background = createPlatformBackground(event.platform)
             root.background = createStatusBackground(root.context, event.isSuccess)
-            
+
             // ViewState handles visibility and text logic
             textViewBodyPreview.isVisible = viewState.isBodyPreviewVisible
             textViewBodyPreview.text = viewState.getBodyPreviewText()

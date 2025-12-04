@@ -105,4 +105,3 @@ internal fun String?.containsQuery(query: String?): Boolean {
     }
     return this.contains(query, ignoreCase = true)
 }
-

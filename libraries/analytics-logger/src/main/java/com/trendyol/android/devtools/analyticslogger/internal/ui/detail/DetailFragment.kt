@@ -64,7 +64,7 @@ internal class DetailFragment : Fragment(), AnalyticsLoggerKoinComponent {
     private fun initializeViews() = with(binding) {
         root.setupHideKeyboardOnTouch()
         root.setupHideKeyboardOnScroll()
-        
+
         webViewJsExecutor.settings.javaScriptEnabled = true
         editTextjsTransformFunction.setText(AnalyticsLogger.getEventTransformFunction())
         editTextjsTransformFunction.doAfterTextChanged {

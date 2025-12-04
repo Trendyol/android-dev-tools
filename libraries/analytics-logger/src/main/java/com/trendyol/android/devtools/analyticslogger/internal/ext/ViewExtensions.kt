@@ -28,7 +28,7 @@ internal fun androidx.recyclerview.widget.RecyclerView.setupHideKeyboardOnScroll
             }
         }
     })
-    
+
     // Also hide on touch to handle taps on items
     setOnTouchListener { v, event ->
         if (event.action == MotionEvent.ACTION_DOWN) {
@@ -46,7 +46,7 @@ internal fun androidx.core.widget.NestedScrollView.setupHideKeyboardOnScroll() {
     setOnScrollChangeListener { _: androidx.core.widget.NestedScrollView, _: Int, _: Int, _: Int, _: Int ->
         hideKeyboard()
     }
-    
+
     // Also hide on touch
     setOnTouchListener { v, event ->
         if (event.action == MotionEvent.ACTION_DOWN) {
@@ -58,7 +58,7 @@ internal fun androidx.core.widget.NestedScrollView.setupHideKeyboardOnScroll() {
 
 /**
  * Sets up touch listener to hide keyboard when clicking outside of SearchView
- * 
+ *
  * Note: SuppressLint is used because we're not handling clicks - we're only hiding the keyboard
  * and letting the event propagate normally (returning false). This is a UX enhancement, not
  * an accessibility feature, so performClick() is not needed here.
@@ -86,20 +86,21 @@ internal fun View.setupHideKeyboardOnTouch() {
 private fun isTouchInsideSearchView(viewGroup: ViewGroup, event: MotionEvent): Boolean {
     for (i in 0 until viewGroup.childCount) {
         val child = viewGroup.getChildAt(i)
-        
+
         if (child is SearchView) {
             // Check if touch is within SearchView bounds
             val location = IntArray(2)
             child.getLocationOnScreen(location)
             val x = location[0]
             val y = location[1]
-            
+
             if (event.rawX >= x && event.rawX <= x + child.width &&
-                event.rawY >= y && event.rawY <= y + child.height) {
+                event.rawY >= y && event.rawY <= y + child.height
+            ) {
                 return true
             }
         }
-        
+
         if (child is ViewGroup) {
             if (isTouchInsideSearchView(child, event)) {
                 return true
@@ -108,4 +109,3 @@ private fun isTouchInsideSearchView(viewGroup: ViewGroup, event: MotionEvent): B
     }
     return false
 }
-

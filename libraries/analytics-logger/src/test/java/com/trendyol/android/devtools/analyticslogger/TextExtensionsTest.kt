@@ -41,7 +41,7 @@ class TextExtensionsTest {
         // Then
         assertNotNull(result)
         assertTrue(result.toString().contains("Cart"))
-        
+
         // Verify spans are applied
         val spans = result.getSpans(0, result.length, BackgroundColorSpan::class.java)
         assertTrue(spans.isNotEmpty())
@@ -465,4 +465,3 @@ class TextExtensionsTest {
         assertTrue(result)
     }
 }
-
