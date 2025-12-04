@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerItemEventBinding
 import com.trendyol.android.devtools.analyticslogger.internal.domain.model.Event
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
+import com.trendyol.android.devtools.analyticslogger.internal.ui.model.EventItemViewState
 
 internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHolder>(
     diffCallback = object : DiffUtil.ItemCallback<Event>() {
@@ -28,6 +30,7 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
 ) {
 
     var onItemSelected: ((event: Event) -> Unit)? = null
+    var searchQuery: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
@@ -58,12 +61,20 @@ internal class EventAdapter : PagingDataAdapter<Event, EventAdapter.EventViewHol
         fun bind(event: Event) = with(binding) {
             boundItem = event
 
-            textViewKey.text = event.key
+            // Create ViewState - all presentation logic is inside
+            val viewState = EventItemViewState(event, searchQuery.orEmpty())
+
+            // ViewState handles all the logic!
+            textViewKey.text = viewState.getKeyText()
             textViewSource.text = event.source
             textViewPlatform.text = event.platform
             textViewDate.text = event.date
             textViewPlatform.background = createPlatformBackground(event.platform)
             root.background = createStatusBackground(root.context, event.isSuccess)
+
+            // ViewState handles visibility and text logic
+            textViewBodyPreview.isVisible = viewState.isBodyPreviewVisible
+            textViewBodyPreview.text = viewState.getBodyPreviewText()
         }
 
         private fun createPlatformBackground(platform: String?): GradientDrawable {

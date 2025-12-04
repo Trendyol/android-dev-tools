@@ -35,10 +35,28 @@
         android:textSize="13sp"
         android:textColor="@color/textColorSecondary"
         app:layout_constraintTop_toBottomOf="@id/textViewKey"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/textViewPlatform"
         tools:text="com.example.package.ClassName" />
+
+    <TextView
+        android:id="@+id/textViewBodyPreview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="10dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="11sp"
+        android:textColor="@color/textColorSecondary"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/textViewSource"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textViewPlatform"
+        tools:text="...found in body: some matching text..."
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/textViewPlatform"

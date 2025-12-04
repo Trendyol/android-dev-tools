@@ -19,13 +19,9 @@ internal class MainViewModel(
     private val eventManager: EventManager,
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            _platformsState.value = eventManager.getPlatforms()
-        }
-    }
+    private val _queryState = MutableStateFlow<String>("")
+    val queryState: StateFlow<String> = _queryState
 
-    private val queryState = MutableStateFlow<String?>("")
     private val platformState = MutableStateFlow("")
 
     private val _detailState = MutableStateFlow<DetailState>(DetailState.Initial)
@@ -34,19 +30,34 @@ internal class MainViewModel(
     private val _platformsState = MutableStateFlow<List<String>>(emptyList())
     val platformsState: StateFlow<List<String>> = _platformsState
 
+    init {
+        viewModelScope.launch {
+            _platformsState.value = eventManager.getPlatforms()
+        }
+    }
+
     val eventsFlow: Flow<PagingData<Event>> = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
         EventPagingSource(
             eventManager = eventManager,
-            query = queryState.value,
+            query = _queryState.value,
             platform = platformState.value
         )
     }
         .flow
         .cachedIn(viewModelScope)
 
-    fun setQuery(query: String?) {
-        queryState.value = query.orEmpty()
+    /**
+     * Updates the search query
+     * This is the main entry point for search functionality
+     */
+    fun setQuery(query: String) {
+        _queryState.value = query
     }
+
+    /**
+     * Gets the current search query
+     */
+    fun getQuery(): String = _queryState.value
 
     fun setFilterState(platform: String) {
         platformState.value = if (platform == "All") "" else platform

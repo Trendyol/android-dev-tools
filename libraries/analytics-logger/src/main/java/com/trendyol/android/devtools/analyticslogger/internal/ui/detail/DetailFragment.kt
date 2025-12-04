@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -25,6 +26,8 @@ import com.trendyol.android.devtools.analyticslogger.R
 import com.trendyol.android.devtools.analyticslogger.databinding.AnalyticsLoggerFragmentDetailBinding
 import com.trendyol.android.devtools.analyticslogger.internal.di.AnalyticsLoggerKoinComponent
 import com.trendyol.android.devtools.analyticslogger.internal.domain.usecase.ExcludeKeysUseCase
+import com.trendyol.android.devtools.analyticslogger.internal.ext.setupHideKeyboardOnScroll
+import com.trendyol.android.devtools.analyticslogger.internal.ext.setupHideKeyboardOnTouch
 import com.trendyol.android.devtools.analyticslogger.internal.factory.ColorFactory
 import com.trendyol.android.devtools.analyticslogger.internal.ui.MainViewModel
 import com.trendyol.android.devtools.analyticslogger.internal.util.executeJS
@@ -59,6 +62,9 @@ internal class DetailFragment : Fragment(), AnalyticsLoggerKoinComponent {
     }
 
     private fun initializeViews() = with(binding) {
+        root.setupHideKeyboardOnTouch()
+        root.setupHideKeyboardOnScroll()
+
         webViewJsExecutor.settings.javaScriptEnabled = true
         editTextjsTransformFunction.setText(AnalyticsLogger.getEventTransformFunction())
         editTextjsTransformFunction.doAfterTextChanged {
@@ -129,26 +135,39 @@ internal class DetailFragment : Fragment(), AnalyticsLoggerKoinComponent {
             return
         }
 
-        val spannableString = SpannableString(originalJsonText)
-        val searchTextLower = searchText.lowercase()
-        val originalTextLower = originalJsonText.lowercase()
-        val highlightColor = Color.YELLOW
+        runCatching {
+            val spannableString = SpannableString(originalJsonText)
+            val searchTextLower = searchText.lowercase()
+            val originalTextLower = originalJsonText.lowercase()
+            val highlightColor = Color.YELLOW
 
-        var startIndex = 0
-        while (true) {
-            val index = originalTextLower.indexOf(searchTextLower, startIndex)
-            if (index == -1) break
+            var startIndex = 0
+            while (startIndex < originalTextLower.length) {
+                val index = originalTextLower.indexOf(searchTextLower, startIndex)
+                if (index == -1) break
 
-            spannableString.setSpan(
-                BackgroundColorSpan(highlightColor),
-                index,
-                index + searchText.length,
-                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            startIndex = index + 1
+                // Safety check: calculate actual matching length in case of case-insensitive differences
+                val endIndex = (index + searchTextLower.length).coerceAtMost(originalJsonText.length)
+
+                // Only apply span if we have a valid range
+                if (index >= 0 && endIndex <= originalJsonText.length && index < endIndex) {
+                    spannableString.setSpan(
+                        BackgroundColorSpan(highlightColor),
+                        index,
+                        endIndex,
+                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+
+                startIndex = index + searchTextLower.length
+            }
+
+            binding.textViewValue.text = spannableString
+        }.onFailure { e ->
+            // If highlighting fails, just show the original text without highlighting
+            Log.w("DetailFragment", "Error highlighting text: ${e.message}")
+            binding.textViewValue.text = originalJsonText
         }
-
-        binding.textViewValue.text = spannableString
     }
 
     private fun copyToClipboard() {

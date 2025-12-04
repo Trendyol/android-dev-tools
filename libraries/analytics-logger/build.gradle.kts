@@ -39,7 +39,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.8.0"
+version = "0.9.0"
 
 publishConfig {
     defaultConfiguration(
@@ -59,4 +59,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.embeddedKoinCore)
     implementation(libs.embeddedKoinAndroid)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
 }
