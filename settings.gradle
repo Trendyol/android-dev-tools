@@ -12,15 +12,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
-        maven {
-            url = uri("https://repository.kotzilla.io/repository/Koin-Embedded/")
-
-            content {
-                includeModule("io.insert-koin", "embedded-koin-core")
-                includeModule("io.insert-koin", "embedded-koin-core-jvm")
-                includeModule("io.insert-koin", "embedded-koin-android")
-            }
-        }
     }
 }
 

@@ -12,7 +12,7 @@ plugins {
 java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toString().toInt())
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "com.trendyol.devtools.environmentmanager"
 
     defaultConfig {
@@ -37,7 +37,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.3.0"
+version = "0.4.0"
 
 publishConfig {
     defaultConfiguration(

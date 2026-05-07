@@ -13,7 +13,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get()
 
 android {
     namespace = "com.trendyol.android.devtools.analyticslogger"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 21
@@ -39,7 +39,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.9.0"
+version = "1.0.0"
 
 publishConfig {
     defaultConfiguration(

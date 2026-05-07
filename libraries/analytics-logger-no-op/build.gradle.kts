@@ -12,7 +12,7 @@ plugins {
 java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toString().toInt())
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "com.trendyol.android.devtools.analyticslogger.noop"
 
     defaultConfig {
@@ -33,7 +33,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.8.0"
+version = "0.9.0"
 
 publishConfig {
     defaultConfiguration(
