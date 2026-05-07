@@ -14,7 +14,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(libs.versions.java.get()
 
 android {
     namespace = "com.trendyol.android.devtools.sharedprefmanager"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 21
@@ -38,7 +38,7 @@ android {
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.4.0"
+version = "0.5.0"
 
 publishConfig {
     defaultConfiguration(
