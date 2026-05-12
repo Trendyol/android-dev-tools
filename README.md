@@ -1,3 +1,5 @@
+
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Trendyol/android-dev-tools/badge)](https://scorecard.dev/viewer/?uri=github.com/Trendyol/android-dev-tools)
 ## Android Dev Tools
 
 Android Dev Tools is a library that contains various QA/Debug tools to speed up and streamline the development progress.
