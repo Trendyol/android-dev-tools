@@ -3,6 +3,7 @@ import com.trendyol.android.devtools.plugins.publish.defaultConfiguration
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ktlint.gradle)
@@ -42,11 +43,14 @@ android {
     buildFeatures {
         buildConfig = false
         viewBinding = true
+        compose = true
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 group = "com.trendyol.android.devtools"
-version = "0.3.0"
+version = "0.4.0"
 
 publishConfig {
     defaultConfiguration(
@@ -56,6 +60,8 @@ publishConfig {
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.startup.runtime)
     implementation(libs.androidx.appcompat)
@@ -65,4 +71,11 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.squareup.moshi.kotlin)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.compose.foundation)
+    testImplementation(libs.androidx.compose.material3)
+    testImplementation(libs.androidx.activity.compose)
+    testImplementation("androidx.compose.ui:ui-test-junit4")
 }

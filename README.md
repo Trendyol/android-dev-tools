@@ -93,9 +93,32 @@ input values must match.
 ```
 
 - `forms` object declares the forms that will be cheched on activity/fragment screen.
-- `fields` are input view ids.
+- `fields` are input view resource names or Compose text field `testTag` values.
 - `matchAnyField` is optional flag to enable the feature whether if all `fields` should be exist or not. Default is `false`.
 - `categories` declares inputs, you can provide multiple category and multiple input values.
+
+### Compose
+
+Add a `testTag` matching the JSON field name to each text field. Standard `TextField`,
+`OutlinedTextField`, and `BasicTextField` components expose the semantics action used to update their state.
+View and Compose inputs can share the same form, and the picker works in both `FragmentActivity` and `ComponentActivity`.
+
+```kotlin
+var email by remember { mutableStateOf("") }
+var password by remember { mutableStateOf("") }
+
+OutlinedTextField(
+    value = email,
+    onValueChange = { email = it },
+    modifier = Modifier.testTag("inputEmail"),
+)
+OutlinedTextField(
+    value = password,
+    onValueChange = { password = it },
+    modifier = Modifier.testTag("inputPassword"),
+    visualTransformation = PasswordVisualTransformation(),
+)
+```
 
 ### Setup
 Since Autofill not requires any initialization code, all you need to add the dependency on desired variant/flavor like
