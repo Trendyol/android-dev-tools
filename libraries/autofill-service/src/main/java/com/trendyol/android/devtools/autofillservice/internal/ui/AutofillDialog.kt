@@ -1,34 +1,22 @@
 package com.trendyol.android.devtools.autofillservice.internal.ui
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.app.Activity
+import android.app.Dialog
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import android.view.Window
 import com.trendyol.android.devtools.autofillservice.databinding.DialogAutofillBinding
 import com.trendyol.android.devtools.autofillservice.internal.model.ListItem
 
-internal class AutofillDialog : DialogFragment() {
+internal class AutofillDialog(activity: Activity) : Dialog(activity) {
 
-    private lateinit var binding: DialogAutofillBinding
-
-    private val adapter by lazy { AutofillAdapter() }
+    private val adapter = AutofillAdapter()
 
     var onItemClickedListener: ((ListItem) -> Unit)? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DialogAutofillBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
+    init {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val binding = DialogAutofillBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         adapter.onItemClickedListener = {
             onItemClickedListener?.invoke(it)
         }
@@ -36,13 +24,12 @@ internal class AutofillDialog : DialogFragment() {
         binding.recyclerView.adapter = adapter
     }
 
-    fun updateItems(items: List<ListItem>) {
-        adapter.updateItems(items)
+    override fun onStart() {
+        super.onStart()
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    companion object {
-        const val DIALOG_TAG = "dialogAutofill"
-
-        fun newInstance() = AutofillDialog()
+    fun updateItems(items: List<ListItem>) {
+        adapter.updateItems(items)
     }
 }
